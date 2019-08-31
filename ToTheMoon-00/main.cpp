@@ -15,11 +15,11 @@ public:
 	
 	TipoDeSuelo tipo() const
 	{
-		//Falta definir esto
-		if (...) {
+		bool condicionDuro; // El valor de este booleano depende de alguna forma de la dureza y la porosidad.
+		if (condicion) {
 			return DuroYCompacto;
 		}
-		else if (...) {
+		else {
 			return BlandoYPoroso;
 		}
 	}
