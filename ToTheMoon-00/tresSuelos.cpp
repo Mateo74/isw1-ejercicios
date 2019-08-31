@@ -2,7 +2,7 @@ enum class TipoDeSuelo
 {
 	DuroYCompacto,
 	BlandoYPoroso,
-  Intermedio
+	Intermedio
 };
 
 class Suelo
@@ -16,16 +16,16 @@ public:
 	TipoDeSuelo tipo() const
 	{
 		bool condicionDuro; // El valor de este booleano depende de alguna forma de la dureza y la porosidad.
-    bool condicionBlando; // Lo mismo con este
-		if (condicion) {
+		bool condicionBlando; // Lo mismo con este
+		if (condicionDuro) {
 			return DuroYCompacto;
 		}
 		else if (condicionBlando){
 			return BlandoYPoroso;
 		}
-    else {
-      return Intermedio;
-    }
+		else {
+			return Intermedio;
+		}
 	}
 	
 private:
@@ -56,11 +56,11 @@ public:
 			cerrarPinza();
 			girarMecha(SentidoHorario, 100, 5);
 		}
-    else if (suelo.tipo() == Intermedio) {
-      girarMecha(SentidoHorario, 150, 5);
-      cerrarPinza();
-      girarMecha(sentidoAntihorario, 100, 10);
-    }
+		else if (suelo.tipo() == Intermedio) {
+			girarMecha(SentidoHorario, 150, 5);
+			cerrarPinza();
+			girarMecha(sentidoAntihorario, 100, 10);
+		}
 	}
 
 private:

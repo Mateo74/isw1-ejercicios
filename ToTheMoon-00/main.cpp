@@ -8,15 +8,14 @@ class Suelo
 {
 public:
 	Suelo(int dureza, int porosidad): dureza(dureza), porosidad(porosidad) {}
-	
-	// Estos no se usan, estará bien sacarlos?
+
 	int dureza() const {return dureza;}
 	int porosidad() const {return porosidad;}
 	
 	TipoDeSuelo tipo() const
 	{
 		bool condicionDuro; // El valor de este booleano depende de alguna forma de la dureza y la porosidad.
-		if (condicion) {
+		if (condicionDuro) {
 			return DuroYCompacto;
 		}
 		else {
