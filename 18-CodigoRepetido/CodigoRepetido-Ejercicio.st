@@ -21,6 +21,16 @@ TestCase subclass: #CustomerBookTest
 	poolDictionaries: ''
 	category: 'CodigoRepetido-Ejercicio'!
 
+!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 21:47:27'!
+failEvaluating: aClosureThatShouldFail
+withError: anError
+andDo: aClosureThatHandlesError
+
+	[ aClosureThatShouldFail value.
+	self fail ]
+		on: anError 
+		do: aClosureThatHandlesError! !
+
 !CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 19:41:33'!
 test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 
@@ -42,21 +52,19 @@ test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 20:38:38'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 21:48:05'!
 test03CanNotAddACustomerWithEmptyName 
 
 	| customerBook |
 			
 	customerBook := CustomerBook new.
 
-	[ customerBook addCustomerNamed: ''.
-	self fail ]
-		on: Error 
-		do: [ :anError | 
+	self failEvaluating: [ customerBook addCustomerNamed: '' ] withError: Error andDo: 
+	[ :anError | 
 			self assert: anError messageText = CustomerBook customerCanNotBeEmptyErrorMessage.
 			self assert: customerBook isEmpty ].! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 20:37:48'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 21:48:34'!
 test04CanNotRemoveAnInvalidCustomer
 	
 	| customerBook johnLennon |
@@ -64,10 +72,9 @@ test04CanNotRemoveAnInvalidCustomer
 	johnLennon := 'John Lennon'.
 	customerBook := self newCustomerBookWithOneCustomer: johnLennon.
 
-	[ customerBook removeCustomerNamed: 'Paul McCartney'.
-	self fail ]
-		on: NotFound 
-		do: [ :anError | self assertThat: customerBook hasExactlyOneCustomerNamed: johnLennon ]! !
+	self failEvaluating: [ customerBook removeCustomerNamed: 'Paul McCartney'.]
+		withError: NotFound 
+		andDo: [ :anError | self assertThat: customerBook hasExactlyOneCustomerNamed: johnLennon ]! !
 
 !CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 20:47:13'!
 test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
@@ -102,7 +109,7 @@ test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 20:01:08'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 21:49:30'!
 test07CanNotSuspendAnInvalidCustomer
 	
 	| customerBook johnLennon |
@@ -110,13 +117,11 @@ test07CanNotSuspendAnInvalidCustomer
 	johnLennon := 'John Lennon'.
 	customerBook _ self newCustomerBookWithOneCustomer: johnLennon.
 	
-	[ customerBook suspendCustomerNamed: 'Paul McCartney'.
-	self fail ]
-		on: CantSuspend 
-		do: [ :anError | self assertThat: customerBook hasExactlyOneCustomerNamed: johnLennon ]
-! !
+	self failEvaluating: [ customerBook suspendCustomerNamed: 'Paul McCartney'. ]
+		withError: CantSuspend 
+		andDo: [ :anError | self assertThat: customerBook hasExactlyOneCustomerNamed: johnLennon ].! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 20:38:10'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 21:49:25'!
 test08CanNotSuspendAnAlreadySuspendedCustomer
 	
 	| customerBook johnLennon |
@@ -125,14 +130,73 @@ test08CanNotSuspendAnAlreadySuspendedCustomer
 
 	customerBook _ self newCustomerBookWithOneSuspendedCustomer: johnLennon.
 
-	[ customerBook suspendCustomerNamed: johnLennon.
+	self failEvaluating: [ customerBook suspendCustomerNamed: johnLennon. ]
+		withError: CantSuspend 
+		andDo: [ :anError | self assertThat: customerBook hasExactlyOneCustomerNamed: johnLennon ].! !
+
+!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 21:32:11'!
+xxx
+	
+	| customerBook johnLennon |
+			
+	johnLennon := 'John Lennon'.
+	customerBook := self newCustomerBookWithOneCustomer: johnLennon.
+
+	[ customerBook removeCustomerNamed: 'Paul McCartney'.
 	self fail ]
-		on: CantSuspend 
+		on: NotFound 
 		do: [ :anError | self assertThat: customerBook hasExactlyOneCustomerNamed: johnLennon ]
-! !
+	
+	
+	
+	
+	
+	
+	
+	"|out of scope ->anError|
+	anError := failIfNotAnError:  [ customerBook removeCustomerNamed: 'Paul McCartney'] orGetError: NotFound
+	
+	
+	failIfNotAnError: [ customerBook removeCustomerNamed: 'Paul McCartney'] on: NotFound do: 
+	
+failIfNotAnError: aClosure on: anError: do: aClosureThatHandlesTheError
+
+	[aClosure value.
+	self fail ]
+		on: anError
+		do: aClosureThatHandlesTheError value"! !
+
+!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 21:35:51'!
+xxx: aClosure
+yyy: anError
+zzz: aClosure2
+
+	[ aClosure value.
+	self fail ]
+		on: anError 
+		do: aClosure2
+	
+	
+	
+	
+	
+	
+	
+	"|out of scope ->anError|
+	anError := failIfNotAnError:  [ customerBook removeCustomerNamed: 'Paul McCartney'] orGetError: NotFound
+	
+	
+	failIfNotAnError: [ customerBook removeCustomerNamed: 'Paul McCartney'] on: NotFound do: 
+	
+failIfNotAnError: aClosure on: anError: do: aClosureThatHandlesTheError
+
+	[aClosure value.
+	self fail ]
+		on: anError
+		do: aClosureThatHandlesTheError value"! !
 
 
-!CustomerBookTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/2/2019 20:44:23'!
+!CustomerBookTest methodsFor: 'assertions' stamp: 'damian y mateo 9/2/2019 20:44:23'!
 assertThat: aCustomerBook
 hasActive: anAmountOfActive
 suspended: anAmountOfSuspended
@@ -142,13 +206,13 @@ andTotal: anAmountOfCustomers
 	self assert: aCustomerBook numberOfSuspendedCustomers = anAmountOfSuspended.
 	self assert: aCustomerBook numberOfCustomers = anAmountOfCustomers.! !
 
-!CustomerBookTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/2/2019 19:58:26'!
+!CustomerBookTest methodsFor: 'assertions' stamp: 'damian y mateo 9/2/2019 19:58:26'!
 assertThat: aCustomerBook hasExactlyOneCustomerNamed: aName
 
 	self assert: aCustomerBook numberOfCustomers = 1.
 	self assert: (aCustomerBook includesCustomerNamed: aName).! !
 
-!CustomerBookTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/2/2019 19:47:13'!
+!CustomerBookTest methodsFor: 'assertions' stamp: 'damian y mateo 9/2/2019 19:47:13'!
 assertThat: aClosure takesLessThan: anAmountOfTime
 
 	|millisecondsBeforeRunning millisecondsAfterRunning|
@@ -159,12 +223,8 @@ assertThat: aClosure takesLessThan: anAmountOfTime
 	
 	self assert: (millisecondsAfterRunning-millisecondsBeforeRunning) < anAmountOfTime! !
 
-!CustomerBookTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/2/2019 19:54:28'!
-customerBookHasAnUniqueCustomerNamed: aName
 
-	self! !
-
-!CustomerBookTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/2/2019 19:17:12'!
+!CustomerBookTest methodsFor: 'create customer books' stamp: 'damian y mateo 9/2/2019 19:17:12'!
 newCustomerBookWithOneCustomer: aName
 
 	|customerBook|
@@ -172,7 +232,7 @@ newCustomerBookWithOneCustomer: aName
 	customerBook addCustomerNamed: aName.
 	^customerBook! !
 
-!CustomerBookTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/2/2019 19:22:47'!
+!CustomerBookTest methodsFor: 'create customer books' stamp: 'damian y mateo 9/2/2019 19:22:47'!
 newCustomerBookWithOneSuspendedCustomer: aName
 
 	|customerBook|
