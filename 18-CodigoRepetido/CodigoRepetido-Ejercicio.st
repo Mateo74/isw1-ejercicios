@@ -134,67 +134,6 @@ test08CanNotSuspendAnAlreadySuspendedCustomer
 		withError: CantSuspend 
 		andDo: [ :anError | self assertThat: customerBook hasExactlyOneCustomerNamed: johnLennon ].! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 21:32:11'!
-xxx
-	
-	| customerBook johnLennon |
-			
-	johnLennon := 'John Lennon'.
-	customerBook := self newCustomerBookWithOneCustomer: johnLennon.
-
-	[ customerBook removeCustomerNamed: 'Paul McCartney'.
-	self fail ]
-		on: NotFound 
-		do: [ :anError | self assertThat: customerBook hasExactlyOneCustomerNamed: johnLennon ]
-	
-	
-	
-	
-	
-	
-	
-	"|out of scope ->anError|
-	anError := failIfNotAnError:  [ customerBook removeCustomerNamed: 'Paul McCartney'] orGetError: NotFound
-	
-	
-	failIfNotAnError: [ customerBook removeCustomerNamed: 'Paul McCartney'] on: NotFound do: 
-	
-failIfNotAnError: aClosure on: anError: do: aClosureThatHandlesTheError
-
-	[aClosure value.
-	self fail ]
-		on: anError
-		do: aClosureThatHandlesTheError value"! !
-
-!CustomerBookTest methodsFor: 'testing' stamp: 'damian y mateo 9/2/2019 21:35:51'!
-xxx: aClosure
-yyy: anError
-zzz: aClosure2
-
-	[ aClosure value.
-	self fail ]
-		on: anError 
-		do: aClosure2
-	
-	
-	
-	
-	
-	
-	
-	"|out of scope ->anError|
-	anError := failIfNotAnError:  [ customerBook removeCustomerNamed: 'Paul McCartney'] orGetError: NotFound
-	
-	
-	failIfNotAnError: [ customerBook removeCustomerNamed: 'Paul McCartney'] on: NotFound do: 
-	
-failIfNotAnError: aClosure on: anError: do: aClosureThatHandlesTheError
-
-	[aClosure value.
-	self fail ]
-		on: anError
-		do: aClosureThatHandlesTheError value"! !
-
 
 !CustomerBookTest methodsFor: 'assertions' stamp: 'damian y mateo 9/2/2019 20:44:23'!
 assertThat: aCustomerBook
