@@ -1,0 +1,37 @@
+- ¿Cuál es la posición de Naur respecto al método en el desarrollo de programas?
+
+Afirma que en el desarrollo de programas no existe un método correcto. Como principal argumento habla 
+de que un método define ciertas acciones que se deben llevar a cabo en un cierto orden a la 
+hora de programar, pero programar consiste en construir una teoría, y como teoría no se divide 
+en etapas que tengan un orden determinado. Esto implica, en resumen, que no importa que método 
+de programación se haya utilizado si no la teoría construida por el programador o los programadores.
+
+- Sintetice en pocas palabras al "diseño natural"
+
+El diseño natural es aquel que se basa en el uso de señales naturales al momento de diseñar un objeto,
+es decir, en darle características que den a entender cómo se usa el objeto y que sean interpretadas por 
+las personas con naturalidad, sin necesidad de ser conscientes de las mismas.
+
+- De un ejemplo original de affordance, es decir, que no aparezca, ni se desprenda directamente de los del texto
+
+
+
+- Defina modelo conceptual
+
+Un modelo conceptual es un modelo que una persona construye de un objeto o dispositivo, es decir un conjunto de 
+conceptos y de relaciones entre ellos, que surgen como producto de una abstracción que una persona realiza 
+basándose en las partes visibles del objeto, y tienen como propósito lograr un entendimiento sobre cómo 
+funciona dicho objeto.
+
+- Explique la paradoja de la tecnología. ¿Tiene solución?
+
+La tecnología sigue avanzando para simplificarnos la vida, pero para esto los dispositivos proveen cada 
+vez más funcionalidades y por lo tanto se vuelven cada vez más complicados y difíciles de usar, lo cual 
+en cierta medida nos complica la vida.
+Sin embargo, siguiendo principios de buen diseño, podemos lograr que esta mayor complejidad en los 
+dispositivos sea controlable y que la dificultad para usarlos sea minimizada, a pesar de que el problema
+que representa la paradoja en sí no tenga solución.
+
+
+
+
