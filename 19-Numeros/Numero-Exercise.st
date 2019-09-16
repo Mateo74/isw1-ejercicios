@@ -390,6 +390,26 @@ Numero subclass: #Entero
 	
 	^self class with: value // aDivisor integerValue! !
 
+!Entero methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:49:34'!
+addEntero: anAdder
+
+	^self class with: value + anAdder integerValue! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:50:23'!
+addFraccion: anAdder
+
+	^anAdder class with: self * anAdder denominator + anAdder numerator over: anAdder denominator! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:47:14'!
+divideEntero: aDividend
+
+	^Fraccion with: aDividend over: self! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:48:38'!
+divideFraccion: aDividend
+
+	^aDividend class with: aDividend numerator over: aDividend denominator * self.! !
+
 !Entero methodsFor: 'arithmetic operations' stamp: 'HAW 9/24/2018 08:47:50'!
 fibonacci
 
@@ -408,6 +428,17 @@ fibonacci
 greatestCommonDivisorWith: anEntero 
 	
 	^self class with: (value gcd: anEntero integerValue)! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:42:54'!
+multiplyEntero: anAdder
+
+	^ self class with: value * anAdder integerValue.
+		! !
+
+!Entero methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:41:39'!
+multiplyFraccion: aMultiplier
+
+	^aMultiplier class with: self * aMultiplier numerator over: aMultiplier denominator.! !
 
 
 !Entero methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 21:01'!
@@ -456,38 +487,6 @@ isZero
 	
 	^value = 0! !
 
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:49:34'!
-addEntero: anAdder
-
-	^self class with: value + anAdder integerValue! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:50:23'!
-addFraccion: anAdder
-
-	^anAdder class with: self * anAdder denominator + anAdder numerator over: anAdder denominator! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:47:14'!
-divideEntero: aDividend
-
-	^Fraccion with: aDividend over: self! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:48:38'!
-divideFraccion: aDividend
-
-	^aDividend class with: aDividend numerator over: aDividend denominator * self.! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:42:54'!
-multiplyEntero: anAdder
-
-	^ self class with: value * anAdder integerValue.
-		! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:41:39'!
-multiplyFraccion: aMultiplier
-
-	^aMultiplier class with: self * aMultiplier numerator over: aMultiplier denominator.! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Entero class' category: #'Numero-Exercise'!
@@ -534,6 +533,38 @@ Numero subclass: #Fraccion
 / aDivisor 
 	
 	^aDivisor divideFraccion: self! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:53:14'!
+addEntero: anAdder
+
+	^anAdder addFraccion: self! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:52:51'!
+addFraccion: anAdder
+
+	^ anAdder class with: self numerator * anAdder denominator + (self denominator * anAdder numerator) over: self denominator * anAdder denominator! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:54:07'!
+divideEntero: aDividend
+
+	^ self class with: denominator * aDividend over: numerator
+! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:53:33'!
+divideFraccion: aDividend
+
+		^(aDividend numerator * denominator) / (aDividend denominator * numerator)! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:55:04'!
+multiplyEntero: aMultiplier
+
+	^aMultiplier multiplyFraccion: self.! !
+
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'damian y mateo 9/12/2019 21:54:41'!
+multiplyFraccion: aMultiplier
+
+		^(numerator * aMultiplier numerator) / (denominator * aMultiplier denominator)
+! !
 
 
 !Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:42'!
@@ -592,39 +623,6 @@ printOn: aStream
 		print: numerator;
 		nextPut: $/;
 		print: denominator ! !
-
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:53:14'!
-addEntero: anAdder
-
-	^anAdder addFraccion: self! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:52:51'!
-addFraccion: anAdder
-
-	^ anAdder class with: self numerator * anAdder denominator + (self denominator * anAdder numerator) over: self denominator * anAdder denominator! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:54:07'!
-divideEntero: aDividend
-
-	^ self class with: denominator * aDividend over: numerator
-! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:53:33'!
-divideFraccion: aDividend
-
-		^(aDividend numerator * denominator) / (aDividend denominator * numerator)! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:55:04'!
-multiplyEntero: aMultiplier
-
-	^aMultiplier multiplyFraccion: self.! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/12/2019 21:54:41'!
-multiplyFraccion: aMultiplier
-
-		^(numerator * aMultiplier numerator) / (denominator * aMultiplier denominator)
-! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
