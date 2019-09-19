@@ -262,18 +262,7 @@ Object subclass: #OOStack
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 16:41:36'!
-initialize
-
-	topContainer := EmptyStackElementContainer new.
-	size := 0! !
-
-!OOStack methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 16:42:04'!
-isEmpty
-
-	^size = 0! !
-
-!OOStack methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 16:42:37'!
+!OOStack methodsFor: 'modifiers' stamp: 'damian y mateo 9/18/2019 16:42:37'!
 pop
 
 	|topElement|
@@ -283,7 +272,7 @@ pop
 	^topElement
 	! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/16/2019 21:17:53'!
+!OOStack methodsFor: 'modifiers' stamp: 'damian y mateo 9/16/2019 21:17:53'!
 push: anElement
 	
 	|newTop|
@@ -291,15 +280,28 @@ push: anElement
 	topContainer := newTop.
 	size := size + 1! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/16/2019 20:24:23'!
+
+!OOStack methodsFor: 'queries' stamp: 'damian y mateo 9/18/2019 16:42:04'!
+isEmpty
+
+	^size = 0! !
+
+!OOStack methodsFor: 'queries' stamp: 'damian y mateo 9/16/2019 20:24:23'!
 size
 
 	^size! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 16:43:45'!
+!OOStack methodsFor: 'queries' stamp: 'damian y mateo 9/18/2019 16:43:45'!
 top
 
 	^topContainer containedElement! !
+
+
+!OOStack methodsFor: 'initialization' stamp: 'damian y mateo 9/18/2019 16:41:36'!
+initialize
+
+	topContainer := EmptyStackElementContainer new.
+	size := 0! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -320,7 +322,29 @@ Object subclass: #SentenceFinderByPrefix
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 19:31:00'!
+!SentenceFinderByPrefix methodsFor: 'strings' stamp: 'damian y mateo 9/18/2019 19:13:06'!
+is: aPrefix aPrefixOf: aString
+
+	|prefixSize stringSize|
+	prefixSize := aPrefix size.
+	stringSize := aString size.
+	^aPrefix = ( aString copyFrom: 1 to: (prefixSize min: stringSize) )! !
+
+!SentenceFinderByPrefix methodsFor: 'strings' stamp: 'damian y mateo 9/18/2019 19:28:46'!
+throwErrorIfContainsSpaces: aPrefix
+
+	aPrefix indexOf: $  ifAbsent: [^self].
+	self error: self class prefixWithSpacesErrorDescription.
+	! !
+
+!SentenceFinderByPrefix methodsFor: 'strings' stamp: 'damian y mateo 9/18/2019 19:30:05'!
+throwErrorIfIsEmpty: aPrefix
+
+	aPrefix isEmpty ifTrue: [self error: self class emptyPrefixErrorDescription ]
+	! !
+
+
+!SentenceFinderByPrefix methodsFor: 'find' stamp: 'damian y mateo 9/18/2019 19:31:00'!
 find: aPrefix in: aStack
 
 	|anotherStack res|
@@ -338,27 +362,6 @@ find: aPrefix in: aStack
 		aStack push: anotherStack pop. 
 		].
 	^res! !
-
-!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 19:13:06'!
-is: aPrefix aPrefixOf: aString
-
-	|prefixSize stringSize|
-	prefixSize := aPrefix size.
-	stringSize := aString size.
-	^aPrefix = ( aString copyFrom: 1 to: (prefixSize min: stringSize) )! !
-
-!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 19:28:46'!
-throwErrorIfContainsSpaces: aPrefix
-
-	aPrefix indexOf: $  ifAbsent: [^self].
-	self error: self class prefixWithSpacesErrorDescription.
-	! !
-
-!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 19:30:05'!
-throwErrorIfIsEmpty: aPrefix
-
-	aPrefix isEmpty ifTrue: [self error: self class emptyPrefixErrorDescription ]
-	! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -392,12 +395,12 @@ StackElementContainer subclass: #EmptyStackElementContainer
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!EmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 16:39:52'!
+!EmptyStackElementContainer methodsFor: 'accessors' stamp: 'damian y mateo 9/18/2019 16:39:52'!
 containedElement
 
 	self error: OOStack stackEmptyErrorDescription ! !
 
-!EmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 16:40:58'!
+!EmptyStackElementContainer methodsFor: 'accessors' stamp: 'damian y mateo 9/18/2019 16:40:58'!
 previousContainer
 
 	self error: OOStack stackEmptyErrorDescription ! !
@@ -410,21 +413,22 @@ StackElementContainer subclass: #NonEmptyStackElementContainer
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!NonEmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 16:38:13'!
+!NonEmptyStackElementContainer methodsFor: 'accessors' stamp: 'damian y mateo 9/18/2019 16:38:13'!
 containedElement
 
 	^containedElement! !
 
-!NonEmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 16:39:23'!
+!NonEmptyStackElementContainer methodsFor: 'accessors' stamp: 'damian y mateo 9/18/2019 16:40:45'!
+previousContainer
+
+	^previousContainer! !
+
+
+!NonEmptyStackElementContainer methodsFor: 'initialization' stamp: 'damian y mateo 9/18/2019 16:39:23'!
 initializeWithElement: anElement andPrevious: aPreviousContainer
 
 	containedElement := anElement.
 	previousContainer := aPreviousContainer.! !
-
-!NonEmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/18/2019 16:40:45'!
-previousContainer
-
-	^previousContainer! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
