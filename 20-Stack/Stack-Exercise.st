@@ -144,7 +144,6 @@ TestCase subclass: #SentenceFinderByPrefixTest
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-
 !SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'damian y mateo 9/18/2019 20:06:24'!
 test01EmptyResult
 
@@ -315,6 +314,7 @@ stackEmptyErrorDescription
 	
 	^ 'Stack is empty'! !
 
+
 
 !classDefinition: #SentenceFinderByPrefix category: #'Stack-Exercise'!
 Object subclass: #SentenceFinderByPrefix
@@ -322,6 +322,7 @@ Object subclass: #SentenceFinderByPrefix
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
+
 
 !SentenceFinderByPrefix methodsFor: 'strings' stamp: 'mm 9/19/2019 16:06:47'!
 assertHasNoSpaces: aPrefix
