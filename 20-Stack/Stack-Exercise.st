@@ -144,6 +144,7 @@ TestCase subclass: #SentenceFinderByPrefixTest
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
+
 !SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'damian y mateo 9/18/2019 20:06:24'!
 test01EmptyResult
 
@@ -322,6 +323,19 @@ Object subclass: #SentenceFinderByPrefix
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
+!SentenceFinderByPrefix methodsFor: 'strings' stamp: 'mm 9/19/2019 16:06:47'!
+assertHasNoSpaces: aPrefix
+
+	aPrefix indexOf: $  ifAbsent: [^self].
+	self error: self class prefixWithSpacesErrorDescription.
+	! !
+
+!SentenceFinderByPrefix methodsFor: 'strings' stamp: 'mm 9/19/2019 16:06:37'!
+assertIsNotEmpty: aPrefix
+
+	aPrefix isEmpty ifTrue: [self error: self class emptyPrefixErrorDescription ]
+	! !
+
 !SentenceFinderByPrefix methodsFor: 'strings' stamp: 'damian y mateo 9/18/2019 19:13:06'!
 is: aPrefix aPrefixOf: aString
 
@@ -330,38 +344,25 @@ is: aPrefix aPrefixOf: aString
 	stringSize := aString size.
 	^aPrefix = ( aString copyFrom: 1 to: (prefixSize min: stringSize) )! !
 
-!SentenceFinderByPrefix methodsFor: 'strings' stamp: 'damian y mateo 9/18/2019 19:28:46'!
-throwErrorIfContainsSpaces: aPrefix
 
-	aPrefix indexOf: $  ifAbsent: [^self].
-	self error: self class prefixWithSpacesErrorDescription.
-	! !
-
-!SentenceFinderByPrefix methodsFor: 'strings' stamp: 'damian y mateo 9/18/2019 19:30:05'!
-throwErrorIfIsEmpty: aPrefix
-
-	aPrefix isEmpty ifTrue: [self error: self class emptyPrefixErrorDescription ]
-	! !
-
-
-!SentenceFinderByPrefix methodsFor: 'find' stamp: 'damian y mateo 9/18/2019 19:31:00'!
+!SentenceFinderByPrefix methodsFor: 'find' stamp: 'mm 9/19/2019 16:07:25'!
 find: aPrefix in: aStack
 
-	|anotherStack res|
+	|visitedStrings matches|
 	
-	self throwErrorIfContainsSpaces: aPrefix.
-	self throwErrorIfIsEmpty: aPrefix.
+	self assertHasNoSpaces: aPrefix.
+	self assertIsNotEmpty: aPrefix.
 	
-	anotherStack _ OOStack new.
-	res _ Set new.
+	visitedStrings _ OOStack new.
+	matches _ Set new.
 	[aStack isEmpty] whileFalse: [
-		anotherStack push: aStack pop. 
-		(self is: aPrefix aPrefixOf: anotherStack top) ifTrue: [res add: anotherStack top].
+		visitedStrings push: aStack pop. 
+		(self is: aPrefix aPrefixOf: visitedStrings top) ifTrue: [matches add: visitedStrings top].
 		].
-	[anotherStack isEmpty] whileFalse: [
-		aStack push: anotherStack pop. 
+	[visitedStrings isEmpty] whileFalse: [
+		aStack push: visitedStrings pop. 
 		].
-	^res! !
+	^matches! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -395,6 +396,22 @@ StackElementContainer subclass: #EmptyStackElementContainer
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
+!EmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/16/2019 20:28:19'!
+element
+
+	self error: OOStack stackEmptyErrorDescription ! !
+
+!EmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/16/2019 20:38:02'!
+hasElement
+
+	^false! !
+
+!EmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/16/2019 20:28:34'!
+previous
+
+	self error: OOStack stackEmptyErrorDescription ! !
+
+
 !EmptyStackElementContainer methodsFor: 'accessors' stamp: 'damian y mateo 9/18/2019 16:39:52'!
 containedElement
 
@@ -412,6 +429,22 @@ StackElementContainer subclass: #NonEmptyStackElementContainer
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
+
+!NonEmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/16/2019 20:36:51'!
+element
+
+	^element! !
+
+!NonEmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/16/2019 20:36:35'!
+hasElement
+
+	^true! !
+
+!NonEmptyStackElementContainer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 9/16/2019 21:25:00'!
+previous
+
+	^previous! !
+
 
 !NonEmptyStackElementContainer methodsFor: 'accessors' stamp: 'damian y mateo 9/18/2019 16:38:13'!
 containedElement
