@@ -144,7 +144,6 @@ TestCase subclass: #SentenceFinderByPrefixTest
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-
 !SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'damian y mateo 9/18/2019 20:06:24'!
 test01EmptyResult
 
@@ -227,6 +226,28 @@ test06StackIsNotChanged
 	stack pop.
 	self assert: stack isEmpty! !
 
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'D 9/18/2019 23:40:21'!
+test07CannotUsePrefixWithSpaces
+
+	self
+		should: [finder find: 'hello world' in: OOStack new]
+		raise: Error
+		withExceptionDo: [
+			:anError |
+			self assert: anError messageText = SentenceFinderByPrefix prefixWithSpacesErrorDescription.
+		]! !
+
+!SentenceFinderByPrefixTest methodsFor: 'tests' stamp: 'D 9/18/2019 23:41:01'!
+test08CannotUseEmptyPrefix
+
+	self
+		should: [finder find: '' in: OOStack new]
+		raise: Error
+		withExceptionDo: [
+			:anError |
+			self assert: anError messageText = SentenceFinderByPrefix emptyPrefixErrorDescription .
+		]! !
+
 
 !SentenceFinderByPrefixTest methodsFor: 'setup' stamp: 'damian y mateo 9/18/2019 19:35:21'!
 setUp
@@ -290,7 +311,6 @@ OOStack class
 stackEmptyErrorDescription
 	
 	^ 'Stack is empty'! !
-
 
 
 !classDefinition: #SentenceFinderByPrefix category: #'Stack-Exercise'!
