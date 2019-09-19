@@ -354,7 +354,7 @@ moveElementsFrom: stack1 to: stack2 whileDoing: aBlock
 		].! !
 
 
-!SentenceFinderByPrefix methodsFor: 'find' stamp: 'mm 9/19/2019 16:27:26'!
+!SentenceFinderByPrefix methodsFor: 'find' stamp: 'mm 9/19/2019 16:34:32'!
 find: aPrefix in: aStack
 
 	|visitedStrings matches|
@@ -365,14 +365,8 @@ find: aPrefix in: aStack
 	visitedStrings _ OOStack new.
 	matches _ Set new.
 	self moveElementsFrom: aStack to: visitedStrings whileDoing: [(self is: aPrefix aPrefixOf: visitedStrings top) ifTrue: [matches add: visitedStrings top]].
-	"[aStack isEmpty] whileFalse: [
-		visitedStrings push: aStack pop. 
-		(self is: aPrefix aPrefixOf: visitedStrings top) ifTrue: [matches add: visitedStrings top].
-		]."
 	self moveElementsFrom: visitedStrings to: aStack whileDoing: [].
-	"[visitedStrings isEmpty] whileFalse: [
-		aStack push: visitedStrings pop. 
-		]."
+
 	^matches! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
