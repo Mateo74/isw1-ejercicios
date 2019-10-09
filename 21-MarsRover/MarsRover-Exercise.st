@@ -5,7 +5,7 @@ TestCase subclass: #MarsRoverTest
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/3/2019 21:26:23'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/3/2019 21:26:23'!
 test01RoverDoesNotChangePositionIfNoCommandsGiven
 
 	|rover|
@@ -13,47 +13,47 @@ test01RoverDoesNotChangePositionIfNoCommandsGiven
 	rover do: ''.
 	self assert: 0@0 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/3/2019 21:26:04'!
-test02RoverDoesNotChangePositionIfNoCommandsGivenFromDifferentPosition
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:54:01'!
+test02RoverInDifferentPositionDoesNotChangePositionIfNoCommandsGiven
 
 	|rover|
 	rover := MarsRover at: 48@-95.
 	rover do: ''.
 	self assert: 48@-95 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/3/2019 21:25:35'!
-test03RoverMovesOneStepForward
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:51:45'!
+test03RoverMovesNorthIfForwardCommandIsGiven
 
 	|rover|
 	rover := MarsRover at: 8@8.
 	rover do: 'f'.
 	self assert: 8@9 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 18:42:20'!
-test04RoverMovesOneStepBackward
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:52:12'!
+test04RoverMovesSouthIfBackwardCommandIsGiven
 
 	|rover|
 	rover := MarsRover at: 4@9.
 	rover do: 'b'.
 	self assert: 4@8 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'mm 10/8/2019 20:08:35'!
-test05RoverDoesNotAdvanceWhenTurningRight
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:52:37'!
+test05RoverDoesNotMoveWhenTurningRight
 
 	|rover|
 	rover := MarsRover at: 25@-14.
 	rover do: 'r'.
 	self assert: 25@-14 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'mm 10/8/2019 20:08:50'!
-test06RoverDoesNotAdvanceWhenTurningLeft
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:53:08'!
+test06RoverDoesNotMoveWhenTurningLeft
 
 	|rover|
 	rover := MarsRover at: 51@-4.
-	rover do: 'r'.
+	rover do: 'l'.
 	self assert: 51@-4 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:35:17'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:17'!
 test07RoverPointsNorthIfNoCommandsGiven
 
 	|rover|
@@ -61,7 +61,7 @@ test07RoverPointsNorthIfNoCommandsGiven
 	rover do: ''.
 	self assert: #N equals: rover direction.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:35:29'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:29'!
 test08RoverPointsEastAfterTurningRightOnce
 
 	|rover|
@@ -69,7 +69,7 @@ test08RoverPointsEastAfterTurningRightOnce
 	rover do: 'r'.
 	self assert: #E equals: rover direction.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:35:34'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:34'!
 test09RoverPointsWestAfterTurningLeftOnce
 
 	|rover|
@@ -77,7 +77,7 @@ test09RoverPointsWestAfterTurningLeftOnce
 	rover do: 'l'.
 	self assert: #W equals: rover direction.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:35:40'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:40'!
 test10RoverPointsSouthAfterTurningRightTwice
 
 	|rover|
@@ -85,7 +85,7 @@ test10RoverPointsSouthAfterTurningRightTwice
 	rover do: 'rr'.
 	self assert: #S equals: rover direction.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:35:48'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:48'!
 test11RoverPointsSouthAfterTurningLeftTwice
 
 	|rover|
@@ -93,7 +93,7 @@ test11RoverPointsSouthAfterTurningLeftTwice
 	rover do: 'll'.
 	self assert: #S equals: rover direction.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:36:07'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:36:07'!
 test12RoverMovesWestAfterTurningLeftAndMovingForward
 
 	|rover|
@@ -101,7 +101,7 @@ test12RoverMovesWestAfterTurningLeftAndMovingForward
 	rover do: 'lf'.
 	self assert: (-21@-40) equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:36:14'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:36:14'!
 test13RoverMovesEastAfterTurningRightAndMovingForward
 
 	|rover|
@@ -109,7 +109,7 @@ test13RoverMovesEastAfterTurningRightAndMovingForward
 	rover do: 'rf'.
 	self assert: (-19@-40) equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:36:19'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:36:19'!
 test14RoverMovesNorthAfterTurningLeftTwiceAndMovingBackward
 
 	|rover|
@@ -117,7 +117,7 @@ test14RoverMovesNorthAfterTurningLeftTwiceAndMovingBackward
 	rover do: 'llb'.
 	self assert: (-20@-39) equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:36:24'!
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:36:24'!
 test15RoverMovesNorthAfterTurningRightTwiceAndMovingBackward
 
 	|rover|
@@ -133,20 +133,21 @@ Object subclass: #Direction
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!Direction methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:34:02'!
+!Direction methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:16:17'!
+rotateLeft
+	^self subclassResponsibility ! !
+
+!Direction methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:16:21'!
+rotateRight
+	^self subclassResponsibility ! !
+
+
+!Direction methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:34:02'!
 descriptiveSymbol
 	
 	^self subclassResponsibility ! !
 
-!Direction methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:16:17'!
-rotateLeft
-	^self subclassResponsibility ! !
-
-!Direction methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:16:21'!
-rotateRight
-	^self subclassResponsibility ! !
-
-!Direction methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:19:37'!
+!Direction methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:19:37'!
 unitaryVectorAsPoint
 	^self subclassResponsibility ! !
 
@@ -158,20 +159,21 @@ Direction subclass: #EastDirection
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!EastDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:34:16'!
+!EastDirection methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:16:42'!
+rotateLeft
+	^NorthDirection new! !
+
+!EastDirection methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:16:52'!
+rotateRight
+	^SouthDirection new! !
+
+
+!EastDirection methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:34:16'!
 descriptiveSymbol
 	
 	^#E! !
 
-!EastDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:16:42'!
-rotateLeft
-	^NorthDirection new! !
-
-!EastDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:16:52'!
-rotateRight
-	^SouthDirection new! !
-
-!EastDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:20:04'!
+!EastDirection methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:20:04'!
 unitaryVectorAsPoint
 	^1@0! !
 
@@ -183,22 +185,23 @@ Direction subclass: #NorthDirection
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!NorthDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:34:25'!
+!NorthDirection methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:34:25'!
 descriptiveSymbol
 	
 	^#N! !
 
-!NorthDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:17:16'!
+!NorthDirection methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:20:22'!
+unitaryVectorAsPoint
+	^0@1! !
+
+
+!NorthDirection methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:17:16'!
 rotateLeft
 	^WestDirection new! !
 
-!NorthDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:17:24'!
+!NorthDirection methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:17:24'!
 rotateRight
 	^EastDirection new! !
-
-!NorthDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:20:22'!
-unitaryVectorAsPoint
-	^0@1! !
 
 
 !classDefinition: #SouthDirection category: #'MarsRover-Exercise'!
@@ -208,22 +211,23 @@ Direction subclass: #SouthDirection
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!SouthDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:34:36'!
+!SouthDirection methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:34:36'!
 descriptiveSymbol
 	
 	^#S! !
 
-!SouthDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:17:48'!
+!SouthDirection methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:20:37'!
+unitaryVectorAsPoint
+	^0@-1! !
+
+
+!SouthDirection methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:17:48'!
 rotateLeft
 	^EastDirection new! !
 
-!SouthDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:17:57'!
+!SouthDirection methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:17:57'!
 rotateRight
 	^WestDirection new! !
-
-!SouthDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:20:37'!
-unitaryVectorAsPoint
-	^0@-1! !
 
 
 !classDefinition: #WestDirection category: #'MarsRover-Exercise'!
@@ -233,22 +237,23 @@ Direction subclass: #WestDirection
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!WestDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:34:57'!
+!WestDirection methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:34:57'!
 descriptiveSymbol
 	
 	^#W! !
 
-!WestDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:18:17'!
+!WestDirection methodsFor: 'representation' stamp: 'damian y mateo 10/9/2019 19:20:49'!
+unitaryVectorAsPoint
+	^-1@0! !
+
+
+!WestDirection methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:18:17'!
 rotateLeft
 	^SouthDirection new! !
 
-!WestDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:18:29'!
+!WestDirection methodsFor: 'rotations' stamp: 'damian y mateo 10/9/2019 19:18:29'!
 rotateRight
 	^NorthDirection new! !
-
-!WestDirection methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:20:49'!
-unitaryVectorAsPoint
-	^-1@0! !
 
 
 !classDefinition: #MarsRover category: #'MarsRover-Exercise'!
@@ -258,19 +263,25 @@ Object subclass: #MarsRover
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:36:50'!
+!MarsRover methodsFor: 'queries' stamp: 'damian y mateo 10/9/2019 19:36:50'!
 direction
 
 	^direction descriptiveSymbol! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 18:48:08'!
+!MarsRover methodsFor: 'queries' stamp: 'damian y mateo 10/3/2019 21:20:17'!
+position
+
+	^position! !
+
+
+!MarsRover methodsFor: 'command execution' stamp: 'damian y mateo 10/9/2019 18:48:08'!
 do: aCommandSequence
 
 	aCommandSequence do: [:aCommand | self executeCommand: aCommand].
 
 	! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 18:51:42'!
+!MarsRover methodsFor: 'command execution' stamp: 'damian y mateo 10/9/2019 18:51:42'!
 executeCommand: aCommand
 
 	(commandImplementations at: aCommand ifAbsent: 
@@ -279,7 +290,8 @@ executeCommand: aCommand
 	]) value
 	! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/9/2019 19:42:28'!
+
+!MarsRover methodsFor: 'initialization' stamp: 'damian y mateo 10/9/2019 19:42:28'!
 initializeAt: aPosition
 	
 	position := aPosition.
@@ -291,11 +303,6 @@ initializeAt: aPosition
 	commandImplementations at: $l put: [direction := direction rotateLeft.].
 	commandImplementations  at: $r put: [direction := direction rotateRight.].
 	! !
-
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/3/2019 21:20:17'!
-position
-
-	^position! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
