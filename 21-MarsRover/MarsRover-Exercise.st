@@ -125,6 +125,21 @@ test15RoverMovesNorthAfterTurningRightTwiceAndMovingBackward
 	rover do: 'rrb'.
 	self assert: (-20@-39) equals: rover position.! !
 
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 20:26:48'!
+test16RoverStopsExecutingCommandsWhenAnInvalidOneIsFound
+
+	|rover|
+	rover := MarsRover at: 10@5.
+	self should:
+	[
+		rover do: 'ffffk3&*2Gffblr'.
+	] raise: Error - MessageNotUnderstood withExceptionDo:
+	[
+		:anError |
+		self assert: MarsRover invalidCommandErrorMessage equals: anError messageText.
+		self assert: rover position equals: 10@9.
+	].! !
+
 
 !classDefinition: #Direction category: #'MarsRover-Exercise'!
 Object subclass: #Direction
