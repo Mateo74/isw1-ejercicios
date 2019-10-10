@@ -5,128 +5,168 @@ TestCase subclass: #MarsRoverTest
 	poolDictionaries: ''
 	category: 'MarsRover-Exercise'!
 
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/3/2019 21:26:23'!
-test01RoverDoesNotChangePositionIfNoCommandsGiven
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:39:29'!
+test01RoverDoesNotChangeDirectionIfNoCommandsGiven
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: ''.
+	self assert: #N equals: rover direction.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:40:14'!
+test02RoverPointsEastWhenPoinitngNorthAndTurningRight
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'r'.
+	self assert: #E equals: rover direction.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:40:42'!
+test03RoverPointsSouthWhenPoinitngEastAndTurningRight
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'rr'.
+	self assert: #S equals: rover direction.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:41:00'!
+test04RoverPointsWestWhenPoinitngSouthAndTurningRight
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'rrr'.
+	self assert: #W equals: rover direction.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:42:05'!
+test05RoverPointsNorthWhenPoinitngWestAndTurningRight
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'rrrr'.
+	self assert: #N equals: rover direction.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:42:46'!
+test06RoverPointsWestWhenPoinitngNorthAndTurningLeft
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'l'.
+	self assert: #W equals: rover direction.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:43:19'!
+test07RoverPointsSouthWhenPoinitngWestAndTurningLeft
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'll'.
+	self assert: #S equals: rover direction.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:45:06'!
+test08RoverPointsEastWhenPoinitngSouthAndTurningLeft
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'lll'.
+	self assert: #E equals: rover direction.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:43:58'!
+test09RoverPointsNorthWhenPoinitngEastAndTurningLeft
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'llll'.
+	self assert: #N equals: rover direction.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:51:40'!
+test10RoverDoesNotChangePositionIfNoCommandsGiven
 
 	|rover|
 	rover := MarsRover at: 0@0.
 	rover do: ''.
 	self assert: 0@0 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:54:01'!
-test02RoverInDifferentPositionDoesNotChangePositionIfNoCommandsGiven
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:51:54'!
+test10RoverInDifferentPositionDoesNotChangePositionIfNoCommandsGiven
 
 	|rover|
 	rover := MarsRover at: 48@-95.
 	rover do: ''.
 	self assert: 48@-95 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:51:45'!
-test03RoverMovesNorthIfForwardCommandIsGiven
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:46:22'!
+test10RoverMovesNorthWhenPointingNorthAndMovingForward
 
 	|rover|
-	rover := MarsRover at: 8@8.
+	rover := MarsRover at: 0@0.
 	rover do: 'f'.
-	self assert: 8@9 equals: rover position.! !
+	self assert: 0@1 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:52:12'!
-test04RoverMovesSouthIfBackwardCommandIsGiven
-
-	|rover|
-	rover := MarsRover at: 4@9.
-	rover do: 'b'.
-	self assert: 4@8 equals: rover position.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:52:37'!
-test05RoverDoesNotMoveWhenTurningRight
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:46:57'!
+test11RoverMovesEastWhenPointingEastAndMovingForward
 
 	|rover|
-	rover := MarsRover at: 25@-14.
-	rover do: 'r'.
-	self assert: 25@-14 equals: rover position.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:53:08'!
-test06RoverDoesNotMoveWhenTurningLeft
-
-	|rover|
-	rover := MarsRover at: 51@-4.
-	rover do: 'l'.
-	self assert: 51@-4 equals: rover position.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:17'!
-test07RoverPointsNorthIfNoCommandsGiven
-
-	|rover|
-	rover := MarsRover at: -20@-40.
-	rover do: ''.
-	self assert: #N equals: rover direction.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:29'!
-test08RoverPointsEastAfterTurningRightOnce
-
-	|rover|
-	rover := MarsRover at: -20@-40.
-	rover do: 'r'.
-	self assert: #E equals: rover direction.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:34'!
-test09RoverPointsWestAfterTurningLeftOnce
-
-	|rover|
-	rover := MarsRover at: -20@-40.
-	rover do: 'l'.
-	self assert: #W equals: rover direction.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:40'!
-test10RoverPointsSouthAfterTurningRightTwice
-
-	|rover|
-	rover := MarsRover at: -20@-40.
-	rover do: 'rr'.
-	self assert: #S equals: rover direction.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:35:48'!
-test11RoverPointsSouthAfterTurningLeftTwice
-
-	|rover|
-	rover := MarsRover at: -20@-40.
-	rover do: 'll'.
-	self assert: #S equals: rover direction.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:36:07'!
-test12RoverMovesWestAfterTurningLeftAndMovingForward
-
-	|rover|
-	rover := MarsRover at: -20@-40.
-	rover do: 'lf'.
-	self assert: (-21@-40) equals: rover position.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:36:14'!
-test13RoverMovesEastAfterTurningRightAndMovingForward
-
-	|rover|
-	rover := MarsRover at: -20@-40.
+	rover := MarsRover at: 0@0.
 	rover do: 'rf'.
-	self assert: (-19@-40) equals: rover position.! !
+	self assert: 1@0 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:36:19'!
-test14RoverMovesNorthAfterTurningLeftTwiceAndMovingBackward
-
-	|rover|
-	rover := MarsRover at: -20@-40.
-	rover do: 'llb'.
-	self assert: (-20@-39) equals: rover position.! !
-
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 19:36:24'!
-test15RoverMovesNorthAfterTurningRightTwiceAndMovingBackward
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:47:17'!
+test12RoverMovesSouthWhenPointingSouthAndMovingForward
 
 	|rover|
-	rover := MarsRover at: -20@-40.
+	rover := MarsRover at: 0@0.
+	rover do: 'rrf'.
+	self assert: 0@-1 equals: rover position.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:47:35'!
+test13RoverMovesEastWhenPointingEastAndMovingForward
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'rrrf'.
+	self assert: -1@0 equals: rover position.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:48:01'!
+test14RoverMovesSouthWhenPointingNorthAndMovingBackward
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'b'.
+	self assert: 0@-1 equals: rover position.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:48:27'!
+test15RoverMovesWestWhenPointingEastAndMovingBackward
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'rb'.
+	self assert: -1@0 equals: rover position.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:49:57'!
+test16RoverMovesNorthWhenPointingSouthAndMovingBackward
+
+	|rover|
+	rover := MarsRover at: 0@0.
 	rover do: 'rrb'.
-	self assert: (-20@-39) equals: rover position.! !
+	self assert: 0@1 equals: rover position.! !
 
-!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/9/2019 20:26:48'!
-test16RoverStopsExecutingCommandsWhenAnInvalidOneIsFound
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:50:14'!
+test17RoverMovesEastWhenPointingWestAndMovingBackward
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'rrrb'.
+	self assert: 1@0 equals: rover position.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:52:58'!
+test18RoverExecutesSeveralCommands
+
+	|rover|
+	rover := MarsRover at: 0@0.
+	rover do: 'rffflblbbbbfllb'.
+	self assert: 5@-1 equals: rover position.! !
+
+!MarsRoverTest methodsFor: 'testing' stamp: 'damian y mateo 10/10/2019 16:50:38'!
+test19RoverStopsExecutingCommandsWhenAnInvalidOneIsFound
 
 	|rover|
 	rover := MarsRover at: 10@5.
