@@ -180,8 +180,25 @@ test13PuttingAnXThatAlignsThreeXDiagonallyIncreasingMakesPlayerXWin
 	terniLapilli putXAt: 1@1.
 	self assert: terniLapilli hasPlayerXWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 18:44:40'!
-test14PuttingAnOThatAlignsThreeOVerticallyMakesPlayerOWin
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:10:13'!
+test14PuttingAnXThatAlignsThreeXDiagonallyDecreasingMakesPlayerXWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 0@2.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 1@0.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 2@0.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 0@1.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 1@1.
+	self assert: terniLapilli hasPlayerXWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:13:56'!
+test15PuttingAnOThatAlignsThreeOVerticallyMakesPlayerOWin
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
@@ -199,8 +216,8 @@ test14PuttingAnOThatAlignsThreeOVerticallyMakesPlayerOWin
 	terniLapilli putOAt: 0@2.
 	self assert: terniLapilli hasPlayerOWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 18:42:20'!
-test15PuttingAnOThatAlignsThreeOHorizontallyMakesPlayerOWin
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:14:15'!
+test16PuttingAnOThatAlignsThreeOHorizontallyMakesPlayerOWin
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
@@ -218,8 +235,8 @@ test15PuttingAnOThatAlignsThreeOHorizontallyMakesPlayerOWin
 	terniLapilli putOAt: 0@1.
 	self assert: terniLapilli hasPlayerOWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:29:09'!
-test16PuttingAnOThatAlignsThreeODiagonallyIncreasingMakesPlayerOWin
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:14:28'!
+test17PuttingAnOThatAlignsThreeODiagonallyIncreasingMakesPlayerOWin
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
@@ -237,29 +254,280 @@ test16PuttingAnOThatAlignsThreeODiagonallyIncreasingMakesPlayerOWin
 	terniLapilli putOAt: 1@1.
 	self assert: terniLapilli hasPlayerOWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:30:55'!
-test17XCannotPlayWhenGameIsOver
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:16:01'!
+test18PuttingAnOThatAlignsThreeODiagonallyDecreasingMakesPlayerOWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerOWon.	
+	terniLapilli  putXAt: 0@0.
+	
+	self deny: terniLapilli hasPlayerOWon.
+
+	terniLapilli putOAt: 0@2.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 1@0.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 2@0.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 0@1.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 1@1.
+	self assert: terniLapilli hasPlayerOWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:46:24'!
+test19CannotPutAnXWhenGameIsOver
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
 	! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:31:09'!
-test18OCannotPlayWhenGameIsOver
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:46:34'!
+test20CannotPutAnOWhenGameIsOver
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
 	! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:32:27'!
-test19XCannotPutAPieceFourTimes
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:16:45'!
+test21XCannotPutAPieceFourTimes
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
 	! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:32:38'!
-test20OCannotPutAPieceFourTimes
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:16:50'!
+test22OCannotPutAPieceFourTimes
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:18:39'!
+test23XCannotMoveAPieceWhenNotPlaying
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:18:35'!
+test24OCannotMoveAPieceWhenNotPlaying
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:20:09'!
+test25XCannotMoveAPieceBeforePuttingThreePieces
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:20:59'!
+test26OCannotMoveAPieceBeforePuttingThreePieces
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:23:08'!
+test27CannotMoveAnXToAnOcuppiedPosition
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:23:20'!
+test28CannotMoveAnOToAnOcuppiedPosition
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:24:35'!
+test29CannotMoveAnXOutOfTheBoard
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:24:46'!
+test30CannotMoveAnOOutOfTheBoard
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:25:49'!
+test31PieceMovedByXIsAtTheRightPlace
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:25:54'!
+test32PieceMovedByOIsAtTheRightPlace
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:26:56'!
+test33MovingAnXThatAlignsThreeXVerticallyMakesPlayerXWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 0@0.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 2@1.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 0@1.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 2@2.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 0@2.
+	self assert: terniLapilli hasPlayerXWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:27:13'!
+test34MovingAnXThatAlignsThreeXHorizontallyMakesPlayerXWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 1@1.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 0@0.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 2@1.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 2@0.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 0@1.
+	self assert: terniLapilli hasPlayerXWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:27:30'!
+test35MovingAnXThatAlignsThreeXDiagonallyIncreasingMakesPlayerXWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 2@2.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 1@0.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 0@0.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 0@1.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 1@1.
+	self assert: terniLapilli hasPlayerXWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:27:43'!
+test36MovingAnXThatAlignsThreeXDiagonallyDecreasingMakesPlayerXWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 0@2.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 1@0.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 2@0.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putOAt: 0@1.
+	self deny: terniLapilli hasPlayerXWon.
+	terniLapilli putXAt: 1@1.
+	self assert: terniLapilli hasPlayerXWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:27:58'!
+test37MovingAnOThatAlignsThreeOVerticallyMakesPlayerOWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 1@1.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 0@0.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 2@1.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 0@1.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 2@2.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 0@2.
+	self assert: terniLapilli hasPlayerOWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:28:15'!
+test38MovingAnOThatAlignsThreeOHorizontallyMakesPlayerOWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 2@2.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 1@1.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 0@0.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 2@1.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 2@0.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 0@1.
+	self assert: terniLapilli hasPlayerOWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:28:33'!
+test39MovingAnOThatAlignsThreeODiagonallyIncreasingMakesPlayerOWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 1@2.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 2@2.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 1@0.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 0@0.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 0@1.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 1@1.
+	self assert: terniLapilli hasPlayerOWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:28:53'!
+test40MovingAnOThatAlignsThreeODiagonallyDecreasingMakesPlayerOWin
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	self deny: terniLapilli hasPlayerOWon.	
+	terniLapilli  putXAt: 0@0.
+	
+	self deny: terniLapilli hasPlayerOWon.
+
+	terniLapilli putOAt: 0@2.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 1@0.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 2@0.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putXAt: 0@1.
+	self deny: terniLapilli hasPlayerOWon.
+	terniLapilli putOAt: 1@1.
+	self assert: terniLapilli hasPlayerOWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:47:10'!
+test41CannotMoveAnXWhenGameIsOver
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:47:20'!
+test42CannotMoveAnOWhenGameIsOver
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
