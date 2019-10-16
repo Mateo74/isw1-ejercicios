@@ -5,6 +5,15 @@ TestCase subclass: #TerniLapilliTest
 	poolDictionaries: ''
 	category: 'TerniLapilli-Exercise'!
 
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 12:28:05'!
+putPiecesToFinishGame: aTerniLapilliGame
+
+	aTerniLapilliGame putXAt: 0@0.
+	aTerniLapilliGame putOAt: 1@0.
+	aTerniLapilliGame putXAt: 0@1.
+	aTerniLapilliGame putOAt: 2@0.
+	aTerniLapilliGame putXAt: 0@2.! !
+
 !TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 16:53:01'!
 test01IsPlayingXWhenGameStarts
 
@@ -275,39 +284,78 @@ test18PuttingAnOThatAlignsThreeODiagonallyDecreasingMakesPlayerOWin
 	terniLapilli putOAt: 1@1.
 	self assert: terniLapilli hasPlayerOWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:46:24'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 12:24:34'!
 test19CannotPutAnXWhenGameIsOver
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
-	! !
+	self putPiecesToFinishGame: terniLapilli.
+	
+	self should: [terniLapilli putXAt: 1@1.] raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: TerniLapilli gameIsOverErrorMessage equals: anError messageText.
+		self deny: (terniLapilli XAt: 1@1).
+	]! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:46:34'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 12:30:10'!
 test20CannotPutAnOWhenGameIsOver
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
-	! !
+	self putPiecesToFinishGame: terniLapilli.
+	
+	self should: [terniLapilli putOAt: 1@1.] raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: TerniLapilli gameIsOverErrorMessage equals: anError messageText.
+		self deny: (terniLapilli OAt: 1@1).
+	]! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:16:45'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 13:42:20'!
 test21XCannotPutAPieceFourTimes
 
 	|terniLapilli|
-	terniLapilli := TerniLapilli new.
+	terniLapilli := TerniLapilli new.	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 0@1.
+	terniLapilli putXAt: 0@2.
+	terniLapilli putOAt: 1@0.
+	terniLapilli putXAt: 1@1.
+	terniLapilli putOAt: 1@2.
+	
+	self should: [terniLapilli putXAt: 2@0.] raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: TerniLapilli noPiecesLeftErrorMessage equals: anError messageText.
+		self deny: (terniLapilli XAt: 2@0).
+	]
 	! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:16:50'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 13:42:00'!
 test22OCannotPutAPieceFourTimes
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
+	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 0@1.
+	terniLapilli putXAt: 0@2.
+	terniLapilli putOAt: 1@0.
+	terniLapilli putXAt: 1@1.
+	
+	self should: [terniLapilli putOAt: 1@2] raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: TerniLapilli noPiecesLeftErrorMessage equals: anError messageText.
+		self deny: (terniLapilli OAt: 1@2).
+	]
 	! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:18:39'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/15/2019 22:48:01'!
 test23XCannotMoveAPieceWhenNotPlaying
 
 	|terniLapilli|
-	terniLapilli := TerniLapilli new.
+	terniLapilli := TerniLapilli new.	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 0@1.
+	terniLapilli putXAt: 0@2.
+	terniLapilli putOAt: 1@0.
+	terniLapilli putXAt: 1@1.
+	terniLapilli putOAt: 1@2.
 	! !
 
 !TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:18:35'!
@@ -649,6 +697,16 @@ putXAt: aPosition
 !classDefinition: 'TerniLapilli class' category: #'TerniLapilli-Exercise'!
 TerniLapilli class
 	instanceVariableNames: ''!
+
+!TerniLapilli class methodsFor: 'errorMessage' stamp: 'DH 10/14/2019 12:26:09'!
+gameIsOverErrorMessage
+
+	^'Jugada hecha luego de haber terminado el juego.'! !
+
+!TerniLapilli class methodsFor: 'errorMessage' stamp: 'DH 10/14/2019 13:45:02'!
+noPiecesLeftErrorMessage
+
+	^'Ficha puesta por cuarta vez.'! !
 
 !TerniLapilli class methodsFor: 'errorMessage' stamp: 'damian y mateo 10/11/2019 17:08:12'!
 piecePutOutOfBoardErrorMessage
