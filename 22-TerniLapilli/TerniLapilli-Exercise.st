@@ -22,46 +22,48 @@ test01IsPlayingXWhenGameStarts
 	self assert: terniLapilli isPlayingX.
 	self deny: terniLapilli isPlayingO.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/10/2019 20:14:55'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:07:09'!
 test02OCannotMoveWhenGameStarts
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
+	
 	self should: [terniLapilli putOAt: 0@0.]
 	raise: Error - MessageNotUnderstood
 	withExceptionDo:
 	[
 		:anError |
-		self assert: anError messageText equals: TerniLapilli playerCannotMoveErrorMessage.
+		self assert: anError messageText equals: TerniLapilli notTheTurnOfPlayerErrorMessage.
 		self deny: (terniLapilli OAt: 0@0).
 	]
-		
 	! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/10/2019 18:30:10'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:07:36'!
 test03IsPlayingOAfterXMakesAMove
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
 	terniLapilli putXAt: 0@0.
+	
 	self assert: terniLapilli isPlayingO.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 16:55:18'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:13:09'!
 test04XCannotMoveTwiceInARow
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
 	terniLapilli putXAt: 0@0.
+	
 	self should: [terniLapilli  putXAt: 1@0.]
 	raise: Error - MessageNotUnderstood 
 	withExceptionDo:
 	[
 		:anError | 
-		self assert: anError messageText equals: TerniLapilli playerCannotMoveErrorMessage.
+		self assert: anError messageText equals: TerniLapilli notTheTurnOfPlayerErrorMessage.
 		self deny: (terniLapilli XAt: 1@0).
 	]! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/10/2019 18:37:01'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:13:27'!
 test05IsPlayingXAfterOMakesAMove
 
 	|terniLapilli|
@@ -71,12 +73,13 @@ test05IsPlayingXAfterOMakesAMove
 
 	self assert: terniLapilli isPlayingX.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 16:57:19'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:13:58'!
 test06ThereCannotBeTwoPiecesInTheSamePosition
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
 	terniLapilli putXAt: 0@0.
+	
 	self should: [terniLapilli putOAt: 0@0.]
 	raise: Error - MessageNotUnderstood 
 	withExceptionDo:
@@ -84,66 +87,63 @@ test06ThereCannotBeTwoPiecesInTheSamePosition
 		:anError | 
 		self assert: anError messageText equals: TerniLapilli positionTakenTwiceErrorMessage.
 		self deny: (terniLapilli OAt: 0@0).
-	].
+	].! !
 
-! !
-
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/10/2019 20:21:44'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:14:14'!
 test07PiecePutByXIsAtTheRightPlace
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
 	terniLapilli putXAt: 1@2.
-	self assert: (terniLapilli XAt: 1@2).
-! !
+	self assert: (terniLapilli XAt: 1@2).! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/10/2019 20:23:26'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:14:35'!
 test08PiecePutByOIsAtTheRightPlace
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
 	terniLapilli putXAt: 1@2.
 	terniLapilli  putOAt: 0@1.
-	self assert: (terniLapilli OAt: 0@1).
-! !
+	
+	self assert: (terniLapilli OAt: 0@1).! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 17:06:07'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:15:13'!
 test09CannotPutXOutOfBoard
-
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
+	
 	self should: [terniLapilli  putXAt: 3@1.]
 	raise: Error - MessageNotUnderstood 
 	withExceptionDo:
 	[
 		:anError | 
 		self assert: anError messageText equals: TerniLapilli piecePutOutOfBoardErrorMessage.
-		"self deny: (terniLapilli XAt: 3@1)."
-	]
-! !
+		self deny: (terniLapilli XAt: 3@1).
+	]! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 17:06:59'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:15:50'!
 test10CannotPutOOutOfBoard
-
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
 	terniLapilli putXAt: 0@0.
+	
 	self should: [terniLapilli  putOAt: -2@0.]
 	raise: Error - MessageNotUnderstood 
 	withExceptionDo:
 	[
 		:anError | 
 		self assert: anError messageText equals: TerniLapilli piecePutOutOfBoardErrorMessage.
-		"self deny: (terniLapilli XAt: 3@1)."
-	]
-! !
+		self deny: (terniLapilli XAt: -2@0).
+	]! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 17:46:28'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:16:20'!
 test11PuttingAnXThatAlignsThreeXVerticallyMakesPlayerXWin
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
+	
 	self deny: terniLapilli hasPlayerXWon.
+	
 	terniLapilli putXAt: 0@0.
 	self deny: terniLapilli hasPlayerXWon.
 	terniLapilli putOAt: 2@1.
@@ -155,12 +155,14 @@ test11PuttingAnXThatAlignsThreeXVerticallyMakesPlayerXWin
 	terniLapilli putXAt: 0@2.
 	self assert: terniLapilli hasPlayerXWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 18:42:03'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:16:39'!
 test12PuttingAnXThatAlignsThreeXHorizontallyMakesPlayerXWin
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
+	
 	self deny: terniLapilli hasPlayerXWon.
+	
 	terniLapilli putXAt: 1@1.
 	self deny: terniLapilli hasPlayerXWon.
 	terniLapilli putOAt: 0@0.
@@ -172,12 +174,14 @@ test12PuttingAnXThatAlignsThreeXHorizontallyMakesPlayerXWin
 	terniLapilli putXAt: 0@1.
 	self assert: terniLapilli hasPlayerXWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:28:38'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:16:59'!
 test13PuttingAnXThatAlignsThreeXDiagonallyIncreasingMakesPlayerXWin
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
+	
 	self deny: terniLapilli hasPlayerXWon.
+	
 	terniLapilli putXAt: 2@2.
 	self deny: terniLapilli hasPlayerXWon.
 	terniLapilli putOAt: 1@0.
@@ -189,12 +193,14 @@ test13PuttingAnXThatAlignsThreeXDiagonallyIncreasingMakesPlayerXWin
 	terniLapilli putXAt: 1@1.
 	self assert: terniLapilli hasPlayerXWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:10:13'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:17:23'!
 test14PuttingAnXThatAlignsThreeXDiagonallyDecreasingMakesPlayerXWin
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
+	
 	self deny: terniLapilli hasPlayerXWon.
+	
 	terniLapilli putXAt: 0@2.
 	self deny: terniLapilli hasPlayerXWon.
 	terniLapilli putOAt: 1@0.
@@ -206,12 +212,14 @@ test14PuttingAnXThatAlignsThreeXDiagonallyDecreasingMakesPlayerXWin
 	terniLapilli putXAt: 1@1.
 	self assert: terniLapilli hasPlayerXWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:13:56'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:17:50'!
 test15PuttingAnOThatAlignsThreeOVerticallyMakesPlayerOWin
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
+	
 	self deny: terniLapilli hasPlayerOWon.
+	
 	terniLapilli putXAt: 1@1.
 	self deny: terniLapilli hasPlayerOWon.
 	terniLapilli putOAt: 0@0.
@@ -284,20 +292,21 @@ test18PuttingAnOThatAlignsThreeODiagonallyDecreasingMakesPlayerOWin
 	terniLapilli putOAt: 1@1.
 	self assert: terniLapilli hasPlayerOWon.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 12:24:34'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:18:23'!
 test19CannotPutAnXWhenGameIsOver
 
 	|terniLapilli|
 	terniLapilli := TerniLapilli new.
-	self putPiecesToFinishGame: terniLapilli.
 	
+	self putPiecesToFinishGame: terniLapilli.
+
 	self should: [terniLapilli putXAt: 1@1.] raise: Error - MessageNotUnderstood
 	withExceptionDo: [:anError |
 		self assert: TerniLapilli gameIsOverErrorMessage equals: anError messageText.
 		self deny: (terniLapilli XAt: 1@1).
 	]! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 12:30:10'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:18:29'!
 test20CannotPutAnOWhenGameIsOver
 
 	|terniLapilli|
@@ -310,11 +319,12 @@ test20CannotPutAnOWhenGameIsOver
 		self deny: (terniLapilli OAt: 1@1).
 	]! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 13:42:20'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:05:38'!
 test21XCannotPutAPieceFourTimes
 
 	|terniLapilli|
-	terniLapilli := TerniLapilli new.	terniLapilli putXAt: 0@0.
+	terniLapilli := TerniLapilli new.
+	terniLapilli putXAt: 0@0.
 	terniLapilli putOAt: 0@1.
 	terniLapilli putXAt: 0@2.
 	terniLapilli putOAt: 1@0.
@@ -328,7 +338,7 @@ test21XCannotPutAPieceFourTimes
 	]
 	! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 13:42:00'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:22:36'!
 test22OCannotPutAPieceFourTimes
 
 	|terniLapilli|
@@ -338,13 +348,14 @@ test22OCannotPutAPieceFourTimes
 	terniLapilli putXAt: 0@2.
 	terniLapilli putOAt: 1@0.
 	terniLapilli putXAt: 1@1.
+	terniLapilli putOAt: 1@2.
+	terniLapilli moveXFrom: 1@1 to: 2@1.
 	
-	self should: [terniLapilli putOAt: 1@2] raise: Error - MessageNotUnderstood
+	self should: [terniLapilli putOAt: 2@0] raise: Error - MessageNotUnderstood
 	withExceptionDo: [:anError |
 		self assert: TerniLapilli noPiecesLeftErrorMessage equals: anError messageText.
-		self deny: (terniLapilli OAt: 1@2).
-	]
-	! !
+		self deny: (terniLapilli OAt: 2@0).
+	]! !
 
 !TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 19:28:36'!
 test23XCannotMoveAPieceWhenNotPlaying
@@ -416,7 +427,7 @@ test26OCannotMoveAPieceBeforePuttingThreePieces
 		self deny: (terniLapilli OAt: 1@1).
 	]! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 20:37:40'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:30:30'!
 test27CannotMoveAnXToAnOcuppiedPosition
 
 	|terniLapilli|
@@ -433,7 +444,7 @@ test27CannotMoveAnXToAnOcuppiedPosition
 	raise: Error - MessageNotUnderstood
 	withExceptionDo: [:anError |
 		self assert: TerniLapilli positionTakenTwiceErrorMessage equals: anError messageText.
-		self deny: (terniLapilli XAt: 1@1).
+		self assert: (terniLapilli XAt: 0@0).
 	]! !
 
 !TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 20:37:48'!
@@ -533,151 +544,45 @@ test32PieceMovedByOIsAtTheRightPlace
 	self assert: (terniLapilli OAt: 2@2).
 	self deny: (terniLapilli OAt: 1@2).! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:26:56'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:37:52'!
 test33MovingAnXThatAlignsThreeXVerticallyMakesPlayerXWin
 
-	|terniLapilli|
-	terniLapilli := TerniLapilli new.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 0@0.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putOAt: 2@1.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 0@1.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putOAt: 2@2.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 0@2.
-	self assert: terniLapilli hasPlayerXWon.! !
+	"Falto implementar"! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:27:13'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:08'!
 test34MovingAnXThatAlignsThreeXHorizontallyMakesPlayerXWin
 
-	|terniLapilli|
-	terniLapilli := TerniLapilli new.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 1@1.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putOAt: 0@0.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 2@1.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putOAt: 2@0.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 0@1.
-	self assert: terniLapilli hasPlayerXWon.! !
+	"Falto implementar"! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:27:30'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:15'!
 test35MovingAnXThatAlignsThreeXDiagonallyIncreasingMakesPlayerXWin
 
-	|terniLapilli|
-	terniLapilli := TerniLapilli new.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 2@2.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putOAt: 1@0.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 0@0.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putOAt: 0@1.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 1@1.
-	self assert: terniLapilli hasPlayerXWon.! !
+	"Falto implementar"! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:27:43'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:23'!
 test36MovingAnXThatAlignsThreeXDiagonallyDecreasingMakesPlayerXWin
 
-	|terniLapilli|
-	terniLapilli := TerniLapilli new.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 0@2.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putOAt: 1@0.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 2@0.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putOAt: 0@1.
-	self deny: terniLapilli hasPlayerXWon.
-	terniLapilli putXAt: 1@1.
-	self assert: terniLapilli hasPlayerXWon.! !
+	"Falto implementar"! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:27:58'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:34'!
 test37MovingAnOThatAlignsThreeOVerticallyMakesPlayerOWin
 
-	|terniLapilli|
-	terniLapilli := TerniLapilli new.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 1@1.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 0@0.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 2@1.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 0@1.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 2@2.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 0@2.
-	self assert: terniLapilli hasPlayerOWon.! !
+	"Falto implementar"! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:28:15'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:43'!
 test38MovingAnOThatAlignsThreeOHorizontallyMakesPlayerOWin
 
-	|terniLapilli|
-	terniLapilli := TerniLapilli new.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 2@2.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 1@1.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 0@0.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 2@1.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 2@0.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 0@1.
-	self assert: terniLapilli hasPlayerOWon.! !
+	"Falto implementar"! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:28:33'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:53'!
 test39MovingAnOThatAlignsThreeODiagonallyIncreasingMakesPlayerOWin
 
-	|terniLapilli|
-	terniLapilli := TerniLapilli new.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 1@2.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 2@2.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 1@0.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 0@0.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 0@1.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 1@1.
-	self assert: terniLapilli hasPlayerOWon.! !
+	"Falto implementar"! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/14/2019 09:28:53'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:39:04'!
 test40MovingAnOThatAlignsThreeODiagonallyDecreasingMakesPlayerOWin
 
-	|terniLapilli|
-	terniLapilli := TerniLapilli new.
-	self deny: terniLapilli hasPlayerOWon.	
-	terniLapilli  putXAt: 0@0.
-	
-	self deny: terniLapilli hasPlayerOWon.
-
-	terniLapilli putOAt: 0@2.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 1@0.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 2@0.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putXAt: 0@1.
-	self deny: terniLapilli hasPlayerOWon.
-	terniLapilli putOAt: 1@1.
-	self assert: terniLapilli hasPlayerOWon.! !
+	"Falto implementar"! !
 
 !TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 19:49:33'!
 test41CannotMoveAnXWhenGameIsOver
@@ -712,80 +617,16 @@ test42CannotMoveAnOWhenGameIsOver
 
 !classDefinition: #TerniLapilli category: #'TerniLapilli-Exercise'!
 Object subclass: #TerniLapilli
-	instanceVariableNames: 'gameBoard isPlayingX'
+	instanceVariableNames: 'gameBoard shouldPlayX'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TerniLapilli-Exercise'!
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 20:43:49'!
-hasPlayerOWon
-
-	^self state hasPlayerOWon! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 20:44:21'!
-hasPlayerXWon
-
-	^self state hasPlayerXWon! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 20:45:04'!
-isOver
-
-	^self state isOver! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 20:45:31'!
-isPlayingO
-
-	^isPlayingX not.! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 20:45:38'!
-isPlayingX
-
-	^isPlayingX! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:25:58'!
-piecesAlignedDiagonallyAndDecreasing: aSetOfPieces
-
-	aSetOfPieces size = 3 ifFalse: [^false].
-	^aSetOfPieces allSatisfy: [:position | 2 - position x = position y]! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:25:53'!
-piecesAlignedDiagonallyAndIncreasing: aSetOfPieces
-
-	aSetOfPieces size = 3 ifFalse: [^false].
-	^aSetOfPieces allSatisfy: [:position | position x = position y]! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:25:20'!
-piecesAlignedHorizontally: aSetOfPieces
-
-	|somePosition|
-	aSetOfPieces size = 3 ifFalse: [^false].
-	somePosition := aSetOfPieces detect: [:anyPosition | true].
-	^aSetOfPieces allSatisfy: [:position | position y = somePosition y]! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/11/2019 19:25:36'!
-piecesAlignedVertically: aSetOfPieces
-
-	|somePosition|
-	aSetOfPieces size = 3 ifFalse: [^false].
-	somePosition := aSetOfPieces detect: [:anyPosition | true].
-	^aSetOfPieces allSatisfy: [:position | position x = somePosition x]! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 20:46:11'!
-putOAt: aPosition
-
-	self state putOAt: aPosition! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 20:46:24'!
-putXAt: aPosition
-
-	self state putXAt: aPosition! !
-
-
-!TerniLapilli methodsFor: 'initialization' stamp: 'damian y mateo 10/16/2019 20:40:40'!
+!TerniLapilli methodsFor: 'initialization' stamp: 'DH 10/17/2019 00:00:00'!
 initialize
 
 	gameBoard := TerniLapilliBoard new.
-	isPlayingX := true.! !
+	shouldPlayX := true.! !
 
 
 !TerniLapilli methodsFor: 'queries' stamp: 'damian y mateo 10/16/2019 20:41:52'!
@@ -797,6 +638,41 @@ OAt: aPosition
 XAt: aPosition
 
 	^gameBoard XAt: aPosition.! !
+
+!TerniLapilli methodsFor: 'queries' stamp: 'DH 10/16/2019 23:51:50'!
+hasPlayerOWon
+
+	^gameBoard hasThreeAlignedO! !
+
+!TerniLapilli methodsFor: 'queries' stamp: 'DH 10/16/2019 23:51:40'!
+hasPlayerXWon
+
+	^gameBoard hasThreeAlignedX! !
+
+!TerniLapilli methodsFor: 'queries' stamp: 'DH 10/16/2019 23:52:15'!
+isOver
+
+	^self hasPlayerXWon or: self hasPlayerOWon! !
+
+!TerniLapilli methodsFor: 'queries' stamp: 'DH 10/17/2019 00:00:16'!
+isPlayingO
+
+	^shouldPlayX not and: self isOver not! !
+
+!TerniLapilli methodsFor: 'queries' stamp: 'DH 10/17/2019 00:00:26'!
+isPlayingX
+
+	^shouldPlayX and: self isOver not! !
+
+!TerniLapilli methodsFor: 'queries' stamp: 'DH 10/16/2019 23:57:28'!
+playerOHasPutThreePieces
+
+	^gameBoard hasLessThanThreeO not! !
+
+!TerniLapilli methodsFor: 'queries' stamp: 'DH 10/16/2019 23:57:21'!
+playerXHasPutThreePieces
+
+	^gameBoard hasLessThanThreeX not! !
 
 
 !TerniLapilli methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 21:13:56'!
@@ -825,6 +701,32 @@ whenOIsMovingPiecesMoveOFrom: aPosition to: aNewPosition
 whenXIsMovingPiecesMoveXFrom: aPosition to: aNewPosition
 
 	gameBoard moveXFrom: aPosition to: aNewPosition! !
+
+
+!TerniLapilli methodsFor: 'putting' stamp: 'DH 10/17/2019 00:10:29'!
+putOAt: aPosition
+
+	self state putOAt: aPosition.
+	shouldPlayX := true.! !
+
+!TerniLapilli methodsFor: 'putting' stamp: 'DH 10/17/2019 00:10:20'!
+putXAt: aPosition
+
+	self state putXAt: aPosition.
+	shouldPlayX := false! !
+
+
+!TerniLapilli methodsFor: 'moving' stamp: 'DH 10/17/2019 00:24:25'!
+moveOFrom: aPosition to: aNewPosition
+
+	self state moveOFrom: aPosition to: aNewPosition.
+	shouldPlayX := true! !
+
+!TerniLapilli methodsFor: 'moving' stamp: 'DH 10/17/2019 00:24:02'!
+moveXFrom: aPosition to: aNewPosition
+
+	self state moveXFrom: aPosition to: aNewPosition.
+	shouldPlayX := false! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -898,19 +800,21 @@ moveXFrom: aPositionOfX to: aNewPosition
 	! !
 
 
-!TerniLapilliBoard methodsFor: 'putting' stamp: 'damian y mateo 10/16/2019 20:34:44'!
+!TerniLapilliBoard methodsFor: 'putting' stamp: 'DH 10/17/2019 00:36:51'!
 putOAt: aPosition
 
 	self add: aPosition to: positionsOfO
 		errorMessageWhenTaken: TerniLapilli positionTakenTwiceErrorMessage
-		errorMessageWhenNotInBoard: TerniLapilli piecePutOutOfBoardErrorMessage.! !
+		errorMessageWhenNotInBoard: TerniLapilli piecePutOutOfBoardErrorMessage
+		onAnyErrorDo: []! !
 
-!TerniLapilliBoard methodsFor: 'putting' stamp: 'damian y mateo 10/16/2019 20:34:39'!
+!TerniLapilliBoard methodsFor: 'putting' stamp: 'DH 10/17/2019 00:36:40'!
 putXAt: aPosition
 
 	self add: aPosition to: positionsOfX
 		errorMessageWhenTaken: TerniLapilli positionTakenTwiceErrorMessage
-		errorMessageWhenNotInBoard: TerniLapilli piecePutOutOfBoardErrorMessage.! !
+		errorMessageWhenNotInBoard: TerniLapilli piecePutOutOfBoardErrorMessage
+		onAnyErrorDo: []! !
 
 
 !TerniLapilliBoard methodsFor: 'queries' stamp: 'damian y mateo 10/16/2019 20:35:58'!
@@ -951,19 +855,29 @@ initialize
 	positionsOfO := Set new.! !
 
 
-!TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 20:16:10'!
+!TerniLapilliBoard methodsFor: 'private' stamp: 'DH 10/17/2019 00:35:24'!
 add: aPosition
 to: aSetOfPositions
 errorMessageWhenTaken: aPositionTakenErrorMessage
 errorMessageWhenNotInBoard: aPositionNotInBoardErrorMessage
+onAnyErrorDo: aBlockToHandleError
 
-	(self isTaken: aPosition) ifTrue: [self error: aPositionTakenErrorMessage.].
-	(self isInBoard: aPosition) ifFalse: [self error: aPositionNotInBoardErrorMessage.].
+	(self isTaken: aPosition) ifTrue: [
+		aBlockToHandleError value.
+		self error: aPositionTakenErrorMessage.
+	].
+	(self isInBoard: aPosition) ifFalse: [
+		aBlockToHandleError value.
+		self error: aPositionNotInBoardErrorMessage.
+	].
 	aSetOfPositions add: aPosition.! !
 
-!TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 20:30:22'!
+!TerniLapilliBoard methodsFor: 'private' stamp: 'DH 10/17/2019 00:41:59'!
 allowedToMoveFrom: aPosition to: aNewPosition
 
+	"Falta implementar. Hay que ver que aNewPosition este a la derecha, izquierda, arriba o abajo de aPosition,
+	o que aPosition sea 1@1 y aNewPosition no sea 1@1, o viceversa. No hace falta chequear que aNewPosition
+	esté dentro del tablero, si pasa eso va a saltar despues."
 	^true! !
 
 !TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 21:37:08'!
@@ -974,25 +888,25 @@ hasThreeAligned: aSetOfPositions
 	or: (self hasThreeDiagonallyIncreasingAligned: aSetOfPositions)
 	or: (self hasThreeDiagonallyDecreasingAligned: aSetOfPositions)! !
 
-!TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 21:35:27'!
+!TerniLapilliBoard methodsFor: 'private' stamp: 'DH 10/17/2019 00:12:26'!
 hasThreeDiagonallyDecreasingAligned: aSetOfPositions
 
-	^true! !
+	^aSetOfPositions size = 3 and: (aSetOfPositions allSatisfy: [:aPosition | aPosition x = (2 - aPosition y)])! !
 
-!TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 21:35:22'!
+!TerniLapilliBoard methodsFor: 'private' stamp: 'DH 10/16/2019 23:35:54'!
 hasThreeDiagonallyIncreasingAligned: aSetOfPositions
 
-	^true! !
+	^aSetOfPositions size = 3 and: (aSetOfPositions allSatisfy: [:aPosition | aPosition x = aPosition y])! !
 
-!TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 21:35:02'!
+!TerniLapilliBoard methodsFor: 'private' stamp: 'DH 10/16/2019 23:43:04'!
 hasThreeHorizontallyAligned: aSetOfPositions
 
-	^true! !
+	^self theSet: aSetOfPositions hasThreePositionsWithSameCoordinate: #y! !
 
-!TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 21:34:38'!
+!TerniLapilliBoard methodsFor: 'private' stamp: 'DH 10/16/2019 23:42:49'!
 hasThreeVerticallyAligned: aSetOfPositions
 
-	^true! !
+	^self theSet: aSetOfPositions hasThreePositionsWithSameCoordinate: #x! !
 
 !TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 19:59:04'!
 isInBoard: aPosition
@@ -1004,14 +918,26 @@ isTaken: aPosition
 
 	^(self XAt: aPosition) or: (self OAt: aPosition).! !
 
-!TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 20:34:28'!
+!TerniLapilliBoard methodsFor: 'private' stamp: 'DH 10/17/2019 00:36:22'!
 makeMovementFrom: aPosition to: aNewPosition in: aSetOfPositions
 
 	aSetOfPositions remove: aPosition ifAbsent: [self error: TerniLapilli notMovingTheCorrectPieceErrorMessage.].
-	(self allowedToMoveFrom: aPosition to: aNewPosition) ifFalse: [self error: TerniLapilli invalidPieceMovementErrorMessage.].
+	(self allowedToMoveFrom: aPosition to: aNewPosition) ifFalse: [
+		aSetOfPositions add: aPosition.
+		self error: TerniLapilli invalidPieceMovementErrorMessage.
+	].
 	self add: aNewPosition to: aSetOfPositions
 		errorMessageWhenTaken: TerniLapilli positionTakenTwiceErrorMessage
-		errorMessageWhenNotInBoard: TerniLapilli pieceMovedOutOfBoardErrorMessage.! !
+		errorMessageWhenNotInBoard: TerniLapilli pieceMovedOutOfBoardErrorMessage
+		onAnyErrorDo: [aSetOfPositions add: aPosition.]! !
+
+!TerniLapilliBoard methodsFor: 'private' stamp: 'DH 10/17/2019 00:08:46'!
+theSet: aSetOfPositions hasThreePositionsWithSameCoordinate: aCoordinateSymbol
+
+	|somePosition|
+	somePosition := aSetOfPositions detect: [:aPosition | true] ifNone: [^false].
+	^aSetOfPositions size = 3 and:
+		(aSetOfPositions allSatisfy: [:aPosition | (aPosition perform: aCoordinateSymbol) = (somePosition perform: aCoordinateSymbol)])! !
 
 
 !classDefinition: #TerniLapilliState category: #'TerniLapilli-Exercise'!
@@ -1020,16 +946,6 @@ Object subclass: #TerniLapilliState
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TerniLapilli-Exercise'!
-
-!TerniLapilliState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:28:56'!
-hasPlayerOWon
-
-	^self subclassResponsibility ! !
-
-!TerniLapilliState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:29:02'!
-hasPlayerXWon
-
-	^self subclassResponsibility ! !
 
 !TerniLapilliState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:28:45'!
 moveOFrom: aPosition to: aNewPosition
@@ -1087,16 +1003,6 @@ TerniLapilliState subclass: #OMovingPiecesState
 	poolDictionaries: ''
 	category: 'TerniLapilli-Exercise'!
 
-!OMovingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:20:58'!
-hasPlayerOWon
-
-	^false! !
-
-!OMovingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:20:58'!
-hasPlayerXWon
-
-	^false! !
-
 !OMovingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:24:12'!
 moveOFrom: aPosition to: aNewPosition
 
@@ -1117,6 +1023,17 @@ putXAt: aPosition
 
 	self error: TerniLapilli notTheTurnOfPlayerErrorMessage ! !
 
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'OMovingPiecesState class' category: #'TerniLapilli-Exercise'!
+OMovingPiecesState class
+	instanceVariableNames: ''!
+
+!OMovingPiecesState class methodsFor: 'state detection' stamp: 'DH 10/17/2019 00:01:32'!
+canHandle: aTerniLapilliGame
+
+	^aTerniLapilliGame isPlayingO and: aTerniLapilliGame playerOHasPutThreePieces! !
+
 
 !classDefinition: #OPuttingPiecesState category: #'TerniLapilli-Exercise'!
 TerniLapilliState subclass: #OPuttingPiecesState
@@ -1124,16 +1041,6 @@ TerniLapilliState subclass: #OPuttingPiecesState
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TerniLapilli-Exercise'!
-
-!OPuttingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:15:37'!
-hasPlayerOWon
-
-	^false! !
-
-!OPuttingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:15:32'!
-hasPlayerXWon
-
-	^false! !
 
 !OPuttingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:19:29'!
 moveOFrom: aPosition to: aNewPosition
@@ -1155,6 +1062,17 @@ putXAt: aPosition
 
 	self error: TerniLapilli notTheTurnOfPlayerErrorMessage! !
 
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'OPuttingPiecesState class' category: #'TerniLapilli-Exercise'!
+OPuttingPiecesState class
+	instanceVariableNames: ''!
+
+!OPuttingPiecesState class methodsFor: 'state detection' stamp: 'DH 10/17/2019 00:02:26'!
+canHandle: aTerniLapilliGame
+
+	^aTerniLapilliGame isPlayingO and: aTerniLapilliGame playerOHasPutThreePieces not! !
+
 
 !classDefinition: #OWonState category: #'TerniLapilli-Exercise'!
 TerniLapilliState subclass: #OWonState
@@ -1162,16 +1080,6 @@ TerniLapilliState subclass: #OWonState
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TerniLapilli-Exercise'!
-
-!OWonState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:28:08'!
-hasPlayerOWon
-
-	^true! !
-
-!OWonState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:28:13'!
-hasPlayerXWon
-
-	^false! !
 
 !OWonState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:28:02'!
 moveOFrom: aPosition to: aNewPosition
@@ -1193,6 +1101,17 @@ putXAt: aPosition
 
 	self error: TerniLapilli gameIsOverErrorMessage ! !
 
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'OWonState class' category: #'TerniLapilli-Exercise'!
+OWonState class
+	instanceVariableNames: ''!
+
+!OWonState class methodsFor: 'state detection' stamp: 'DH 10/17/2019 00:02:51'!
+canHandle: aTerniLapilliGame
+
+	^aTerniLapilliGame hasPlayerOWon! !
+
 
 !classDefinition: #XMovingPiecesState category: #'TerniLapilli-Exercise'!
 TerniLapilliState subclass: #XMovingPiecesState
@@ -1200,16 +1119,6 @@ TerniLapilliState subclass: #XMovingPiecesState
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TerniLapilli-Exercise'!
-
-!XMovingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:24:35'!
-hasPlayerOWon
-
-	^false! !
-
-!XMovingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:24:35'!
-hasPlayerXWon
-
-	^false! !
 
 !XMovingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:26:26'!
 moveOFrom: aPosition to: aNewPosition
@@ -1231,6 +1140,17 @@ putXAt: aPosition
 
 	self error: TerniLapilli noPiecesLeftErrorMessage! !
 
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'XMovingPiecesState class' category: #'TerniLapilli-Exercise'!
+XMovingPiecesState class
+	instanceVariableNames: ''!
+
+!XMovingPiecesState class methodsFor: 'state detection' stamp: 'DH 10/17/2019 00:03:33'!
+canHandle: aTerniLapilliGame
+
+	^aTerniLapilliGame isPlayingX and: aTerniLapilliGame playerXHasPutThreePieces! !
+
 
 !classDefinition: #XPuttingPiecesState category: #'TerniLapilli-Exercise'!
 TerniLapilliState subclass: #XPuttingPiecesState
@@ -1238,16 +1158,6 @@ TerniLapilliState subclass: #XPuttingPiecesState
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TerniLapilli-Exercise'!
-
-!XPuttingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:10:14'!
-hasPlayerOWon
-
-	^false! !
-
-!XPuttingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:10:20'!
-hasPlayerXWon
-
-	^false! !
 
 !XPuttingPiecesState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:18:42'!
 moveOFrom: aPosition to: aNewPosition
@@ -1269,6 +1179,17 @@ putXAt: aPosition
 
 	terniLapilliGame putXAtWhenXPuttingPieces: aPosition! !
 
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'XPuttingPiecesState class' category: #'TerniLapilli-Exercise'!
+XPuttingPiecesState class
+	instanceVariableNames: ''!
+
+!XPuttingPiecesState class methodsFor: 'state detection' stamp: 'DH 10/17/2019 00:03:52'!
+canHandle: aTerniLapilliGame
+
+	^aTerniLapilliGame isPlayingX and: aTerniLapilliGame playerXHasPutThreePieces not! !
+
 
 !classDefinition: #XWonState category: #'TerniLapilli-Exercise'!
 TerniLapilliState subclass: #XWonState
@@ -1276,16 +1197,6 @@ TerniLapilliState subclass: #XWonState
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TerniLapilli-Exercise'!
-
-!XWonState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:27:11'!
-hasPlayerOWon
-
-	^false! !
-
-!XWonState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:27:24'!
-hasPlayerXWon
-
-	^true! !
 
 !XWonState methodsFor: 'game operations' stamp: 'damian y mateo 10/16/2019 21:27:39'!
 moveOFrom: aPosition to: aNewPosition
@@ -1306,3 +1217,14 @@ putOAt: aPosition
 putXAt: aPosition
 
 	self error: TerniLapilli gameIsOverErrorMessage ! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'XWonState class' category: #'TerniLapilli-Exercise'!
+XWonState class
+	instanceVariableNames: ''!
+
+!XWonState class methodsFor: 'state detection' stamp: 'DH 10/17/2019 00:03:11'!
+canHandle: aTerniLapilliGame
+
+	^aTerniLapilliGame hasPlayerXWon! !
