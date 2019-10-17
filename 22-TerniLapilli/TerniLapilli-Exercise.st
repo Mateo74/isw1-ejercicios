@@ -544,45 +544,145 @@ test32PieceMovedByOIsAtTheRightPlace
 	self assert: (terniLapilli OAt: 2@2).
 	self deny: (terniLapilli OAt: 1@2).! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:37:52'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 09:39:52'!
 test33MovingAnXThatAlignsThreeXVerticallyMakesPlayerXWin
 
-	"Falto implementar"! !
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 2@2.
+	terniLapilli putXAt: 1@1.
+	terniLapilli putOAt: 2@0.
+	terniLapilli putXAt: 0@2.
+	terniLapilli putOAt: 1@0.
+	terniLapilli moveXFrom: 1@1 to: 0@1.
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:08'!
+
+	self assert: terniLapilli hasPlayerXWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 09:47:40'!
 test34MovingAnXThatAlignsThreeXHorizontallyMakesPlayerXWin
 
-	"Falto implementar"! !
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 0@1.
+	terniLapilli putOAt: 2@2.
+	terniLapilli putXAt: 1@1.
+	terniLapilli putOAt: 0@0.
+	terniLapilli putXAt: 2@0.
+	terniLapilli putOAt: 1@0.
+	terniLapilli moveXFrom: 2@0 to: 2@1.
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:15'!
+
+	self assert: terniLapilli hasPlayerXWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 09:51:16'!
 test35MovingAnXThatAlignsThreeXDiagonallyIncreasingMakesPlayerXWin
 
-	"Falto implementar"! !
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 2@2.
+	terniLapilli putOAt: 1@0.
+	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 0@1.
+	terniLapilli putXAt: 2@0.
+	terniLapilli putOAt: 1@2.
+	terniLapilli moveXFrom: 2@0 to: 1@1.
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:23'!
+
+	self assert: terniLapilli hasPlayerXWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 09:54:45'!
 test36MovingAnXThatAlignsThreeXDiagonallyDecreasingMakesPlayerXWin
 
-	"Falto implementar"! !
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 2@0.
+	terniLapilli putOAt: 2@1.
+	terniLapilli putXAt: 1@1.
+	terniLapilli putOAt: 2@2.
+	terniLapilli putXAt: 1@2.
+	terniLapilli putOAt: 1@0.
+	terniLapilli moveXFrom: 1@2 to: 0@2.
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:34'!
+
+	self assert: terniLapilli hasPlayerXWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 09:59:08'!
 test37MovingAnOThatAlignsThreeOVerticallyMakesPlayerOWin
 
-	"Falto implementar"! !
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 2@2.
+	terniLapilli putXAt: 1@1.
+	terniLapilli putOAt: 1@0.
+	terniLapilli putXAt: 0@2.
+	terniLapilli putOAt: 2@1.
+	terniLapilli moveXFrom: 1@1 to: 1@2.
+	terniLapilli moveOFrom: 1@0 to: 2@0.
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:43'!
+
+	self assert: terniLapilli hasPlayerOWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 10:00:16'!
 test38MovingAnOThatAlignsThreeOHorizontallyMakesPlayerOWin
 
-	"Falto implementar"! !
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 2@2.
+	terniLapilli putXAt: 1@1.
+	terniLapilli putOAt: 0@1.
+	terniLapilli putXAt: 2@0.
+	terniLapilli putOAt: 1@2.
+	terniLapilli moveXFrom: 1@1 to: 2@1.
+	terniLapilli moveOFrom: 0@1 to: 0@2.
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:38:53'!
+
+	self assert: terniLapilli hasPlayerOWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 10:03:32'!
 test39MovingAnOThatAlignsThreeODiagonallyIncreasingMakesPlayerOWin
 
-	"Falto implementar"! !
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 2@2.
+	terniLapilli putXAt: 0@2.
+	terniLapilli putOAt: 1@1.
+	terniLapilli putXAt: 2@1.
+	terniLapilli putOAt: 1@0.
+	terniLapilli moveXFrom: 0@0 to: 0@1.
+	terniLapilli moveOFrom: 1@0 to: 0@0.
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'DH 10/17/2019 00:39:04'!
+
+	self assert: terniLapilli hasPlayerOWon.! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 10:06:49'!
 test40MovingAnOThatAlignsThreeODiagonallyDecreasingMakesPlayerOWin
+	
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 0@1.
+	terniLapilli putOAt: 0@2.
+	terniLapilli putXAt: 1@1.
+	terniLapilli putOAt: 2@1.
+	terniLapilli putXAt: 1@2.
+	terniLapilli putOAt: 2@0.
+	terniLapilli moveXFrom: 1@1 to: 0@0.
+	terniLapilli moveOFrom: 2@1 to: 1@1.
 
-	"Falto implementar"! !
+
+	self assert: terniLapilli hasPlayerOWon.! !
 
 !TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/16/2019 19:49:33'!
 test41CannotMoveAnXWhenGameIsOver
@@ -612,6 +712,46 @@ test42CannotMoveAnOWhenGameIsOver
 	withExceptionDo: [:anError |
 		self assert: TerniLapilli gameIsOverErrorMessage equals: anError messageText.
 		self deny: (terniLapilli OAt: 2@1).
+	]! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 10:23:53'!
+test43CannotMoveThroughInvalidDiagonal
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 0@1.
+	terniLapilli putXAt: 0@2.
+	terniLapilli putOAt: 1@1.
+	terniLapilli putXAt: 1@0.
+	terniLapilli putOAt: 1@2.
+	
+	self should: [terniLapilli moveXFrom: 1@0 to: 2@1.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: TerniLapilli invalidPieceMovementErrorMessage equals: anError messageText.
+		self deny: (terniLapilli XAt: 0@-1).
+	]! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'mm 10/17/2019 10:25:05'!
+test44CannotMoveADistanceGreaterThanOne
+
+	|terniLapilli|
+	terniLapilli := TerniLapilli new.
+	
+	terniLapilli putXAt: 0@0.
+	terniLapilli putOAt: 0@1.
+	terniLapilli putXAt: 0@2.
+	terniLapilli putOAt: 1@1.
+	terniLapilli putXAt: 1@2.
+	terniLapilli putOAt: 2@2.
+	
+	self should: [terniLapilli moveXFrom: 0@0 to: 2@0.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: TerniLapilli invalidPieceMovementErrorMessage equals: anError messageText.
+		self deny: (terniLapilli XAt: 0@-1).
 	]! !
 
 
@@ -872,13 +1012,17 @@ onAnyErrorDo: aBlockToHandleError
 	].
 	aSetOfPositions add: aPosition.! !
 
-!TerniLapilliBoard methodsFor: 'private' stamp: 'DH 10/17/2019 00:41:59'!
+!TerniLapilliBoard methodsFor: 'private' stamp: 'mm 10/17/2019 09:44:47'!
 allowedToMoveFrom: aPosition to: aNewPosition
 
-	"Falta implementar. Hay que ver que aNewPosition este a la derecha, izquierda, arriba o abajo de aPosition,
-	o que aPosition sea 1@1 y aNewPosition no sea 1@1, o viceversa. No hace falta chequear que aNewPosition
-	esté dentro del tablero, si pasa eso va a saltar despues."
-	^true! !
+	"La única forma en que un movimiento en diagonal es legal es si empieza en el centro o termina en el centro. Si no, solo se puede mover
+	vericalmene una posición hacia arriba o abajo, u horizontalmente una posición a derecha o izquierda."
+	^((aPosition = aNewPosition) not and: (aPosition = (1@1) or: aNewPosition = (1@1))) or: 
+			(
+			aPosition +  (1@0) = aNewPosition  or: 
+			aPosition +  (0@1) = aNewPosition  or:											 
+			aPosition + (-1@0) = aNewPosition or:										
+			aPosition + (0@-1) = aNewPosition )! !
 
 !TerniLapilliBoard methodsFor: 'private' stamp: 'damian y mateo 10/16/2019 21:37:08'!
 hasThreeAligned: aSetOfPositions
