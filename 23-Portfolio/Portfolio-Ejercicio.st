@@ -204,18 +204,18 @@ test13CannotAddAccountThatAlreadyExistsIndirectly
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:36'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/21/2019 15:47:44'!
 test14CannotAddPortfolioThatAlreadyExistsIndirectly
 
-	|portfolio portfolio2 portfolio3|
-	portfolio _ Portfolio new.
+	|portfolio1 portfolio2 portfolio3|
+	portfolio1 _ Portfolio new.
 	portfolio2 _ Portfolio new.
 	portfolio3 _ Portfolio new.
 	
 	portfolio2 add: portfolio3.
-	portfolio add: portfolio2.
+	portfolio1 add: portfolio2.
 	
-	self should: [portfolio add: portfolio3.]
+	self should: [portfolio1 add: portfolio3.]
 	raise: Error - MessageNotUnderstood 
 	withExceptionDo: [:anError | 
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
@@ -269,6 +269,63 @@ test17CannotAddPortfolioThatHasExistingAccount
 	portfolio2 add: account.
 	
 	self should: [portfolio add: portfolio2.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
+		].		! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/21/2019 15:31:28'!
+test18CannotAddPortfolioWithExistingAccountTwoLevelsDown
+
+	|portfolio portfolio2 portfolio3 account|
+	portfolio _ Portfolio new.
+	portfolio2 _ Portfolio new.
+	portfolio3 _ Portfolio new.
+	account _ ReceptiveAccount new.
+	
+	portfolio add: account.
+	portfolio2 add: portfolio3.
+	portfolio3 add: account.
+	
+	self should: [portfolio add: portfolio2.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
+		].		! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/21/2019 15:54:24'!
+test19PortfolioCannotAddItself
+
+	|portfolio|
+	portfolio _ Portfolio new.
+
+	self should: [portfolio add: portfolio.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
+		].		! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/21/2019 15:46:20'!
+test20ItemsCanBeRepeatedButNotJoined
+
+	|portfolio1 portfolio2 portfolio3 account|
+	portfolio1 _ Portfolio new.
+	portfolio2 _ Portfolio new.
+	
+	portfolio3 _ Portfolio new.
+	
+	
+	account _ ReceptiveAccount new.
+
+	
+	portfolio1 add: account.
+	
+	portfolio3 add: account.
+	
+	portfolio1 add: portfolio2.
+	
+	portfolio3 add: portfolio2.	
+	self should: [portfolio2 add: account.]
 	raise: Error - MessageNotUnderstood 
 	withExceptionDo: [:anError | 
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
@@ -535,11 +592,9 @@ anyParentHas: anItem
 	parentList ifEmpty: [^ self hasIndirectly: anItem].
 	^self someElementIn: parentList satisfies: [:aPortfolio | aPortfolio anyParentHas: anItem]! !
 
-!Portfolio methodsFor: 'private' stamp: 'mm 10/20/2019 19:03:52'!
+!Portfolio methodsFor: 'private' stamp: 'mm 10/21/2019 15:51:33'!
 canAdd: anItem
-
-	"(self hasIndirectly: anItem) ifTrue: [self error: self class ItemAlreadyExistsErrorMessage]."
-	^ (self anyParentHas: anItem) not and: (anItem children allSatisfy: [:item | (self anyParentHas: item) not]).! !
+	^ (self = anItem) not and: (self anyParentHas: anItem) not and: (anItem children allSatisfy: [:item | (self canAdd: item)]).! !
 
 !Portfolio methodsFor: 'private' stamp: 'mm 10/20/2019 19:01:34'!
 children
