@@ -14,29 +14,25 @@ test01NewPortfolioHasZeroBalance
 	self assert: 0 equals: portfolio balance.
 	! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'damian y mateo 10/17/2019 19:16:36'!
-test02NewPortfolioHasNoTransactions
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:28:26'!
+test02PortfolioAddsAccountsAndRecognizesAddedAccounts
 
-	|portfolio|
+	|portfolio account1 account2 account3|
 	portfolio _ Portfolio new.
+	account1 _ ReceptiveAccount new.	account2 _ ReceptiveAccount new.	account3 _ ReceptiveAccount new.
 	
-	self assert: 0 equals: portfolio transactions size.
-	! !
+	self add: account1 and: account2 to: portfolio andAssertInclusionButExclusionOf: account3.! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
-test03PortfolioAddsAccountAndHasZeroBalance
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:28:29'!
+test03PortfolioAddsPortfoliosAndRecognizesAddedPortfolios
 
-	|portfolio account|
+	|portfolio portfolio1 portfolio2 portfolio3|
 	portfolio _ Portfolio new.
-	account _ ReceptiveAccount new.
+	portfolio1 _ Portfolio new.	portfolio2 _ Portfolio new.	portfolio3 _ Portfolio new.
 	
-	portfolio add: account.
-	
-	self assert: (portfolio has: account).
-	self assert: 0 equals: portfolio balance.
-	! !
+	self add: portfolio1 and: portfolio2 to: portfolio andAssertInclusionButExclusionOf: portfolio3.! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:28:32'!
 test04PortfolioWithOneAccountHasBalanceEqualToAccountBalance
 
 	|portfolio account|
@@ -51,7 +47,7 @@ test04PortfolioWithOneAccountHasBalanceEqualToAccountBalance
 	self assert: account balance equals: portfolio balance.
 	! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:28:35'!
 test05PortfolioWithSeveralAccountsHasBalanceEqualToSumOfBalances
 
 	|portfolio account1 account2 account3| 
@@ -70,7 +66,7 @@ test05PortfolioWithSeveralAccountsHasBalanceEqualToSumOfBalances
 	self assert: account1 balance + account2 balance + account3 balance equals: portfolio balance.
 	! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:28:38'!
 test06PortfolioWithAccountsAndPortfolioHasBalanceEqualToSumOfElements
 
 	|portfolio1 portfolio2 account1 account2 account3| 
@@ -93,8 +89,8 @@ test06PortfolioWithAccountsAndPortfolioHasBalanceEqualToSumOfElements
 	self assert: account1 balance + account2 balance + account3 balance equals: portfolio1 balance.
 	! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'damian y mateo 10/17/2019 20:15:01'!
-test07NewPortfolioHasNoTransactions
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:28:42'!
+test07NewPortfolioDoesNotRecognizeAnyTransaction
 
 	|portfolio transaction|
 	portfolio _ Portfolio new.
@@ -103,8 +99,8 @@ test07NewPortfolioHasNoTransactions
 	
 	self deny: (portfolio hasRegistered: transaction).! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
-test08hasRegisteredAccounts
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:28:51'!
+test08PortfolioRecognizesTransactionsFromDifferentAccounts
 
 	|portfolio1 portfolio2 account1 account2 account3 transaction1 transaction2 transaction3| 
 	
@@ -127,7 +123,7 @@ test08hasRegisteredAccounts
 	self assert: (portfolio1 hasRegistered: transaction2).
 	self assert: (portfolio1 hasRegistered: transaction3).! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'damian y mateo 10/17/2019 20:17:05'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:15'!
 test09NewPortfolioHasEmptyListOfTransactions
 
 	|portfolio|
@@ -136,10 +132,8 @@ test09NewPortfolioHasEmptyListOfTransactions
 	
 	self assert: portfolio transactions isEmpty.! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
-test10hasRegisteredAccounts
-
-"Después vemos"
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:23'!
+test10PortfolioShowsTransactionsFromDifferentAccounts
 
 	|portfolio1 portfolio2 account1 account2 account3 transaction1 transaction2 transaction3| 
 	
@@ -163,7 +157,7 @@ test10hasRegisteredAccounts
 	self assert: (portfolio1 transactions includes: transaction3).
 ! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:26'!
 test11CannotAddSameAccountTwice
 
 	|portfolio account|
@@ -178,7 +172,7 @@ test11CannotAddSameAccountTwice
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 17:13:19'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:29'!
 test12CannotAddSamePortfolioTwice
 
 	|portfolio portfolio2|
@@ -193,7 +187,7 @@ test12CannotAddSamePortfolioTwice
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:31'!
 test13CannotAddAccountThatAlreadyExistsIndirectly
 
 	|portfolio portfolio2 account|
@@ -210,7 +204,7 @@ test13CannotAddAccountThatAlreadyExistsIndirectly
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 17:32:33'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:36'!
 test14CannotAddPortfolioThatAlreadyExistsIndirectly
 
 	|portfolio portfolio2 portfolio3|
@@ -227,7 +221,7 @@ test14CannotAddPortfolioThatAlreadyExistsIndirectly
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:44'!
 test15CannotAddAccountThatAlreadyExistsInParentPortfolio
 
 	|portfolio portfolio2 account|
@@ -244,7 +238,7 @@ test15CannotAddAccountThatAlreadyExistsInParentPortfolio
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:48'!
 test16CannotAddAccountThatAlreadyExistsInGrandparentPortfolio
 
 	|portfolio portfolio2 portfolio3 account|
@@ -263,7 +257,7 @@ test16CannotAddAccountThatAlreadyExistsInGrandparentPortfolio
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'DH 10/21/2019 00:29:52'!
 test17CannotAddPortfolioThatHasExistingAccount
 
 	|portfolio portfolio2 account|
@@ -279,6 +273,17 @@ test17CannotAddPortfolioThatHasExistingAccount
 	withExceptionDo: [:anError | 
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
+
+
+!PortfolioTest methodsFor: 'utility' stamp: 'DH 10/21/2019 00:19:03'!
+add: aChildItem and: anotherChildItem to: aPortfolio andAssertInclusionButExclusionOf: aSeparateItem
+
+	aPortfolio add: aChildItem.
+	aPortfolio add: anotherChildItem.
+	
+	self assert: (aPortfolio has: aChildItem).
+	self assert: (aPortfolio has: anotherChildItem).
+	self deny: (aPortfolio has: aSeparateItem).! !
 
 
 !classDefinition: #ReceptiveAccountTest category: #'Portfolio-Ejercicio'!
