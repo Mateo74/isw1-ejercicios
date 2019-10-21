@@ -5,7 +5,7 @@ TestCase subclass: #PortfolioTest
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!PortfolioTest methodsFor: 'testing' stamp: 'damian y mateo 10/17/2019 19:15:07'!
+!PortfolioTest methodsFor: 'tests' stamp: 'damian y mateo 10/17/2019 19:15:07'!
 test01NewPortfolioHasZeroBalance
 
 	|portfolio|
@@ -14,7 +14,7 @@ test01NewPortfolioHasZeroBalance
 	self assert: 0 equals: portfolio balance.
 	! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'damian y mateo 10/17/2019 19:16:36'!
+!PortfolioTest methodsFor: 'tests' stamp: 'damian y mateo 10/17/2019 19:16:36'!
 test02NewPortfolioHasNoTransactions
 
 	|portfolio|
@@ -23,7 +23,7 @@ test02NewPortfolioHasNoTransactions
 	self assert: 0 equals: portfolio transactions size.
 	! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
 test03PortfolioAddsAccountAndHasZeroBalance
 
 	|portfolio account|
@@ -36,7 +36,7 @@ test03PortfolioAddsAccountAndHasZeroBalance
 	self assert: 0 equals: portfolio balance.
 	! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:55'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
 test04PortfolioWithOneAccountHasBalanceEqualToAccountBalance
 
 	|portfolio account|
@@ -51,7 +51,7 @@ test04PortfolioWithOneAccountHasBalanceEqualToAccountBalance
 	self assert: account balance equals: portfolio balance.
 	! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:55'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
 test05PortfolioWithSeveralAccountsHasBalanceEqualToSumOfBalances
 
 	|portfolio account1 account2 account3| 
@@ -70,7 +70,7 @@ test05PortfolioWithSeveralAccountsHasBalanceEqualToSumOfBalances
 	self assert: account1 balance + account2 balance + account3 balance equals: portfolio balance.
 	! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
 test06PortfolioWithAccountsAndPortfolioHasBalanceEqualToSumOfElements
 
 	|portfolio1 portfolio2 account1 account2 account3| 
@@ -93,7 +93,7 @@ test06PortfolioWithAccountsAndPortfolioHasBalanceEqualToSumOfElements
 	self assert: account1 balance + account2 balance + account3 balance equals: portfolio1 balance.
 	! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'damian y mateo 10/17/2019 20:15:01'!
+!PortfolioTest methodsFor: 'tests' stamp: 'damian y mateo 10/17/2019 20:15:01'!
 test07NewPortfolioHasNoTransactions
 
 	|portfolio transaction|
@@ -103,7 +103,7 @@ test07NewPortfolioHasNoTransactions
 	
 	self deny: (portfolio hasRegistered: transaction).! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
 test08hasRegisteredAccounts
 
 	|portfolio1 portfolio2 account1 account2 account3 transaction1 transaction2 transaction3| 
@@ -127,7 +127,7 @@ test08hasRegisteredAccounts
 	self assert: (portfolio1 hasRegistered: transaction2).
 	self assert: (portfolio1 hasRegistered: transaction3).! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'damian y mateo 10/17/2019 20:17:05'!
+!PortfolioTest methodsFor: 'tests' stamp: 'damian y mateo 10/17/2019 20:17:05'!
 test09NewPortfolioHasEmptyListOfTransactions
 
 	|portfolio|
@@ -136,7 +136,7 @@ test09NewPortfolioHasEmptyListOfTransactions
 	
 	self assert: portfolio transactions isEmpty.! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:55'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
 test10hasRegisteredAccounts
 
 "Después vemos"
@@ -163,7 +163,7 @@ test10hasRegisteredAccounts
 	self assert: (portfolio1 transactions includes: transaction3).
 ! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:55'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
 test11CannotAddSameAccountTwice
 
 	|portfolio account|
@@ -178,7 +178,7 @@ test11CannotAddSameAccountTwice
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 17:13:19'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 17:13:19'!
 test12CannotAddSamePortfolioTwice
 
 	|portfolio portfolio2|
@@ -193,7 +193,7 @@ test12CannotAddSamePortfolioTwice
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
 test13CannotAddAccountThatAlreadyExistsIndirectly
 
 	|portfolio portfolio2 account|
@@ -210,7 +210,7 @@ test13CannotAddAccountThatAlreadyExistsIndirectly
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 17:32:33'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 17:32:33'!
 test14CannotAddPortfolioThatAlreadyExistsIndirectly
 
 	|portfolio portfolio2 portfolio3|
@@ -227,7 +227,7 @@ test14CannotAddPortfolioThatAlreadyExistsIndirectly
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
 test15CannotAddAccountThatAlreadyExistsInParentPortfolio
 
 	|portfolio portfolio2 account|
@@ -244,7 +244,7 @@ test15CannotAddAccountThatAlreadyExistsInParentPortfolio
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:55'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:55'!
 test16CannotAddAccountThatAlreadyExistsInGrandparentPortfolio
 
 	|portfolio portfolio2 portfolio3 account|
@@ -263,7 +263,7 @@ test16CannotAddAccountThatAlreadyExistsInGrandparentPortfolio
 		self assert: anError messageText equals: Portfolio ItemAlreadyExistsErrorMessage.
 		].		! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'mm 10/20/2019 19:22:54'!
+!PortfolioTest methodsFor: 'tests' stamp: 'mm 10/20/2019 19:22:54'!
 test17CannotAddPortfolioThatHasExistingAccount
 
 	|portfolio portfolio2 account|
@@ -483,20 +483,38 @@ Object subclass: #Item
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Item methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 17:34:58'!
-balance
+!Item methodsFor: 'initialization' stamp: 'DH 10/20/2019 23:35:04'!
+initialize
 
-	self subclassResponsibility ! !
+	^self subclassResponsibility ! !
 
-!Item methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 17:35:23'!
+
+!Item methodsFor: 'transactions' stamp: 'DH 10/20/2019 23:36:02'!
 hasRegistered: aTransaction
 
-	self subclassResponsibility ! !
+	^self subclassResponsibility ! !
 
-!Item methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 17:35:40'!
+!Item methodsFor: 'transactions' stamp: 'DH 10/20/2019 23:36:19'!
 transactions
 
-	self subclassResponsibility! !
+	^self subclassResponsibility ! !
+
+
+!Item methodsFor: 'balance' stamp: 'DH 10/20/2019 23:36:51'!
+balance
+
+	^self subclassResponsibility ! !
+
+
+!Item methodsFor: 'private' stamp: 'DH 10/20/2019 23:37:42'!
+children
+
+	^self subclassResponsibility ! !
+
+!Item methodsFor: 'private' stamp: 'DH 10/20/2019 23:37:53'!
+hasIndirectly: anItem
+
+	^self subclassResponsibility ! !
 
 
 !classDefinition: #Portfolio category: #'Portfolio-Ejercicio'!
@@ -506,11 +524,11 @@ Item subclass: #Portfolio
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Portfolio methodsFor: 'private' stamp: 'mm 10/20/2019 18:08:50'!
+!Portfolio methodsFor: 'private' stamp: 'DH 10/20/2019 23:45:58'!
 anyParentHas: anItem
 
 	parentList ifEmpty: [^ self hasIndirectly: anItem].
-	^ (parentList findFirst: [:aPortfolio | aPortfolio anyParentHas: anItem]) isZero not.! !
+	^self someElementIn: parentList satisfies: [:aPortfolio | aPortfolio anyParentHas: anItem]! !
 
 !Portfolio methodsFor: 'private' stamp: 'mm 10/20/2019 19:03:52'!
 canAdd: anItem
@@ -523,18 +541,49 @@ children
 	
 	^ elements copy! !
 
-!Portfolio methodsFor: 'private' stamp: 'mm 10/20/2019 17:25:33'!
+!Portfolio methodsFor: 'private' stamp: 'DH 10/20/2019 23:44:36'!
 hasIndirectly: anItem
-	
-	^ (self has: anItem) or: ((elements findFirst: [:item | item hasIndirectly: anItem]) isZero not)! !
+	^ (self has: anItem) or: (self someElementIn: elements satisfies: [:item | item hasIndirectly: anItem])! !
 
 !Portfolio methodsFor: 'private' stamp: 'mm 10/20/2019 17:52:58'!
 registerParent: aPortfolio
 
 	parentList add: aPortfolio.! !
 
+!Portfolio methodsFor: 'private' stamp: 'DH 10/20/2019 23:43:11'!
+someElementIn: aCollectionOfItems satisfies: aBlock
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 19:04:04'!
+	^(aCollectionOfItems findFirst: aBlock) isZero not! !
+
+
+!Portfolio methodsFor: 'transactions' stamp: 'damian y mateo 10/17/2019 19:59:21'!
+hasRegistered: aTransaction
+
+	^self transactions includes: aTransaction! !
+
+!Portfolio methodsFor: 'transactions' stamp: 'mm 10/20/2019 17:09:31'!
+transactions
+
+	|transactions|
+	transactions _ OrderedCollection new.
+	elements do: [:anItem| transactions addAll: anItem transactions].
+	^transactions! !
+
+
+!Portfolio methodsFor: 'balance' stamp: 'mm 10/20/2019 17:09:10'!
+balance
+
+	^ elements sum: [:anItem | anItem balance] ifEmpty: [0].! !
+
+
+!Portfolio methodsFor: 'initialization' stamp: 'mm 10/20/2019 17:52:37'!
+initialize
+
+	elements   _ OrderedCollection new.
+	parentList _ OrderedCollection new.! !
+
+
+!Portfolio methodsFor: 'content' stamp: 'mm 10/20/2019 19:04:04'!
 add: anItem
 
 	"(self hasIndirectly: anItem) ifTrue: [self error: self class ItemAlreadyExistsErrorMessage]."
@@ -542,34 +591,10 @@ add: anItem
 	anItem registerParent: self.
 	elements add: anItem.! !
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 17:09:10'!
-balance
-
-	^ elements sum: [:anItem | anItem balance] ifEmpty: [0].! !
-
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 17:09:15'!
+!Portfolio methodsFor: 'content' stamp: 'mm 10/20/2019 17:09:15'!
 has: anItem
 	
 	^ elements includes: anItem.! !
-
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/17/2019 19:59:21'!
-hasRegistered: aTransaction
-
-	^self transactions includes: aTransaction! !
-
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 17:52:37'!
-initialize
-
-	elements   _ OrderedCollection new.
-	parentList _ OrderedCollection new.! !
-
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 17:09:31'!
-transactions
-
-	|transactions|
-	transactions _ OrderedCollection new.
-	elements do: [:anItem| transactions addAll: anItem transactions].
-	^transactions! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -595,7 +620,46 @@ Item subclass: #ReceptiveAccount
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 15:44:41'!
+!ReceptiveAccount methodsFor: 'private' stamp: 'mm 10/20/2019 19:01:16'!
+children
+
+	^ OrderedCollection new.! !
+
+!ReceptiveAccount methodsFor: 'private' stamp: 'mm 10/20/2019 17:26:08'!
+hasIndirectly: anItem
+
+	^ false
+! !
+
+!ReceptiveAccount methodsFor: 'private' stamp: 'mm 10/20/2019 17:47:22'!
+registerParent: aPortfolio! !
+
+
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'mm 10/20/2019 15:45:00'!
+initialize
+
+	transactions := OrderedCollection new.! !
+
+
+!ReceptiveAccount methodsFor: 'transactions' stamp: 'mm 10/20/2019 15:44:24'!
+hasRegistered: aTransaction
+
+	^ transactions includes: aTransaction 
+! !
+
+!ReceptiveAccount methodsFor: 'transactions' stamp: 'mm 10/20/2019 15:45:18'!
+register: aTransaction
+
+	transactions add: aTransaction 
+! !
+
+!ReceptiveAccount methodsFor: 'transactions' stamp: 'mm 10/20/2019 15:45:29'!
+transactions 
+
+	^ transactions copy! !
+
+
+!ReceptiveAccount methodsFor: 'balance' stamp: 'mm 10/20/2019 15:44:41'!
 balance
 
 	"^transactions sum: [ :aTransaction | aTransaction value ] ifEmpty: [ 0 ]"
@@ -603,39 +667,3 @@ balance
 	balance _ 0.
 	transactions do: [:transaction | balance _ transaction updateBalance: balance].
 	^balance! !
-
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 19:01:16'!
-children
-
-	^ OrderedCollection new.! !
-
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 17:26:08'!
-hasIndirectly: anItem
-
-	^ false
-! !
-
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 15:44:24'!
-hasRegistered: aTransaction
-
-	^ transactions includes: aTransaction 
-! !
-
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 15:45:00'!
-initialize
-
-	transactions := OrderedCollection new.! !
-
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 15:45:18'!
-register: aTransaction
-
-	transactions add: aTransaction 
-! !
-
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 17:47:22'!
-registerParent: aPortfolio! !
-
-!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'mm 10/20/2019 15:45:29'!
-transactions 
-
-	^ transactions copy! !
