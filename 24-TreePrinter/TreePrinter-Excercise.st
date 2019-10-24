@@ -312,29 +312,29 @@ TestCase subclass: #ReportTest
 	poolDictionaries: ''
 	category: 'TreePrinter-Excercise'!
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/21/2019 20:44:54'!
+!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:02:50'!
 test01AccountSummaryForEmptyAccountIsEmpty
 
 	|account|
 	account _ ReceptiveAccount new.
-	self assert: (AccountSummary for: account) asString isEmpty.! !
+	self assert: (self accountSummaryOf: account) isEmpty.! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/21/2019 20:46:00'!
+!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:03:21'!
 test02AccountSummaryForEmptyPortfolioIsEmpty
 
 	|portfolio|
 	portfolio _ Portfolio new.
-	self assert: (AccountSummary for: portfolio) asString isEmpty.! !
+	self assert: (self accountSummaryOf: portfolio) isEmpty.! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/21/2019 20:58:30'!
+!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:04:13'!
 test03AccountSummaryForAccountWithOneTransactionShowsTheTransaction
 
 	|account|
 	account _ ReceptiveAccount new.
 	Deposit register: 68 on: account.  
-	self assert: 'Depósito por 68. Balance = 68' equals: (AccountSummary for: account) asString.! !
+	self assert: 'Depósito por 68. Balance = 68' equals: (self accountSummaryOf: account).! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/21/2019 21:02:13'!
+!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:05:48'!
 test04AccountSummaryForAccountWithManyTransactionsShowsTheTransactions
 
 	|account|
@@ -344,9 +344,9 @@ test04AccountSummaryForAccountWithManyTransactionsShowsTheTransactions
 	Transfer from: account to: ReceptiveAccount new for: 20.
 	Transfer from: ReceptiveAccount new to: account for: 30. 
 	self assert: 'Depósito por 100. Extracción por 50. Salida por transferencia de 20. Entrada por transferencia de 30. Balance = 60'
-	equals: (AccountSummary for: account) asString.! !
+	equals: (self accountSummaryOf: account).! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/21/2019 21:05:02'!
+!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:06:24'!
 test05AccountSummaryForPortfolioWithOneAccountIsAccountSummaryOfAccount
 
 	|portfolio account|
@@ -357,9 +357,9 @@ test05AccountSummaryForPortfolioWithOneAccountIsAccountSummaryOfAccount
 	Withdraw register: 50 on: account.
 
 	self assert: 'Depósito por 100. Extracción por 50. Balance = 50'
-	equals: (AccountSummary for: portfolio) asString.! !
+	equals: (self accountSummaryOf: portfolio).! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/21/2019 21:10:34'!
+!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:07:02'!
 test06AccountSummaryForPortfolioWithManyAccountsIsUnionOfSummariesOfAccounts
 
 	|portfolio account1 account2|
@@ -375,9 +375,9 @@ test06AccountSummaryForPortfolioWithManyAccountsIsUnionOfSummariesOfAccounts
 	Withdraw register: 50 on: account1.
 	
 	self assert: 'Depósito por 100. Extracción por 50. Balance = 50. Extracción por 30. Balance = -30'
-	equals: (AccountSummary for: portfolio) asString.! !
+	equals: (self accountSummaryOf: portfolio).! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/21/2019 21:11:47'!
+!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:07:18'!
 test07AccountSummaryForPortfolioWithAccountsAndPortfoliosIsUnionOfSummariesOfAccounts
 
 	|portfolio1  portfolio2 account1 account2|
@@ -395,7 +395,13 @@ test07AccountSummaryForPortfolioWithAccountsAndPortfoliosIsUnionOfSummariesOfAcc
 	Withdraw register: 50 on: account1.
 	
 	self assert: 'Depósito por 100. Extracción por 50. Balance = 50. Extracción por 30. Balance = -30'
-	equals: (AccountSummary for: portfolio1) asString.! !
+	equals: (self accountSummaryOf: portfolio1).! !
+
+
+!ReportTest methodsFor: 'reports' stamp: 'damian y mateo 10/24/2019 19:02:13'!
+accountSummaryOf: anAccount
+
+	^(AccountSummary for: anAccount) asString! !
 
 
 !classDefinition: #TransferTest category: #'TreePrinter-Excercise'!
@@ -418,8 +424,8 @@ test01TransferAffectsBalanceOfAccounts
 	self assert: -100 equals: account1 balance.
 	self assert:  100 equals: account2 balance.! !
 
-!TransferTest methodsFor: 'tests' stamp: 'damian y mateo 10/21/2019 19:37:35'!
-test02valueOfTransferIsCorrect
+!TransferTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:01:00'!
+test02ValueOfTransferIsCorrect
 	
 	|account1 account2 transfer|
 	
@@ -876,10 +882,32 @@ fromTransfer: aTransfer
 
 !classDefinition: #Report category: #'TreePrinter-Excercise'!
 Object subclass: #Report
-	instanceVariableNames: ''
+	instanceVariableNames: 'account'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TreePrinter-Excercise'!
+
+!Report methodsFor: 'initialization' stamp: 'damian y mateo 10/24/2019 19:10:05'!
+initializeFor: anAccount
+
+	account _ anAccount! !
+
+
+!Report methodsFor: 'value' stamp: 'damian y mateo 10/24/2019 19:11:04'!
+asString
+
+	^''! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Report class' category: #'TreePrinter-Excercise'!
+Report class
+	instanceVariableNames: ''!
+
+!Report class methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/24/2019 19:08:36'!
+for: anAccount
+
+	^self new initializeFor: anAccount! !
 
 
 !classDefinition: #AccountSummary category: #'TreePrinter-Excercise'!
@@ -888,17 +916,6 @@ Report subclass: #AccountSummary
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TreePrinter-Excercise'!
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'AccountSummary class' category: #'TreePrinter-Excercise'!
-AccountSummary class
-	instanceVariableNames: ''!
-
-!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/21/2019 21:13:49'!
-for: anAccount
-
-	^''! !
 
 
 !classDefinition: #Transfer category: #'TreePrinter-Excercise'!
