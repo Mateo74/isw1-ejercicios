@@ -1,0 +1,4 @@
+- Colaboradores internos de transfer, deposit y withdraw
+- Codigo repetido en deposit y withdraw.
+- Se pueden modificar las clases para crear un reporte (no la jerarquía)?
+- Se deben poder instanciar reportes?
