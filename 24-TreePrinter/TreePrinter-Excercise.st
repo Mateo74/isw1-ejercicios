@@ -783,17 +783,25 @@ AccountTransaction subclass: #DepositByTransfer
 	poolDictionaries: ''
 	category: 'TreePrinter-Excercise'!
 
-!DepositByTransfer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/21/2019 20:22:23'!
-affectBalance: aBalance
-
-	^aBalance + transfer value! !
-
-!DepositByTransfer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/21/2019 20:18:57'!
+!DepositByTransfer methodsFor: 'initialization' stamp: 'damian y mateo 10/21/2019 20:18:57'!
 initializeWith: aTransfer
 
 	transfer _ aTransfer! !
 
-!DepositByTransfer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/21/2019 20:20:03'!
+
+!DepositByTransfer methodsFor: 'balance' stamp: 'damian y mateo 10/21/2019 20:22:23'!
+affectBalance: aBalance
+
+	^aBalance + transfer value! !
+
+
+!DepositByTransfer methodsFor: 'value' stamp: 'DH 10/26/2019 11:09:51'!
+value
+
+	^transfer value! !
+
+
+!DepositByTransfer methodsFor: 'transfer' stamp: 'damian y mateo 10/21/2019 20:20:03'!
 transfer
 
 	^transfer! !
@@ -853,17 +861,25 @@ AccountTransaction subclass: #WithdrawByTransfer
 	poolDictionaries: ''
 	category: 'TreePrinter-Excercise'!
 
-!WithdrawByTransfer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/21/2019 20:22:42'!
+!WithdrawByTransfer methodsFor: 'balance' stamp: 'damian y mateo 10/21/2019 20:22:42'!
 affectBalance: aBalance
 
 	^aBalance - transfer value! !
 
-!WithdrawByTransfer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/21/2019 20:19:29'!
+
+!WithdrawByTransfer methodsFor: 'value' stamp: 'DH 10/26/2019 11:11:13'!
+value
+
+	^transfer value! !
+
+
+!WithdrawByTransfer methodsFor: 'initialization' stamp: 'damian y mateo 10/21/2019 20:19:29'!
 initializeWith: aTransfer
 
 	transfer _ aTransfer! !
 
-!WithdrawByTransfer methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/21/2019 20:20:15'!
+
+!WithdrawByTransfer methodsFor: 'transfer' stamp: 'damian y mateo 10/21/2019 20:20:15'!
 transfer
 
 	^transfer! !
