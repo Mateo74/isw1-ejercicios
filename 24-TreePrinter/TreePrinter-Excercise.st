@@ -326,7 +326,7 @@ test02AccountSummaryForEmptyPortfolioIsEmpty
 	portfolio _ Portfolio new.
 	self assert: (self accountSummaryOf: portfolio) isEmpty.! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:04:13'!
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/26/2019 17:57:13'!
 test03AccountSummaryForAccountWithOneTransactionShowsTheTransaction
 
 	|account|
@@ -398,7 +398,7 @@ test07AccountSummaryForPortfolioWithAccountsAndPortfoliosIsUnionOfSummariesOfAcc
 	equals: (self accountSummaryOf: portfolio1).! !
 
 
-!ReportTest methodsFor: 'reports' stamp: 'damian y mateo 10/24/2019 19:02:13'!
+!ReportTest methodsFor: 'reports' stamp: 'DH 10/26/2019 17:51:40'!
 accountSummaryOf: anAccount
 
 	^(AccountSummary for: anAccount) asString! !
@@ -508,6 +508,12 @@ transactions
 addedTo: aPortfolio
 
 	self subclassResponsibility ! !
+
+
+!Account methodsFor: 'report' stamp: 'DH 10/26/2019 14:29:09'!
+accept: aReport
+	
+	^self subclassResponsibility ! !
 
 
 !classDefinition: #Portfolio category: #'TreePrinter-Excercise'!
@@ -621,6 +627,17 @@ signalCanNotAddAccount
 	
 	self error: self class canNotAddAccountErrorMessage! !
 
+
+!Portfolio methodsFor: 'report' stamp: 'DH 10/26/2019 17:52:19'!
+accept: aReport
+
+	aReport visitPortfolio: self! !
+
+!Portfolio methodsFor: 'report' stamp: 'DH 10/26/2019 14:34:00'!
+childrenAccept: aReport
+
+	accounts do: [:account | account accept: aReport.]! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Portfolio class' category: #'TreePrinter-Excercise'!
@@ -704,6 +721,17 @@ addedTo: aPortfolio
 	
 	! !
 
+
+!ReceptiveAccount methodsFor: 'report' stamp: 'DH 10/26/2019 17:52:10'!
+accept: aReport
+
+	aReport visitReceptiveAccount: self! !
+
+!ReceptiveAccount methodsFor: 'report' stamp: 'DH 10/26/2019 14:36:43'!
+transactionsAccept: aReport
+
+	transactions do: [:transaction | transaction accept: aReport.]! !
+
 
 !classDefinition: #AccountTransaction category: #'TreePrinter-Excercise'!
 Object subclass: #AccountTransaction
@@ -722,6 +750,12 @@ value
 affectBalance: aBalance
 
 	self subclassResponsibility ! !
+
+
+!AccountTransaction methodsFor: 'report' stamp: 'DH 10/26/2019 14:38:12'!
+accept: aReport
+
+	^self subclassResponsibility! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -763,6 +797,12 @@ value
 affectBalance: aBalance
 
 	^aBalance + value ! !
+
+
+!Deposit methodsFor: 'report' stamp: 'DH 10/26/2019 17:54:42'!
+accept: aReport
+
+	aReport visitDepositTransaction: self! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -806,6 +846,12 @@ transfer
 
 	^transfer! !
 
+
+!DepositByTransfer methodsFor: 'report' stamp: 'DH 10/26/2019 17:54:50'!
+accept: aReport
+
+	aReport visitDepositByTransferTransaction: self! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'DepositByTransfer class' category: #'TreePrinter-Excercise'!
@@ -841,6 +887,12 @@ value
 affectBalance: aBalance
 
 	^aBalance - value! !
+
+
+!Withdraw methodsFor: 'report' stamp: 'DH 10/26/2019 17:54:57'!
+accept: aReport
+
+	aReport visitWithdrawTransaction: self! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -884,6 +936,12 @@ transfer
 
 	^transfer! !
 
+
+!WithdrawByTransfer methodsFor: 'report' stamp: 'DH 10/26/2019 17:55:02'!
+accept: aReport
+
+	aReport visitWithdrawByTransferTransaction: self! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'WithdrawByTransfer class' category: #'TreePrinter-Excercise'!
@@ -909,10 +967,41 @@ initializeFor: anAccount
 	account _ anAccount! !
 
 
-!Report methodsFor: 'value' stamp: 'damian y mateo 10/24/2019 19:11:04'!
+!Report methodsFor: 'value' stamp: 'DH 10/26/2019 17:49:16'!
 asString
 
-	^''! !
+	^self subclassResponsibility ! !
+
+
+!Report methodsFor: 'visit' stamp: 'DH 10/26/2019 15:13:05'!
+visitDepositByTransferTransaction: aDepositByTransfer
+
+	^self subclassResponsibility! !
+
+!Report methodsFor: 'visit' stamp: 'DH 10/26/2019 15:04:43'!
+visitDepositTransaction: aDeposit
+
+	^self subclassResponsibility! !
+
+!Report methodsFor: 'visit' stamp: 'DH 10/26/2019 15:04:04'!
+visitPortfolio: aPortfolio
+
+	^self subclassResponsibility! !
+
+!Report methodsFor: 'visit' stamp: 'DH 10/26/2019 15:04:13'!
+visitReceptiveAccount: aReceptiveAccount
+
+	^self subclassResponsibility! !
+
+!Report methodsFor: 'visit' stamp: 'DH 10/26/2019 15:13:17'!
+visitWithdrawByTransferTransaction: aWithdrawByTransfer
+
+	^self subclassResponsibility! !
+
+!Report methodsFor: 'visit' stamp: 'DH 10/26/2019 15:13:24'!
+visitWithdrawTransaction: aWithdraw
+
+	^self subclassResponsibility! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -920,7 +1009,7 @@ asString
 Report class
 	instanceVariableNames: ''!
 
-!Report class methodsFor: 'as yet unclassified' stamp: 'damian y mateo 10/24/2019 19:08:36'!
+!Report class methodsFor: 'instance creation' stamp: 'damian y mateo 10/24/2019 19:08:36'!
 for: anAccount
 
 	^self new initializeFor: anAccount! !
@@ -928,10 +1017,86 @@ for: anAccount
 
 !classDefinition: #AccountSummary category: #'TreePrinter-Excercise'!
 Report subclass: #AccountSummary
-	instanceVariableNames: ''
+	instanceVariableNames: 'reportAsString'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TreePrinter-Excercise'!
+
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:55:58'!
+visitDepositByTransferTransaction: aDepositByTransfer
+
+	reportAsString _ reportAsString, (self depositByTransferAsString: aDepositByTransfer), '. '! !
+
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:56:18'!
+visitDepositTransaction: aDeposit
+
+	reportAsString _ reportAsString, (self depositAsString: aDeposit), '. '! !
+
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:10:17'!
+visitPortfolio: aPortfolio
+
+	^self subclassResponsibility! !
+
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:16:44'!
+visitReceptiveAccount: aReceptiveAccount
+
+	^aReceptiveAccount transactionsAccept: self! !
+
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:56:27'!
+visitWithdrawByTransferTransaction: aWithdrawByTransfer
+
+	reportAsString _ reportAsString, (self withdrawByTransferAsString: aWithdrawByTransfer), '. '! !
+
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:56:33'!
+visitWithdrawTransaction: aWithdraw
+
+	reportAsString _ reportAsString, (self withdrawAsString: aWithdraw), '. '! !
+
+
+!AccountSummary methodsFor: 'transaction to string' stamp: 'DH 10/26/2019 17:56:54'!
+depositAsString: aDeposit
+
+	^'Depósito por ', aDeposit value asString! !
+
+!AccountSummary methodsFor: 'transaction to string' stamp: 'DH 10/26/2019 17:44:12'!
+depositByTransferAsString: aDepositByTransfer
+
+	^'Entrada por transferencia de ', aDepositByTransfer value asString! !
+
+!AccountSummary methodsFor: 'transaction to string' stamp: 'DH 10/26/2019 17:57:02'!
+withdrawAsString: aWithdraw
+
+	^'Extracción por ', aWithdraw value asString! !
+
+!AccountSummary methodsFor: 'transaction to string' stamp: 'DH 10/26/2019 17:44:45'!
+withdrawByTransferAsString: aWithdrawByTransfer
+
+	^'Salida por transferencia de ', aWithdrawByTransfer value asString! !
+
+
+!AccountSummary methodsFor: 'value' stamp: 'DH 10/26/2019 17:50:27'!
+asString
+
+	account accept: self.
+	^reportAsString ! !
+
+
+!AccountSummary methodsFor: 'initialization' stamp: 'DH 10/26/2019 17:53:53'!
+initializeFor: anAccount
+
+	super initializeFor: anAccount.
+	reportAsString _ String new! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'AccountSummary class' category: #'TreePrinter-Excercise'!
+AccountSummary class
+	instanceVariableNames: ''!
+
+!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'DH 10/26/2019 17:10:17'!
+for: anAccount
+
+	^self new initializeFor: anAccount! !
 
 
 !classDefinition: #Transfer category: #'TreePrinter-Excercise'!
