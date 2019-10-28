@@ -312,29 +312,29 @@ TestCase subclass: #ReportTest
 	poolDictionaries: ''
 	category: 'TreePrinter-Excercise'!
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:02:50'!
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:27:53'!
 test01AccountSummaryForEmptyAccountIsEmpty
 
 	|account|
 	account _ ReceptiveAccount new.
-	self assert: (self accountSummaryOf: account) isEmpty.! !
+	self assert: 'Balance = 0. ' equals: (self accountSummaryOf: account).! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:03:21'!
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:38:58'!
 test02AccountSummaryForEmptyPortfolioIsEmpty
 
 	|portfolio|
 	portfolio _ Portfolio new.
 	self assert: (self accountSummaryOf: portfolio) isEmpty.! !
 
-!ReportTest methodsFor: 'tests' stamp: 'DH 10/26/2019 17:57:13'!
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:28:30'!
 test03AccountSummaryForAccountWithOneTransactionShowsTheTransaction
 
 	|account|
 	account _ ReceptiveAccount new.
 	Deposit register: 68 on: account.  
-	self assert: 'Depósito por 68. Balance = 68' equals: (self accountSummaryOf: account).! !
+	self assert: 'Depósito por 68. Balance = 68. ' equals: (self accountSummaryOf: account).! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:05:48'!
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:28:41'!
 test04AccountSummaryForAccountWithManyTransactionsShowsTheTransactions
 
 	|account|
@@ -343,23 +343,25 @@ test04AccountSummaryForAccountWithManyTransactionsShowsTheTransactions
 	Withdraw register: 50 on: account.
 	Transfer from: account to: ReceptiveAccount new for: 20.
 	Transfer from: ReceptiveAccount new to: account for: 30. 
-	self assert: 'Depósito por 100. Extracción por 50. Salida por transferencia de 20. Entrada por transferencia de 30. Balance = 60'
+	self assert: 'Depósito por 100. Extracción por 50. Salida por transferencia de 20. Entrada por transferencia de 30. Balance = 60. '
 	equals: (self accountSummaryOf: account).! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:06:24'!
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:40:46'!
 test05AccountSummaryForPortfolioWithOneAccountIsAccountSummaryOfAccount
 
 	|portfolio account|
 	portfolio _ Portfolio new.
 	account _ ReceptiveAccount new.
+	
+	portfolio add: account.
 
 	Deposit register: 100 on: account.
 	Withdraw register: 50 on: account.
 
-	self assert: 'Depósito por 100. Extracción por 50. Balance = 50'
+	self assert: 'Depósito por 100. Extracción por 50. Balance = 50. '
 	equals: (self accountSummaryOf: portfolio).! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:07:02'!
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:28:52'!
 test06AccountSummaryForPortfolioWithManyAccountsIsUnionOfSummariesOfAccounts
 
 	|portfolio account1 account2|
@@ -374,10 +376,10 @@ test06AccountSummaryForPortfolioWithManyAccountsIsUnionOfSummariesOfAccounts
 	Withdraw register: 30 on: account2.
 	Withdraw register: 50 on: account1.
 	
-	self assert: 'Depósito por 100. Extracción por 50. Balance = 50. Extracción por 30. Balance = -30'
+	self assert: 'Depósito por 100. Extracción por 50. Balance = 50. Extracción por 30. Balance = -30. '
 	equals: (self accountSummaryOf: portfolio).! !
 
-!ReportTest methodsFor: 'tests' stamp: 'damian y mateo 10/24/2019 19:07:18'!
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:28:57'!
 test07AccountSummaryForPortfolioWithAccountsAndPortfoliosIsUnionOfSummariesOfAccounts
 
 	|portfolio1  portfolio2 account1 account2|
@@ -394,14 +396,62 @@ test07AccountSummaryForPortfolioWithAccountsAndPortfoliosIsUnionOfSummariesOfAcc
 	Withdraw register: 30 on: account2.
 	Withdraw register: 50 on: account1.
 	
-	self assert: 'Depósito por 100. Extracción por 50. Balance = 50. Extracción por 30. Balance = -30'
+	self assert: 'Depósito por 100. Extracción por 50. Balance = 50. Extracción por 30. Balance = -30. '
 	equals: (self accountSummaryOf: portfolio1).! !
 
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:49:29'!
+test08TransferNetForEmptyAccountIsZero
 
-!ReportTest methodsFor: 'reports' stamp: 'DH 10/26/2019 17:51:40'!
+	|account|
+	account _ ReceptiveAccount new.
+	self assert: 0 equals: (self transferNetOf: account).! !
+
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:50:09'!
+test09TransferNetForEmptyPortfolioIsZero
+
+	|portfolio|
+	portfolio _ Portfolio new.
+	self assert: 0 equals: (self transferNetOf: portfolio).! !
+
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:53:04'!
+test10TransferNetForAccountWithOneDepositByTransferShowsTheTransferValue
+
+	|account|
+	account _ ReceptiveAccount new.	Transfer from: ReceptiveAccount new to: account for: 50.
+
+	self assert: 50 equals: (self transferNetOf: account).! !
+
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:54:07'!
+test11TransferNetForAccountWithOneWithdrawByTransferShowsTheNegativeTransferValue
+
+	|account|
+	account _ ReceptiveAccount new.	Transfer from: account to: ReceptiveAccount new for: 70.
+
+	self assert: -70 equals: (self transferNetOf: account).! !
+
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 06:56:44'!
+test12TransferNetForAccountWithManyTransactionsShowsTransferNet
+
+	|account|
+	account _ ReceptiveAccount new.
+	
+	Deposit register: 100 on: account.
+	Withdraw register: 50 on: account.
+	Transfer from: account to: ReceptiveAccount new for: 20.
+	Transfer from: ReceptiveAccount new to: account for: 30.
+	
+	self assert: 10 equals: (self transferNetOf: account).! !
+
+
+!ReportTest methodsFor: 'reports' stamp: 'DH 10/28/2019 06:47:40'!
 accountSummaryOf: anAccount
 
-	^(AccountSummary for: anAccount) asString! !
+	^(AccountSummary for: anAccount) value! !
+
+!ReportTest methodsFor: 'reports' stamp: 'DH 10/28/2019 06:47:54'!
+transferNetOf: anAccount
+
+	^(TransferNet for: anAccount) value! !
 
 
 !classDefinition: #TransferTest category: #'TreePrinter-Excercise'!
@@ -1022,62 +1072,74 @@ Report subclass: #AccountSummary
 	poolDictionaries: ''
 	category: 'TreePrinter-Excercise'!
 
-!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:55:58'!
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/28/2019 06:33:51'!
 visitDepositByTransferTransaction: aDepositByTransfer
 
-	reportAsString _ reportAsString, (self depositByTransferAsString: aDepositByTransfer), '. '! !
+	reportAsString _ reportAsString, (self depositByTransferLine: aDepositByTransfer)! !
 
-!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:56:18'!
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/28/2019 06:34:04'!
 visitDepositTransaction: aDeposit
 
-	reportAsString _ reportAsString, (self depositAsString: aDeposit), '. '! !
+	reportAsString _ reportAsString, (self depositLine: aDeposit)! !
 
-!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:10:17'!
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/28/2019 06:35:46'!
 visitPortfolio: aPortfolio
 
-	^self subclassResponsibility! !
+	aPortfolio childrenAccept: self! !
 
-!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:16:44'!
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/28/2019 06:38:02'!
 visitReceptiveAccount: aReceptiveAccount
 
-	^aReceptiveAccount transactionsAccept: self! !
+	aReceptiveAccount transactionsAccept: self.
+	reportAsString _ reportAsString, (self balanceLineWithBalance: aReceptiveAccount balance).! !
 
-!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:56:27'!
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/28/2019 06:34:11'!
 visitWithdrawByTransferTransaction: aWithdrawByTransfer
 
-	reportAsString _ reportAsString, (self withdrawByTransferAsString: aWithdrawByTransfer), '. '! !
+	reportAsString _ reportAsString, (self withdrawByTransferLine: aWithdrawByTransfer)! !
 
-!AccountSummary methodsFor: 'visit' stamp: 'DH 10/26/2019 17:56:33'!
+!AccountSummary methodsFor: 'visit' stamp: 'DH 10/28/2019 06:34:17'!
 visitWithdrawTransaction: aWithdraw
 
-	reportAsString _ reportAsString, (self withdrawAsString: aWithdraw), '. '! !
+	reportAsString _ reportAsString, (self withdrawLine: aWithdraw)! !
 
 
-!AccountSummary methodsFor: 'transaction to string' stamp: 'DH 10/26/2019 17:56:54'!
-depositAsString: aDeposit
+!AccountSummary methodsFor: 'summary lines' stamp: 'DH 10/28/2019 06:38:27'!
+balanceLineWithBalance: aBalance
 
-	^'Depósito por ', aDeposit value asString! !
+	^self reportLineWithText: 'Balance = ' andValue: aBalance.! !
 
-!AccountSummary methodsFor: 'transaction to string' stamp: 'DH 10/26/2019 17:44:12'!
-depositByTransferAsString: aDepositByTransfer
+!AccountSummary methodsFor: 'summary lines' stamp: 'DH 10/28/2019 06:26:23'!
+depositByTransferLine: aDepositByTransfer
 
-	^'Entrada por transferencia de ', aDepositByTransfer value asString! !
+	^self reportLineWithText: 'Entrada por transferencia de ' andValue: aDepositByTransfer value! !
 
-!AccountSummary methodsFor: 'transaction to string' stamp: 'DH 10/26/2019 17:57:02'!
-withdrawAsString: aWithdraw
+!AccountSummary methodsFor: 'summary lines' stamp: 'DH 10/28/2019 06:26:08'!
+depositLine: aDeposit
 
-	^'Extracción por ', aWithdraw value asString! !
+	^self reportLineWithText: 'Depósito por ' andValue: aDeposit value.! !
 
-!AccountSummary methodsFor: 'transaction to string' stamp: 'DH 10/26/2019 17:44:45'!
-withdrawByTransferAsString: aWithdrawByTransfer
+!AccountSummary methodsFor: 'summary lines' stamp: 'DH 10/28/2019 06:31:36'!
+reportLineWithText: aReportLineText andValue: aReportLineValue
 
-	^'Salida por transferencia de ', aWithdrawByTransfer value asString! !
+	^aReportLineText, aReportLineValue asString, '. '! !
+
+!AccountSummary methodsFor: 'summary lines' stamp: 'DH 10/28/2019 06:26:30'!
+withdrawByTransferLine: aWithdrawByTransfer
+
+	^self reportLineWithText: 'Salida por transferencia de ' andValue: aWithdrawByTransfer value! !
+
+!AccountSummary methodsFor: 'summary lines' stamp: 'DH 10/28/2019 06:26:16'!
+withdrawLine: aWithdraw
+
+	^self reportLineWithText: 'Extracción por ' andValue: aWithdraw value.! !
 
 
-!AccountSummary methodsFor: 'value' stamp: 'DH 10/26/2019 17:50:27'!
-asString
+!AccountSummary methodsFor: 'value' stamp: 'DH 10/28/2019 06:47:16'!
+value
 
 	account accept: self.
+	"reportAsString _ reportAsString, self balanceLine."
 	^reportAsString ! !
 
 
@@ -1094,6 +1156,69 @@ AccountSummary class
 	instanceVariableNames: ''!
 
 !AccountSummary class methodsFor: 'as yet unclassified' stamp: 'DH 10/26/2019 17:10:17'!
+for: anAccount
+
+	^self new initializeFor: anAccount! !
+
+
+!classDefinition: #TransferNet category: #'TreePrinter-Excercise'!
+Report subclass: #TransferNet
+	instanceVariableNames: 'transferNetValue'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TreePrinter-Excercise'!
+
+!TransferNet methodsFor: 'value' stamp: 'DH 10/28/2019 06:46:44'!
+value
+
+	account accept: self.
+	^transferNetValue! !
+
+
+!TransferNet methodsFor: 'visit' stamp: 'DH 10/28/2019 06:45:33'!
+visitDepositByTransferTransaction: aDepositByTransfer
+
+	transferNetValue _ transferNetValue + aDepositByTransfer value! !
+
+!TransferNet methodsFor: 'visit' stamp: 'DH 10/28/2019 06:46:00'!
+visitDepositTransaction: aDeposit
+
+	! !
+
+!TransferNet methodsFor: 'visit' stamp: 'DH 10/28/2019 06:44:50'!
+visitPortfolio: aPortfolio
+
+	aPortfolio childrenAccept: self! !
+
+!TransferNet methodsFor: 'visit' stamp: 'DH 10/28/2019 06:44:35'!
+visitReceptiveAccount: aReceptiveAccount
+
+	aReceptiveAccount transactionsAccept: self! !
+
+!TransferNet methodsFor: 'visit' stamp: 'DH 10/28/2019 06:45:46'!
+visitWithdrawByTransferTransaction: aWithdrawByTransfer
+
+	transferNetValue _ transferNetValue - aWithdrawByTransfer value! !
+
+!TransferNet methodsFor: 'visit' stamp: 'DH 10/28/2019 06:45:55'!
+visitWithdrawTransaction: aWithdraw
+
+	! !
+
+
+!TransferNet methodsFor: 'initialization' stamp: 'DH 10/28/2019 06:44:03'!
+initializeFor: anAccount
+
+	super initializeFor: anAccount.
+	transferNetValue _ 0! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'TransferNet class' category: #'TreePrinter-Excercise'!
+TransferNet class
+	instanceVariableNames: ''!
+
+!TransferNet class methodsFor: 'instance creation' stamp: 'DH 10/28/2019 06:41:35'!
 for: anAccount
 
 	^self new initializeFor: anAccount! !
