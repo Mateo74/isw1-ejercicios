@@ -442,6 +442,60 @@ test12TransferNetForAccountWithManyTransactionsShowsTransferNet
 	
 	self assert: 10 equals: (self transferNetOf: account).! !
 
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 16:45:39'!
+test13TransferNetForPortfolioWithOneAccountIsTransferNetOfAccount
+
+	|portfolio account|
+	portfolio _ Portfolio new.
+	account _ ReceptiveAccount new.
+	
+	portfolio add: account.
+
+	Transfer from: account to: ReceptiveAccount new for: 30.
+	Transfer from: ReceptiveAccount new to: account for: 20.
+
+	self assert: -10 equals: (self transferNetOf: portfolio).! !
+
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 16:49:46'!
+test14TransferNetForPortfolioWithManyAccountsIsSumOfTransferNetsOfAccounts
+
+	|portfolio account1 account2|
+	portfolio _ Portfolio new.
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	
+	portfolio add: account1.
+	portfolio add: account2.
+	
+	Transfer from: ReceptiveAccount new to: account1 for: 100.
+	
+	Transfer from: account2 to: ReceptiveAccount new for: 30.
+	
+	self assert: 70 equals: (self transferNetOf: portfolio).! !
+
+!ReportTest methodsFor: 'tests' stamp: 'DH 10/28/2019 16:52:24'!
+test15TransferNetForPortfolioWithAccountsAndPortfoliosIsSumOfTransferNetsOfAccounts
+
+	|portfolio1  portfolio2 account1 account2|
+	portfolio1 _ Portfolio new.
+	portfolio2 _ Portfolio new.
+	account1 _ ReceptiveAccount new.
+	account2 _ ReceptiveAccount new.
+	
+	portfolio1 add: account1.
+	portfolio2 add: account2.
+	portfolio1 add: portfolio2.
+	
+	Transfer from: ReceptiveAccount new to: account1 for: 100.
+	
+	Transfer from: account2 to: ReceptiveAccount new for: 30.
+	
+	Transfer from: account1 to: ReceptiveAccount new for: 50.
+	
+	Transfer from: account1 to: account2 for: 5000.
+	
+	self assert: 20 equals: (self transferNetOf: portfolio1).! !
+
 
 !ReportTest methodsFor: 'reports' stamp: 'DH 10/28/2019 06:47:40'!
 accountSummaryOf: anAccount
