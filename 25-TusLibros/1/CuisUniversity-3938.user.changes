@@ -1,0 +1,314 @@
+
+
+----STARTUP---- (31 October 2019 09:30:28) as /Users/mmarenco/Materias/isw1/Cuis/CuisUniversity-3938.image!
+
+
+TestCase subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Kernel-Processes'!
+
+!classDefinition: #TusLibrosTest category: #'Kernel-Processes' stamp: 'mm 10/31/2019 09:47:49'!
+TestCase subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Kernel-Processes'!
+
+!classRemoval: #TusLibrosTest stamp: 'mm 10/31/2019 09:48:56'!
+TestCase subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Kernel-Processes'!
+
+TestCase subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #TusLibrosTest category: #TusLibros stamp: 'mm 10/31/2019 09:49:02'!
+TestCase subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!TusLibrosTest methodsFor: 'nil' stamp: 'mm 10/31/2019 09:49:51'!
+test01NewCartIsEmpty! !
+
+!classDefinition: #Cart category: #TusLibros stamp: 'mm 10/31/2019 09:51:00'!
+Object subclass: #Cart
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 09:50:38' prior: 50777389!
+test01NewCartIsEmpty
+
+	self assert: Cart new isEmpty.! !
+!Cart methodsFor: 'nil' stamp: 'mm 10/31/2019 09:51:24'!
+isEmpty
+
+	^true! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'mm 10/31/2019 09:51:34'!
+PASSED!
+
+!classDefinition: #Libro category: #TusLibros stamp: 'mm 10/31/2019 11:02:37'!
+Object subclass: #Libro
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:02:30'!
+test02CartWithOneItemIsNotEmpty
+
+	|carrito libro|
+	
+	carrito _ Cart new.
+	libro _ Libro new.
+	carrito add: libro.
+	self deny: carrito isEmpty.! !
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:02:42'!
+ERROR!
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:02:42'!
+ERROR!
+!Cart methodsFor: 'nil' stamp: 'mm 10/31/2019 11:02:59'!
+add: aBook! !
+
+Object subclass: #Cart
+	instanceVariableNames: 'isEmpty'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cart category: #TusLibros stamp: 'mm 10/31/2019 11:03:55'!
+Object subclass: #Cart
+	instanceVariableNames: 'isEmpty'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cart methodsFor: 'nil' stamp: 'mm 10/31/2019 11:04:11'!
+initialize
+
+	isEmpty _ true.! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'mm 10/31/2019 11:04:18'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:04:18'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:04:18'!
+FAILURE!
+!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:04:41' prior: 50777430!
+add: aBook
+
+	isEmpty _ false.! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'mm 10/31/2019 11:04:43'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:04:43'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:04:43'!
+FAILURE!
+!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:04:55' prior: 50777404!
+isEmpty
+
+	^isEmpty! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'mm 10/31/2019 11:04:57'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:04:57'!
+PASSED!
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:09:49'!
+test03CartWithSeveralItemsContainsThoseItems
+
+	|carrito libro1 libro2 libro3 libro4|
+	
+	carrito _ Cart new.
+	libro1 _ Libro new.
+	libro2 _ Libro new.
+	libro3 _ Libro new.
+	libro4 _ Libro new.
+	carrito add: libro1.
+	carrito add: libro2.
+	carrito add: libro3.
+	
+	self assert: (carrito containingDirectoryPathOf: libro1).
+	self assert: (carrito contains: libro2).
+	self assert: (carrito contains: libro3).
+	self deny:   (carrito contains: libro4).! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:10:01' prior: 50777479!
+test03CartWithSeveralItemsContainsThoseItems
+
+	|carrito libro1 libro2 libro3 libro4|
+	
+	carrito _ Cart new.
+	libro1 _ Libro new.
+	libro2 _ Libro new.
+	libro3 _ Libro new.
+	libro4 _ Libro new.
+	carrito add: libro1.
+	carrito add: libro2.
+	carrito add: libro3.
+	
+	self assert: (carrito contains: libro1).
+	self assert: (carrito contains: libro2).
+	self assert: (carrito contains: libro3).
+	self deny:   (carrito contains: libro4).! !
+!Cart methodsFor: 'nil' stamp: 'mm 10/31/2019 11:10:30'!
+contains: aBook
+
+	^true.! !
+
+!testRun: #TusLibrosTest #test03CartWithSeveralItemsContainsThoseItems stamp: 'mm 10/31/2019 11:10:33'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test03CartWithSeveralItemsContainsThoseItems stamp: 'mm 10/31/2019 11:10:33'!
+FAILURE!
+
+Object subclass: #Cart
+	instanceVariableNames: 'books'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cart category: #TusLibros stamp: 'mm 10/31/2019 11:10:58'!
+Object subclass: #Cart
+	instanceVariableNames: 'books'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:11:11' prior: 50777443!
+initialize
+
+	books _ OrderedCollection new.! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:11:33' prior: 50777456!
+add: aBook
+
+	books add: aBook.! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:11:49' prior: 50777469!
+isEmpty
+
+	^books isEmpty.! !
+
+----End fileIn of /Users/mmarenco/Materias/isw1/Cuis/Packages/TerseGuide.pck.st----!
+!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:12:38' prior: 50777513!
+contains: aBook
+
+	^books includes: aBook.! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'mm 10/31/2019 11:12:40'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:12:40'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CartWithSeveralItemsContainsThoseItems stamp: 'mm 10/31/2019 11:12:40'!
+PASSED!
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:12:48' prior: 50777497!
+test03CartWithSeveralItemsContainsThoseItems
+
+	|carrito libro1 libro2 libro3 libro4|
+	
+	carrito _ Cart new.
+	libro1 _ Book new.
+	libro2 _ Book new.
+	libro3 _ Book new.
+	libro4 _ Book new.
+	carrito add: libro1.
+	carrito add: libro2.
+	carrito add: libro3.
+	
+	self assert: (carrito contains: libro1).
+	self assert: (carrito contains: libro2).
+	self assert: (carrito contains: libro3).
+	self deny:   (carrito contains: libro4).! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:12:48' prior: 50777417!
+test02CartWithOneItemIsNotEmpty
+
+	|carrito libro|
+	
+	carrito _ Cart new.
+	libro _ Book new.
+	carrito add: libro.
+	self deny: carrito isEmpty.! !
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'mm 10/31/2019 11:12:56'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:12:56'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CartWithSeveralItemsContainsThoseItems stamp: 'mm 10/31/2019 11:12:56'!
+PASSED!
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:14:23'!
+test04CartWithSeveralItemsContainsThoseItems
+
+	|carrito libro1 libro2 libro3 libro4|
+	
+	carrito _ Cart new.
+	libro1 _ Book new.
+	libro2 _ Book new.
+	libro3 _ Book new.
+	libro4 _ Book new.
+	carrito add: libro1.
+	carrito add: libro2.
+	carrito add: libro3.
+	
+	self assert: (carrito contains: libro1).
+	self assert: (carrito contains: libro2).
+	self assert: (carrito contains: libro3).
+	self deny:   (carrito contains: libro4).! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:15:04'!
+test03CartContainsAddedItem
+
+	|carrito libro1|
+	
+	carrito _ Cart new.
+	libro1 _ Book new.
+	carrito add: libro1.
+	
+	self assert: (carrito contains: libro1).
+! !
+
+!methodRemoval: TusLibrosTest #test03CartWithSeveralItemsContainsThoseItems stamp: 'mm 10/31/2019 11:15:10'!
+test03CartWithSeveralItemsContainsThoseItems
+
+	|carrito libro1 libro2 libro3 libro4|
+	
+	carrito _ Cart new.
+	libro1 _ Book new.
+	libro2 _ Book new.
+	libro3 _ Book new.
+	libro4 _ Book new.
+	carrito add: libro1.
+	carrito add: libro2.
+	carrito add: libro3.
+	
+	self assert: (carrito contains: libro1).
+	self assert: (carrito contains: libro2).
+	self assert: (carrito contains: libro3).
+	self deny:   (carrito contains: libro4).!
+
+----SNAPSHOT----(31 October 2019 11:52:06) CuisUniversity-3938.image priorSource: 14319118!
+
+!testRun: #TusLibrosTest #test01NewCartIsEmpty stamp: 'mm 10/31/2019 11:52:26'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02CartWithOneItemIsNotEmpty stamp: 'mm 10/31/2019 11:52:26'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03CartContainsAddedItem stamp: 'mm 10/31/2019 11:52:26'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04CartWithSeveralItemsContainsThoseItems stamp: 'mm 10/31/2019 11:52:26'!
+PASSED!
