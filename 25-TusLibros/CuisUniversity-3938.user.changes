@@ -312,3 +312,772 @@ PASSED!
 
 !testRun: #TusLibrosTest #test04CartWithSeveralItemsContainsThoseItems stamp: 'mm 10/31/2019 11:52:26'!
 PASSED!
+
+'holaMundo: 4' selector!
+
+----QUIT----(1 November 2019 00:46:30) CuisUniversity-3938.image priorSource: 14367894!
+
+----STARTUP---- (2 November 2019 16:17:19) as /Users/mmarenco/Materias/isw1/Cuis/CuisUniversity-3938.image!
+
+
+----QUIT----(2 November 2019 16:37:56) CuisUniversity-3938.image priorSource: 14368411!
+
+----STARTUP---- (3 November 2019 15:47:44) as /Users/mmarenco/Materias/isw1/Cuis/CuisUniversity-3938.image!
+
+
+!classRemoval: #Cart stamp: 'mm 11/3/2019 15:49:34'!
+Object subclass: #Cart
+	instanceVariableNames: 'books'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Book stamp: 'mm 11/3/2019 15:49:34'!
+Object subclass: #Book
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #TusLibrosTest stamp: 'mm 11/3/2019 15:49:35'!
+TestCase subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+----End fileIn of /Users/mmarenco/Materias/isw1/isw1-ejercicios/25-TusLibros/TusLibros1-Catedra.st----!
+
+----QUIT----(3 November 2019 18:16:06) CuisUniversity-3938.image priorSource: 14368610!
+
+----STARTUP---- (4 November 2019 11:51:04) as /Users/mmarenco/Materias/isw1/Cuis/CuisUniversity-3938.image!
+
+
+TestCase subclass: #CashierTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CashierTest category: #TusLibros stamp: 'mm 11/4/2019 11:58:13'!
+TestCase subclass: #CashierTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #Cashier
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'mm 11/4/2019 11:58:18'!
+Object subclass: #Cashier
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTest methodsFor: 'nil' stamp: 'mm 11/4/2019 12:16:02'!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart|
+	
+	cart _ self createCart.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:25'!
+createCart
+	
+	^Cart acceptingItemsOf: self defaultCatalog! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:38'!
+defaultCatalog
+	
+	^ Array with: self itemSellByTheStore! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:51'!
+itemSellByTheStore
+	
+	^ 'validBook'! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:17:13'!
+itemNotSellByTheStore
+	
+	^'invalidBook'! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:20:13' prior: 50780905!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	creditCard _ '1234567890101112'
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:20:52' prior: 50780929!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	creditCard _ self validCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:21:20'!
+validCreditCard
+
+	^'123456789010111213'! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:21:45'!
+invalidCreditCard
+
+	^'invalid card'! !
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 12:21:55'!
+ERROR!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 12:21:55'!
+ERROR!
+!Cashier class methodsFor: 'no messages' stamp: 'mm 11/4/2019 12:22:38'!
+EmptyCartError
+
+	^'Cannot sell to empty cart.'! !
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:23:17'!
+sell: aCart to: aCreditCardNumber
+
+	self error: self EmptyCartError.! !
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 12:23:23'!
+PASSED!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:29:24'!
+test01CashierDoesNotExpiredCreditCard
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	cart add: self itemSellByTheStore.
+	creditCard _ self invalidCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:30:27'!
+test02CashierDoesNotExpiredCreditCard
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	cart add: self itemSellByTheStore.
+	creditCard _ self invalidCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier ExpiredCreditCardError.
+		]! !
+
+!methodRemoval: CashierTest #test01CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 12:30:33'!
+test01CashierDoesNotExpiredCreditCard
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	cart add: self itemSellByTheStore.
+	creditCard _ self invalidCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]!
+
+Object subclass: #CreditCard
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'mm 11/4/2019 12:30:52'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #CreditCard
+	instanceVariableNames: 'number date owner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'mm 11/4/2019 12:31:27'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'number date owner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'mm 11/4/2019 12:31:58'!
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CreditCard methodsFor: 'nil' stamp: 'mm 11/4/2019 12:33:34'!
+initializeWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate
+
+	number _ aCreditCardNumber.
+	owner   _ aPersonName.
+	date      _ anExpirationDate.! !
+!CreditCard class methodsFor: 'nil' stamp: 'mm 11/4/2019 12:34:43'!
+newWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate
+
+	^self new initializeWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate.
+! !
+
+----STARTUP---- (4 November 2019 12:40:34) as /Users/mmarenco/Materias/isw1/Cuis/CuisUniversity-3938.image!
+
+
+!classDefinition: #CashierTest category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+TestCase subclass: #CashierTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CashierTest category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+TestCase subclass: #CashierTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+Object subclass: #Cashier
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+Object subclass: #Cashier
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTest methodsFor: 'nil' stamp: 'mm 11/4/2019 12:16:02'!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart|
+	
+	cart _ self createCart.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:25'!
+createCart
+	
+	^Cart acceptingItemsOf: self defaultCatalog! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:38'!
+defaultCatalog
+	
+	^ Array with: self itemSellByTheStore! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:51'!
+itemSellByTheStore
+	
+	^ 'validBook'! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:17:13'!
+itemNotSellByTheStore
+	
+	^'invalidBook'! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:20:13' prior: 50781104!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	creditCard _ '1234567890101112'
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:20:52' prior: 50781128!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	creditCard _ self validCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:21:20'!
+validCreditCard
+
+	^'123456789010111213'! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:21:45'!
+invalidCreditCard
+
+	^'invalid card'! !
+!Cashier class methodsFor: 'no messages' stamp: 'mm 11/4/2019 12:22:38'!
+EmptyCartError
+
+	^'Cannot sell to empty cart.'! !
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:23:17'!
+sell: aCart to: aCreditCardNumber
+
+	self error: self EmptyCartError.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:29:24'!
+test01CashierDoesNotExpiredCreditCard
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	cart add: self itemSellByTheStore.
+	creditCard _ self invalidCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:30:27'!
+test02CashierDoesNotExpiredCreditCard
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	cart add: self itemSellByTheStore.
+	creditCard _ self invalidCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier ExpiredCreditCardError.
+		]! !
+
+!methodRemoval: CashierTest #test01CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 12:40:41'!
+test01CashierDoesNotExpiredCreditCard
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	cart add: self itemSellByTheStore.
+	creditCard _ self invalidCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'number date owner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'number date owner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'mm 11/4/2019 12:40:41'!
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CreditCard methodsFor: 'nil' stamp: 'mm 11/4/2019 12:33:34'!
+initializeWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate
+
+	number _ aCreditCardNumber.
+	owner   _ aPersonName.
+	date      _ anExpirationDate.! !
+!CreditCard class methodsFor: 'nil' stamp: 'mm 11/4/2019 12:34:43'!
+newWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate
+
+	^self new initializeWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate.
+! !
+
+----SNAPSHOT----(4 November 2019 12:41:19) CuisUniversity-3938.image priorSource: 14375247!
+
+self date!
+
+Date today!
+
+Date tomorrow!
+
+Date tomorrow > Date today!
+
+Date tomorrow = Date today!
+
+Date tomorrow < Date today!
+
+Date tomorrow > Date today!
+
+Date tomorrow month!
+
+Date month!
+
+Date today!
+
+Date today firstDayOfMonth !
+
+Date month: 08 year: 2014!
+
+Date month: #August year: 2014!
+
+Date month: 'August' year: 2014!
+
+DateAndTime month: 'August' year: 2014!
+
+Date month: 'August' year: '2014'!
+
+Date month:01year:1998.!
+
+Month month: 08 year: 2014.!
+
+Month month: '08' year: 2014.!
+
+a _ String new.!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:57:02' prior: 50781154!
+validCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpiraton: (Month month: 04 year: 2023).! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:57:26' prior: 50781158!
+invalidCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpiraton: (Month month: 04 year: 2018).! !
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:58:08'!
+ExpiredCreditCardError
+
+	^'Credit card is expired.'! !
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 12:58:22'!
+FAILURE!
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 12:58:22'!
+FAILURE!
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:58:50' prior: 50781167!
+sell: aCart to: aCreditCard
+
+	self error: self EmptyCartError.! !
+
+Month today!
+
+Date today month!
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:00:46' prior: 50781318!
+sell: aCart to: aCreditCard
+
+	(Date today month > aCreditCard expiratonDate) ifTrue: [self error: self ExpiredCreditCardError ].
+	self error: self EmptyCartError.! !
+!CreditCard methodsFor: 'nil' stamp: 'mm 11/4/2019 13:01:07'!
+expirationDate
+
+	^date! !
+!CreditCard methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:01:23'!
+owner
+
+	^owner! !
+!CreditCard methodsFor: 'nil' stamp: 'mm 11/4/2019 13:01:44'!
+number
+
+	^number! !
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:01:53'!
+ERROR!
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:01:53'!
+ERROR!
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:02:13' prior: 50781325!
+sell: aCart to: aCreditCard
+
+	(Date today month > aCreditCard expirationDate) ifTrue: [self error: self ExpiredCreditCardError ].
+	self error: self EmptyCartError.! !
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:02:17'!
+ERROR!
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:02:17'!
+ERROR!
+
+Date today month > Date tomorrow month!
+
+m _ Month new!
+
+m _ Month new!
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:07:37' prior: 50781351!
+sell: aCart to: aCreditCard
+
+	(Date today > aCreditCard expirationDate) ifTrue: [self error: self ExpiredCreditCardError ].
+	self error: self EmptyCartError.! !
+
+Date today - 1!
+
+Date today lastDayOfMonth!
+
+Date today firstDayOfMonth.!
+
+a _ 'holamundo'.!
+
+a from: 4 to: 8!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:18:41' prior: 50781291!
+validCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpiraton: '042023'.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:18:51' prior: 50781299!
+invalidCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpiraton: '042018'.! !
+
+Month today!
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:21:14' prior: 50781368!
+sell: aCart to: aCreditCard
+
+	(self isExpired: aCreditCard) ifTrue: [self error: self ExpiredCreditCardError ].
+	self error: self EmptyCartError.! !
+
+a copyFrom: 4 to: 8.!
+
+Date today year!
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:26:16'!
+isExpired: aCreditCard
+
+	|today|
+	
+	today _ Date today yyyymmdd.
+	
+	((today copyFrom: 1 to: 4) > aCreditCard expirationDate copyFrom: 3 to: 6) or:
+	(((today copyFrom: 1 to: 4) = aCreditCard expirationDate copyFrom: 3 to: 6) and:
+	((today copyFrom: 5 to: 6) > aCreditCard expirationDate copyFrom: 1 to: 2)).! !
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:26:21'!
+ERROR!
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:26:21'!
+ERROR!
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:26:33'!
+ERROR!
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:26:33'!
+ERROR!
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:27:07' prior: 50781404!
+isExpired: aCreditCard
+
+	|today|
+	
+	today _ Date today yyyymmdd.
+	
+	((today copyFrom: 1 to: 4) > (aCreditCard expirationDate copyFrom: 3 to: 6)) or:
+	(((today copyFrom: 1 to: 4) = (aCreditCard expirationDate copyFrom: 3 to: 6)) and:
+	((today copyFrom: 5 to: 6) > (aCreditCard expirationDate copyFrom: 1 to: 2))).! !
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:27:16' prior: 50781430!
+isExpired: aCreditCard
+
+	|today|
+	
+	today _ Date today yyyymmdd.
+	
+	^((today copyFrom: 1 to: 4) > (aCreditCard expirationDate copyFrom: 3 to: 6)) or:
+	(((today copyFrom: 1 to: 4) = (aCreditCard expirationDate copyFrom: 3 to: 6)) and:
+	((today copyFrom: 5 to: 6) > (aCreditCard expirationDate copyFrom: 1 to: 2))).! !
+
+!testRun: #CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:27:26'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:27:29'!
+PASSED!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:29:23'!
+test02CashierDoesNotAcceptExpiredCreditCard
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	cart add: self itemSellByTheStore.
+	creditCard _ self invalidCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier ExpiredCreditCardError.
+		]! !
+
+!methodRemoval: CashierTest #test02CashierDoesNotExpiredCreditCard stamp: 'mm 11/4/2019 13:29:26'!
+test02CashierDoesNotExpiredCreditCard
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	cart add: self itemSellByTheStore.
+	creditCard _ self invalidCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier ExpiredCreditCardError.
+		]!
+
+----QUIT----(4 November 2019 13:29:45) CuisUniversity-3938.image priorSource: 14387869!
+
+----STARTUP---- (4 November 2019 13:30:48) as /Users/mmarenco/Materias/isw1/Cuis/CuisUniversity-3938.image!
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:31:42' prior: 50781141!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	creditCard _ self validCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier ExpiredCreditCardError.
+		]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:32:07' prior: 50781498!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	creditCard _ self validCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier ExpiredCreditCardError.
+		]! !
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:32:23'!
+FAILURE!
+
+!testRun: #CashierTest #test02CashierDoesNotAcceptExpiredCreditCard stamp: 'mm 11/4/2019 13:32:23'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:32:23'!
+FAILURE!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:32:53'!
+FAILURE!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:32:53'!
+FAILURE!
+
+!testRun: #CashierTest #test02CashierDoesNotAcceptExpiredCreditCard stamp: 'mm 11/4/2019 13:33:13'!
+PASSED!
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:35:59' prior: 50781443!
+isExpired: aCreditCard
+
+	|today bool1 bool2 bool3|
+	
+	today _ Date today yyyymmdd.
+	bool1 _ ((today copyFrom: 1 to: 4) > (aCreditCard expirationDate copyFrom: 3 to: 6)).
+	bool2 _ ((today copyFrom: 1 to: 4) = (aCreditCard expirationDate copyFrom: 3 to: 6)).
+	bool3 _ (today copyFrom: 5 to: 6) > (aCreditCard expirationDate copyFrom: 1 to: 2).
+	^ bool1 or: (bool2 and: bool3).! !
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:36:31'!
+FAILURE!
+
+!testRun: #CashierTest #test02CashierDoesNotAcceptExpiredCreditCard stamp: 'mm 11/4/2019 13:36:31'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:36:31'!
+FAILURE!
+
+'2019' > '2023'!
+
+'2019' = '2023'!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:40:07'!
+FAILURE!
+
+!testRun: #CashierTest #test02CashierDoesNotAcceptExpiredCreditCard stamp: 'mm 11/4/2019 13:40:07'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:40:07'!
+FAILURE!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:41:11' prior: 50781512!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	creditCard _ self validCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]! !
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:41:14'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierDoesNotAcceptExpiredCreditCard stamp: 'mm 11/4/2019 13:41:14'!
+PASSED!
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:42:11' prior: 50781395!
+sell: aCart to: aCreditCard
+
+	(self isExpired: aCreditCard) ifTrue: [self error: self ExpiredCreditCardError ].
+	aCart isEmpty ifTrue: [self error: self EmptyCartError].! !
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCart stamp: 'mm 11/4/2019 13:42:12'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierDoesNotAcceptExpiredCreditCard stamp: 'mm 11/4/2019 13:42:12'!
+PASSED!
+
+----SNAPSHOT----(4 November 2019 13:42:39) CuisUniversity-3938.image priorSource: 14394875!
+
+----QUIT----(4 November 2019 14:07:31) CuisUniversity-3938.image priorSource: 14398878!
