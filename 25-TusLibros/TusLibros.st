@@ -1,88 +1,348 @@
-!classDefinition: #TusLibrosTest category: #TusLibros stamp: 'mm 10/31/2019 11:52:19'!
-TestCase subclass: #TusLibrosTest
+!classDefinition: #CartTest category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+TestCase subclass: #CartTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 09:50:38'!
-test01NewCartIsEmpty
+!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 17:08'!
+test01NewCartsAreCreatedEmpty
 
-	self assert: Cart new isEmpty.! !
+	self assert: self createCart isEmpty! !
 
-!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:12:48'!
-test02CartWithOneItemIsNotEmpty
+!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 17:45'!
+test02CanNotAddItemsThatDoNotBelongToStore
 
-	|carrito libro|
+	| cart |
 	
-	carrito _ Cart new.
-	libro _ Book new.
-	carrito add: libro.
-	self deny: carrito isEmpty.! !
-
-!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:15:04'!
-test03CartContainsAddedItem
-
-	|carrito libro1|
+	cart := self createCart.
 	
-	carrito _ Cart new.
-	libro1 _ Book new.
-	carrito add: libro1.
-	
-	self assert: (carrito contains: libro1).
-! !
+	self 
+		should: [ cart add: self itemNotSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidItemErrorMessage.
+			self assert: cart isEmpty ]! !
 
-!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:14:23'!
-test04CartWithSeveralItemsContainsThoseItems
+!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 17:43'!
+test03AfterAddingAnItemTheCartIsNotEmptyAnymore
 
-	|carrito libro1 libro2 libro3 libro4|
+	| cart |
 	
-	carrito _ Cart new.
-	libro1 _ Book new.
-	libro2 _ Book new.
-	libro3 _ Book new.
-	libro4 _ Book new.
-	carrito add: libro1.
-	carrito add: libro2.
-	carrito add: libro3.
+	cart := self createCart.
 	
-	self assert: (carrito contains: libro1).
-	self assert: (carrito contains: libro2).
-	self assert: (carrito contains: libro3).
-	self deny:   (carrito contains: libro4).! !
+	cart add: self itemSellByTheStore.
+	self deny: cart isEmpty ! !
+
+!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 17:43'!
+test04CanNotAddNonPositiveNumberOfItems
+
+	| cart |
+	
+	cart := self createCart.
+	
+	self 
+		should: [cart add: 0 of: self itemSellByTheStore ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidQuantityErrorMessage.
+			self assert: cart isEmpty ]! !
+
+!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 17:45'!
+test05CanNotAddMoreThanOneItemNotSellByTheStore
+
+	| cart |
+	
+	cart := self createCart.
+	
+	self 
+		should: [cart add: 2 of: self itemNotSellByTheStore  ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = cart invalidItemErrorMessage.
+			self assert: cart isEmpty ]! !
+
+!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 17:43'!
+test06CartRemembersAddedItems
+
+	| cart |
+	
+	cart := self createCart.
+	
+	cart add: self itemSellByTheStore.
+	self assert: (cart includes: self itemSellByTheStore)! !
+
+!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 17:43'!
+test07CartDoesNotHoldNotAddedItems
+
+	| cart |
+	
+	cart := self createCart.
+	
+	self deny: (cart includes: self itemSellByTheStore)! !
+
+!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 17:45'!
+test08CartRemembersTheNumberOfAddedItems
+
+	| cart |
+	
+	cart := self createCart.
+	
+	cart add: 2 of: self itemSellByTheStore.
+	self assert: (cart occurrencesOf: self itemSellByTheStore) = 2! !
+
+
+!CartTest methodsFor: 'support' stamp: 'HernanWilkinson 6/17/2013 17:48'!
+createCart
+	
+	^Cart acceptingItemsOf: self defaultCatalog! !
+
+!CartTest methodsFor: 'support' stamp: 'HernanWilkinson 6/17/2013 17:43'!
+defaultCatalog
+	
+	^ Array with: self itemSellByTheStore! !
+
+!CartTest methodsFor: 'support' stamp: 'HernanWilkinson 6/17/2013 17:44'!
+itemNotSellByTheStore
+	
+	^'invalidBook'! !
+
+!CartTest methodsFor: 'support' stamp: 'HernanWilkinson 6/17/2013 17:43'!
+itemSellByTheStore
+	
+	^ 'validBook'! !
 
 
-!classDefinition: #Book category: #TusLibros stamp: 'mm 10/31/2019 11:52:19'!
-Object subclass: #Book
+!classDefinition: #CashierTest category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+TestCase subclass: #CashierTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:25'!
+createCart
+	
+	^Cart acceptingItemsOf: self defaultCatalog! !
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:38'!
+defaultCatalog
+	
+	^ Array with: self itemSellByTheStore! !
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:18:51'!
+invalidCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpiraton: '042018'.! !
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:17:13'!
+itemNotSellByTheStore
+	
+	^'invalidBook'! !
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:51'!
+itemSellByTheStore
+	
+	^ 'validBook'! !
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:41:11'!
+test01CashierDoesNotAcceptEmptyCart
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	creditCard _ self validCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier EmptyCartError.
+		]! !
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:29:23'!
+test02CashierDoesNotAcceptExpiredCreditCard
+
+	|cart creditCard|
+	
+	cart _ self createCart.
+	cart add: self itemSellByTheStore.
+	creditCard _ self invalidCreditCard.
+	
+	self should: [Cashier sell: cart to: creditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier ExpiredCreditCardError.
+		]! !
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:18:41'!
+validCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpiraton: '042023'.! !
+
 
-!classDefinition: #Cart category: #TusLibros stamp: 'mm 10/31/2019 11:52:19'!
+!classDefinition: #Cart category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
 Object subclass: #Cart
-	instanceVariableNames: 'books'
+	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:11:33'!
-add: aBook
+!Cart methodsFor: 'error messages' stamp: 'HernanWilkinson 6/17/2013 17:45'!
+invalidItemErrorMessage
+	
+	^'Item is not in catalog'! !
 
-	books add: aBook.! !
+!Cart methodsFor: 'error messages' stamp: 'HernanWilkinson 6/17/2013 17:45'!
+invalidQuantityErrorMessage
+	
+	^'Invalid number of items'! !
 
-!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:12:38'!
-contains: aBook
 
-	^books includes: aBook.! !
+!Cart methodsFor: 'assertions' stamp: 'HernanWilkinson 6/17/2013 17:51'!
+assertIsValidItem: anItem
 
-!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:11:11'!
-initialize
+	(catalog includes: anItem) ifFalse: [ self error: self invalidItemErrorMessage ]! !
 
-	books _ OrderedCollection new.! !
+!Cart methodsFor: 'assertions' stamp: 'HernanWilkinson 6/17/2013 17:51'!
+assertIsValidQuantity: aQuantity
 
-!Cart methodsFor: 'as yet unclassified' stamp: 'mm 10/31/2019 11:11:49'!
+	aQuantity strictlyPositive ifFalse: [ self error: self invalidQuantityErrorMessage ]! !
+
+
+!Cart methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2013 17:48'!
+initializeAcceptingItemsOf: aCatalog
+
+	catalog := aCatalog.
+	items := OrderedCollection new.! !
+
+
+!Cart methodsFor: 'queries' stamp: 'HernanWilkinson 6/17/2013 17:45'!
+occurrencesOf: anItem
+
+	^items occurrencesOf: anItem  ! !
+
+
+!Cart methodsFor: 'testing' stamp: 'HernanWilkinson 6/17/2013 17:44'!
+includes: anItem
+
+	^items includes: anItem ! !
+
+!Cart methodsFor: 'testing' stamp: 'HernanWilkinson 6/17/2013 17:44'!
 isEmpty
+	
+	^items isEmpty ! !
 
-	^books isEmpty.! !
+
+!Cart methodsFor: 'adding' stamp: 'HernanWilkinson 6/17/2013 17:44'!
+add: anItem
+
+	^ self add: 1 of: anItem ! !
+
+!Cart methodsFor: 'adding' stamp: 'HernanWilkinson 6/17/2013 17:51'!
+add: aQuantity of: anItem
+
+	self assertIsValidQuantity: aQuantity.
+	self assertIsValidItem: anItem.
+
+	1 to: aQuantity do: [ :aNumber | items add: anItem ]! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+Cart class
+	instanceVariableNames: ''!
+
+!Cart class methodsFor: 'instance creation' stamp: 'HernanWilkinson 6/17/2013 17:48'!
+acceptingItemsOf: aCatalog
+
+	^self new initializeAcceptingItemsOf: aCatalog ! !
+
+
+!classDefinition: #Cashier category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+Object subclass: #Cashier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+Cashier class
+	instanceVariableNames: ''!
+
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:22:38'!
+EmptyCartError
+
+	^'Cannot sell to empty cart.'! !
+
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:58:08'!
+ExpiredCreditCardError
+
+	^'Credit card is expired.'! !
+
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:35:59'!
+isExpired: aCreditCard
+
+	|today bool1 bool2 bool3|
+	
+	today _ Date today yyyymmdd.
+	bool1 _ ((today copyFrom: 1 to: 4) > (aCreditCard expirationDate copyFrom: 3 to: 6)).
+	bool2 _ ((today copyFrom: 1 to: 4) = (aCreditCard expirationDate copyFrom: 3 to: 6)).
+	bool3 _ (today copyFrom: 5 to: 6) > (aCreditCard expirationDate copyFrom: 1 to: 2).
+	^ bool1 or: (bool2 and: bool3).! !
+
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:42:11'!
+sell: aCart to: aCreditCard
+
+	(self isExpired: aCreditCard) ifTrue: [self error: self ExpiredCreditCardError ].
+	aCart isEmpty ifTrue: [self error: self EmptyCartError].! !
+
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'number date owner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!CreditCard methodsFor: 'nil' stamp: 'mm 11/4/2019 12:33:34'!
+initializeWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate
+
+	number _ aCreditCardNumber.
+	owner   _ aPersonName.
+	date      _ anExpirationDate.! !
+
+
+!CreditCard methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:01:07'!
+expirationDate
+
+	^date! !
+
+!CreditCard methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:01:44'!
+number
+
+	^number! !
+
+!CreditCard methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:01:23'!
+owner
+
+	^owner! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+CreditCard class
+	instanceVariableNames: ''!
+
+!CreditCard class methodsFor: 'nil' stamp: 'mm 11/4/2019 12:34:43'!
+newWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate
+
+	^self new initializeWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate.
+! !
