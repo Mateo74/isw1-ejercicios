@@ -18,17 +18,27 @@ test02CashierCheckoutsCartWithOneItem
 	|cart item cashier saleDetail|
 	cart := self createCart.
 	item := self itemSellByTheStore.
-	cashier := Cashier at: Date today registeringSalesOn: OrderedCollection new.
+	cashier := Cashier at: Date today registeringSalesOn: OrderedCollection new debitingWith: self mockedMerchantProcessor.
 	
 	cart add: item.
-	saleDetail := cashier checkout: cart with: self validCreditCard debitingWith: self mockedMerchantProcessor.
+	saleDetail := cashier checkout: cart with: self validCreditCard.
 	
 	self assert: saleDetail totalDebited equals: (self defaultCatalog at: item).
 	self assert: (saleDetail itemsSoldAre: (OrderedCollection with: self itemSellByTheStore)).
 
+test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart
 
+	|cart item cashier saleDetail|
+	cart := self createCart.
+	item := self itemSellByTheStore.
+	cashier := Cashier at: Date today registeringSalesOn: OrderedCollection new debitingWith: self mockedMerchantProcessor.
+	
+	cart add: item.
+	saleDetail := cashier checkout: cart with: self validCreditCard.
+	
+	self deny: (saleDetail itemsSoldAre: (OrderedCollection with: self itemSellByTheStore with: self anotherItemSellByTheStore)).
 
-test03CashierDoesNotAcceptExpiredCreditCard
+test04CashierDoesNotAcceptExpiredCreditCard
 
 	|cart cashier salesBook|
 	cart := self createCart.
@@ -45,7 +55,7 @@ test03CashierDoesNotAcceptExpiredCreditCard
 	]
 
 
-test04CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30
+test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30
 
 	|cart cashier salesBook|
 	cart := self createCart.
@@ -61,7 +71,7 @@ test04CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30
 		self assert: salesBook isEmpty.
 	]
 
-test05CashierSalesAreRegisteredOnSalesBook
+test06CashierSalesAreRegisteredOnSalesBook
 
 	|cart item cashier firstSaleDetail secondSaleDetail salesBook|
 	salesBook := OrderedCollection new.

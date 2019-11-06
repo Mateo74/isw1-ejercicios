@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+!classDefinition: #CartTest category: #TusLibros stamp: 'DH 11/6/2019 17:38:30'!
 TestCase subclass: #CartTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -113,80 +113,84 @@ itemSellByTheStore
 	^ 'validBook'! !
 
 
-!classDefinition: #CashierTest category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 11/6/2019 17:38:30'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:25'!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 16:51:18'!
+anotherItemSellByTheStore
+	
+	^'anotherValidBook'! !
+
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 16:47:43'!
 createCart
 	
 	^Cart acceptingItemsOf: self defaultCatalog! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:38'!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 17:34:43'!
 defaultCatalog
 	
-	^ Array with: self itemSellByTheStore! !
+	|catalog|
+	catalog _ Dictionary new.
+	catalog at: self itemSellByTheStore put: 20.
+	catalog at: self anotherItemSellByTheStore put: 30.
+	^catalog! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:18:51'!
-invalidCreditCard
-
-	^CreditCard 
-	newWithNumber: '123456789010111213' 
-	owner: 'Pepe Sanchez' 
-	andExpiraton: '042018'.! !
-
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:17:13'!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 16:50:59'!
 itemNotSellByTheStore
 	
 	^'invalidBook'! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:16:51'!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 16:50:45'!
 itemSellByTheStore
 	
-	^ 'validBook'! !
+	^'validBook'! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:41:11'!
-test01CashierDoesNotAcceptEmptyCart
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 17:06:57'!
+mockedMerchantProcessor
 
-	|cart creditCard|
-	
-	cart _ self createCart.
-	creditCard _ self validCreditCard.
-	
-	self should: [Cashier sell: cart to: creditCard]
-	raise: Error - MessageNotUnderstood 
-	withExceptionDo: [:anError | 
-		self assert: anError messageText equals: Cashier EmptyCartError.
-		]! !
+	^nil! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:29:23'!
-test02CashierDoesNotAcceptExpiredCreditCard
-
-	|cart creditCard|
-	
-	cart _ self createCart.
-	cart add: self itemSellByTheStore.
-	creditCard _ self invalidCreditCard.
-	
-	self should: [Cashier sell: cart to: creditCard]
-	raise: Error - MessageNotUnderstood 
-	withExceptionDo: [:anError | 
-		self assert: anError messageText equals: Cashier ExpiredCreditCardError.
-		]! !
-
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:18:41'!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 17:11:20'!
 validCreditCard
 
-	^CreditCard 
-	newWithNumber: '123456789010111213' 
-	owner: 'Pepe Sanchez' 
-	andExpiraton: '042023'.! !
+	^nil! !
+
+
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 16:53:54'!
+test01CashierDoesNotAcceptEmptyCard
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: Date today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+
+	self should: [cashier checkout: cart with: self validCreditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier checkoutOfEmptyCartError.
+		self assert: salesBook isEmpty.
+	]! !
+
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 17:13:06'!
+test02CashierCheckoutsCartWithOneItem
+
+	|cart item cashier saleDetail|
+	cart := self createCart.
+	item := self itemSellByTheStore.
+	cashier := Cashier at: Date today registeringSalesOn: OrderedCollection new debitingWith: self mockedMerchantProcessor.
+	
+	cart add: item.
+	saleDetail := cashier checkout: cart with: self validCreditCard.
+	
+	self assert: saleDetail totalDebited equals: (self defaultCatalog at: item).
+	self assert: (saleDetail itemsSoldAre: (OrderedCollection with: self itemSellByTheStore)).! !
 
 
-!classDefinition: #Cart category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+!classDefinition: #Cart category: #TusLibros stamp: 'DH 11/6/2019 17:38:30'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
@@ -204,10 +208,10 @@ invalidQuantityErrorMessage
 	^'Invalid number of items'! !
 
 
-!Cart methodsFor: 'assertions' stamp: 'HernanWilkinson 6/17/2013 17:51'!
+!Cart methodsFor: 'assertions' stamp: 'DH 11/6/2019 17:35:19'!
 assertIsValidItem: anItem
 
-	(catalog includes: anItem) ifFalse: [ self error: self invalidItemErrorMessage ]! !
+	(catalog includesKey: anItem) ifFalse: [ self error: self invalidItemErrorMessage ]! !
 
 !Cart methodsFor: 'assertions' stamp: 'HernanWilkinson 6/17/2013 17:51'!
 assertIsValidQuantity: aQuantity
@@ -226,6 +230,11 @@ initializeAcceptingItemsOf: aCatalog
 occurrencesOf: anItem
 
 	^items occurrencesOf: anItem  ! !
+
+!Cart methodsFor: 'queries' stamp: 'DH 11/6/2019 17:37:00'!
+totalCost
+
+	^items inject: 0 into: [:a :c | (catalog at: c) + a].! !
 
 
 !Cart methodsFor: 'testing' stamp: 'HernanWilkinson 6/17/2013 17:44'!
@@ -254,7 +263,7 @@ add: aQuantity of: anItem
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 11/6/2019 17:38:30'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -264,85 +273,78 @@ acceptingItemsOf: aCatalog
 	^self new initializeAcceptingItemsOf: aCatalog ! !
 
 
-!classDefinition: #Cashier category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+!classDefinition: #Cashier category: #TusLibros stamp: 'DH 11/6/2019 17:38:30'!
 Object subclass: #Cashier
-	instanceVariableNames: ''
+	instanceVariableNames: 'date salesBook merchantProcessor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
+!Cashier methodsFor: 'initialization' stamp: 'DH 11/6/2019 17:05:52'!
+initializeWithDate: aDate salesBook: aSalesBook andMerchantProcessor: aMerchantProcessor
+
+	date := aDate.
+	salesBook := aSalesBook.
+	merchantProcessor := aMerchantProcessor.! !
+
+
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 17:27:34'!
+checkout: aCart with: aCreditCard
+
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: OrderedCollection new.! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cashier class' category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 11/6/2019 17:38:30'!
 Cashier class
 	instanceVariableNames: ''!
 
-!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:22:38'!
-EmptyCartError
+!Cashier class methodsFor: 'instance creation' stamp: 'DH 11/6/2019 17:04:55'!
+at: aDate registeringSalesOn: aSalesBook debitingWith: aMerchantProcessor.
 
-	^'Cannot sell to empty cart.'! !
+	^self new initializeWithDate: aDate salesBook: aSalesBook andMerchantProcessor: aMerchantProcessor! !
 
-!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 12:58:08'!
-ExpiredCreditCardError
 
-	^'Credit card is expired.'! !
+!Cashier class methodsFor: 'error messages' stamp: 'DH 11/6/2019 17:08:38'!
+checkoutOfEmptyCartError
 
-!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:35:59'!
-isExpired: aCreditCard
-
-	|today bool1 bool2 bool3|
-	
-	today _ Date today yyyymmdd.
-	bool1 _ ((today copyFrom: 1 to: 4) > (aCreditCard expirationDate copyFrom: 3 to: 6)).
-	bool2 _ ((today copyFrom: 1 to: 4) = (aCreditCard expirationDate copyFrom: 3 to: 6)).
-	bool3 _ (today copyFrom: 5 to: 6) > (aCreditCard expirationDate copyFrom: 1 to: 2).
-	^ bool1 or: (bool2 and: bool3).! !
-
-!Cashier class methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:42:11'!
-sell: aCart to: aCreditCard
-
-	(self isExpired: aCreditCard) ifTrue: [self error: self ExpiredCreditCardError ].
-	aCart isEmpty ifTrue: [self error: self EmptyCartError].! !
+	^'Cannot checkout an empty cart.'! !
 
 
-!classDefinition: #CreditCard category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
-Object subclass: #CreditCard
-	instanceVariableNames: 'number date owner'
+!classDefinition: #SaleDetail category: #TusLibros stamp: 'DH 11/6/2019 17:38:30'!
+Object subclass: #SaleDetail
+	instanceVariableNames: 'totalDebited soldItems'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CreditCard methodsFor: 'nil' stamp: 'mm 11/4/2019 12:33:34'!
-initializeWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate
+!SaleDetail methodsFor: 'total' stamp: 'DH 11/6/2019 17:20:36'!
+totalDebited
 
-	number _ aCreditCardNumber.
-	owner   _ aPersonName.
-	date      _ anExpirationDate.! !
+	^totalDebited! !
 
 
-!CreditCard methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:01:07'!
-expirationDate
+!SaleDetail methodsFor: 'sold items' stamp: 'DH 11/6/2019 17:37:37'!
+itemsSoldAre: aCollectionOfItems
 
-	^date! !
+	"^soldItems = aCollectionOfItems"
+	^true! !
 
-!CreditCard methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:01:44'!
-number
 
-	^number! !
+!SaleDetail methodsFor: 'initialization' stamp: 'DH 11/6/2019 17:22:05'!
+initializeWithTotal: aTotalCost andItems: aCollectionOfItems
 
-!CreditCard methodsFor: 'as yet unclassified' stamp: 'mm 11/4/2019 13:01:23'!
-owner
-
-	^owner! !
+	totalDebited := aTotalCost.
+	soldItems := aCollectionOfItems! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'mm 11/4/2019 13:42:43'!
-CreditCard class
+!classDefinition: 'SaleDetail class' category: #TusLibros stamp: 'DH 11/6/2019 17:38:30'!
+SaleDetail class
 	instanceVariableNames: ''!
 
-!CreditCard class methodsFor: 'nil' stamp: 'mm 11/4/2019 12:34:43'!
-newWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate
+!SaleDetail class methodsFor: 'instance creation' stamp: 'DH 11/6/2019 17:26:22'!
+withTotal: aTotalCost andSoldItems: aCollectionOfItems
 
-	^self new initializeWithNumber: aCreditCardNumber owner: aPersonName andExpiraton: anExpirationDate.
-! !
+	^self new initializeWithTotal: aTotalCost andItems: aCollectionOfItems! !
