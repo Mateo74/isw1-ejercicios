@@ -3,7 +3,7 @@ test01CashierDoesNotAcceptEmptyCard
 	|cart cashier salesBook|
 	cart := self createCart.
 	salesBook := OrderedCollection new.
-	cashier := Cashier at: Date today registeringSalesOn: salesBook.
+	cashier := Cashier at: Date today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
 
 	self should: [Cashier checkout: cart with: self validCreditCard]
 	raise: Error - MessageNotUnderstood 
@@ -21,7 +21,7 @@ test02CashierCheckoutsCartWithOneItem
 	cashier := Cashier at: Date today registeringSalesOn: OrderedCollection new.
 	
 	cart add: item.
-	saleDetail := cashier checkout: cart with: self validCreditCard.
+	saleDetail := cashier checkout: cart with: self validCreditCard debitingWith: self mockedMerchantProcessor.
 	
 	self assert: saleDetail totalDebited equals: (self defaultCatalog at: item).
 	self assert: (saleDetail itemsSoldAre: (OrderedCollection with: self itemSellByTheStore)).
@@ -33,9 +33,9 @@ test03CashierDoesNotAcceptExpiredCreditCard
 	|cart cashier salesBook|
 	cart := self createCart.
 	salesBook := OrderedCollection new.
-	cashier := Cashier at: Date today registeringSalesOn: salesBook.
+	cashier := Cashier at: self today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
 
-	cart add: self itemSellByTheStore
+	cart add: self itemSellByTheStore.
 
 	self should: [Cashier checkout: cart with: self expiredCreditCard]
 	raise: Error - MessageNotUnderstood 
@@ -50,7 +50,7 @@ test04CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30
 	|cart cashier salesBook|
 	cart := self createCart.
 	salesBook := OrderedCollection new.
-	cashier := Cashier at: Date today registeringSalesOn: salesBook.
+	cashier := Cashier at: Date today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
 	
 	cart add: self itemSellByTheStore.
 
@@ -65,7 +65,7 @@ test05CashierSalesAreRegisteredOnSalesBook
 
 	|cart item cashier firstSaleDetail secondSaleDetail salesBook|
 	salesBook := OrderedCollection new.
-	cashier := Cashier at: Date today registeringSalesOn: salesBook.
+	cashier := Cashier at: Date today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
 	
 	cart := self createCart.
 	item := self itemSellByTheStore.
@@ -78,3 +78,9 @@ test05CashierSalesAreRegisteredOnSalesBook
 	secondSaleDetail := cashier checkout: cart with: self validCreditCard.
 	
 	self assert: (OrderedCollection with: firstSaleDetail with: secondSaleDetail) equals: salesBook
+
+
+mockedMerchantProcessor
+
+	^MockedMerchantProcessor new
+	
