@@ -1857,3 +1857,389 @@ PASSED!
 ----SNAPSHOT----(6 November 2019 23:15:12) CuisUniversity-3938.image priorSource: 14418330!
 
 ----QUIT----(6 November 2019 23:15:25) CuisUniversity-3938.image priorSource: 14433719!
+
+----STARTUP---- (6 November 2019 23:20:26) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+
+Object subclass: #AbstractMerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #AbstractMerchantProcessor category: #TusLibros stamp: 'DH 11/6/2019 23:22:07'!
+Object subclass: #AbstractMerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+AbstractMerchantProcessor subclass: #MerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #MerchantProcessor category: #TusLibros stamp: 'DH 11/6/2019 23:22:21'!
+AbstractMerchantProcessor subclass: #MerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+AbstractMerchantProcessor subclass: #MockedMerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #MockedMerchantProcessor category: #TusLibros stamp: 'DH 11/6/2019 23:22:26'!
+AbstractMerchantProcessor subclass: #MockedMerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!AbstractMerchantProcessor methodsFor: 'debit' stamp: 'DH 11/6/2019 23:23:12'!
+debit: anAmount from: aCreditCard
+
+	^self subclassResponsibility! !
+!MerchantProcessor methodsFor: 'debit' stamp: 'DH 11/6/2019 23:23:35'!
+debit: anAmount from: aCreditCard
+
+	^self notYetImplemented ! !
+!MockedMerchantProcessor methodsFor: 'debit' stamp: 'DH 11/6/2019 23:24:02'!
+debit: anAmount from: aCreditCard
+
+	! !
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 23:26:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 23:26:35'!
+PASSED!
+
+!testRun: #CreditCardTest #test03CannotCreateCreditCardWithNumberNotOf16Digits stamp: 'DH 11/6/2019 23:26:35'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:26:36'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:26:36'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:26:36'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:26:36'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:26:36'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:26:36'!
+PASSED!
+
+!testRun: #CashierTest #testDate stamp: 'DH 11/6/2019 23:26:36'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/6/2019 23:26:40'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/6/2019 23:26:40'!
+ERROR!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/6/2019 23:26:40'!
+ERROR!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/6/2019 23:26:40'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/6/2019 23:26:40'!
+ERROR!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/6/2019 23:26:40'!
+ERROR!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/6/2019 23:26:40'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/6/2019 23:26:40'!
+ERROR!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/6/2019 23:26:57'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/6/2019 23:27:05'!
+ERROR!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/6/2019 23:27:05'!
+ERROR!
+!CartTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:28:04' prior: 50777532!
+defaultCatalog
+	
+	|catalog|
+	catalog _ Dictionary new.
+	catalog at: self itemSellByTheStore put: 40.
+	^catalog! !
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/6/2019 23:28:08'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/6/2019 23:28:10'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/6/2019 23:28:11'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/6/2019 23:28:14'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/6/2019 23:28:14'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/6/2019 23:28:14'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/6/2019 23:28:14'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/6/2019 23:28:14'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/6/2019 23:28:14'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/6/2019 23:28:14'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/6/2019 23:28:14'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:28:16'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:28:16'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:28:16'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:28:16'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:28:16'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:28:16'!
+PASSED!
+
+!testRun: #CashierTest #testDate stamp: 'DH 11/6/2019 23:28:16'!
+PASSED!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 23:28:18'!
+PASSED!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 23:28:18'!
+PASSED!
+
+!testRun: #CreditCardTest #test03CannotCreateCreditCardWithNumberNotOf16Digits stamp: 'DH 11/6/2019 23:28:18'!
+PASSED!
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:29:37' prior: 50782646!
+checkout: aCart with: aCreditCard
+
+	|totalCost soldItems saleDetail|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
+	
+	totalCost _ aCart totalCost.
+	soldItems _ OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	
+	merchantProcessor debit: totalCost from: aCreditCard.
+	
+	saleDetail _ SaleDetail withTotal: totalCost andSoldItems: soldItems.
+	salesBook add: saleDetail.
+	^saleDetail! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/6/2019 23:29:53'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/6/2019 23:29:53'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/6/2019 23:29:53'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/6/2019 23:29:53'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/6/2019 23:29:53'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/6/2019 23:29:53'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/6/2019 23:29:53'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/6/2019 23:29:53'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:29:56'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:29:56'!
+ERROR!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:29:56'!
+ERROR!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:29:56'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:29:56'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:29:56'!
+ERROR!
+
+!testRun: #CashierTest #testDate stamp: 'DH 11/6/2019 23:29:56'!
+PASSED!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:30:20' prior: 50780679!
+mockedMerchantProcessor
+
+	^MockedMerchantProcessor new! !
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:30:23'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:30:23'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:30:23'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:30:23'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:30:23'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:30:23'!
+PASSED!
+
+!testRun: #CashierTest #testDate stamp: 'DH 11/6/2019 23:30:23'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/6/2019 23:30:26'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/6/2019 23:30:26'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/6/2019 23:30:26'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/6/2019 23:30:26'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/6/2019 23:30:26'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/6/2019 23:30:26'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/6/2019 23:30:26'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/6/2019 23:30:26'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:30:29'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:30:29'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:30:29'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:30:29'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:30:29'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:30:29'!
+PASSED!
+
+!testRun: #CashierTest #testDate stamp: 'DH 11/6/2019 23:30:29'!
+PASSED!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 23:30:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 23:30:31'!
+PASSED!
+
+!testRun: #CreditCardTest #test03CannotCreateCreditCardWithNumberNotOf16Digits stamp: 'DH 11/6/2019 23:30:31'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/6/2019 23:30:33'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/6/2019 23:30:33'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/6/2019 23:30:33'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/6/2019 23:30:33'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CashierTest #testDate stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test03CannotCreateCreditCardWithNumberNotOf16Digits stamp: 'DH 11/6/2019 23:30:34'!
+PASSED!
+
+----SNAPSHOT----(6 November 2019 23:30:39) CuisUniversity-3938.image priorSource: 14433812!
+
+----QUIT----(6 November 2019 23:30:53) CuisUniversity-3938.image priorSource: 14447301!

@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: #CartTest category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 TestCase subclass: #CartTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -97,10 +97,13 @@ createCart
 	
 	^Cart acceptingItemsOf: self defaultCatalog! !
 
-!CartTest methodsFor: 'support' stamp: 'HernanWilkinson 6/17/2013 17:43'!
+!CartTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:28:04'!
 defaultCatalog
 	
-	^ Array with: self itemSellByTheStore! !
+	|catalog|
+	catalog _ Dictionary new.
+	catalog at: self itemSellByTheStore put: 40.
+	^catalog! !
 
 !CartTest methodsFor: 'support' stamp: 'HernanWilkinson 6/17/2013 17:44'!
 itemNotSellByTheStore
@@ -113,7 +116,7 @@ itemSellByTheStore
 	^ 'validBook'! !
 
 
-!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -165,10 +168,10 @@ itemSellByTheStore
 	
 	^'validBook'! !
 
-!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 17:06:57'!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:30:20'!
 mockedMerchantProcessor
 
-	^nil! !
+	^MockedMerchantProcessor new! !
 
 !CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:00:53'!
 testDate
@@ -282,7 +285,7 @@ test06CashierSalesAreRegisteredOnSalesBook
 ! !
 
 
-!classDefinition: #CreditCardTest category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: #CreditCardTest category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 TestCase subclass: #CreditCardTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -340,7 +343,46 @@ assertThatCreditCardCannotBeCreatedWithNumber: anInvalidCreditCardNumber
 	].! !
 
 
-!classDefinition: #Cart category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: #AbstractMerchantProcessor category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
+Object subclass: #AbstractMerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!AbstractMerchantProcessor methodsFor: 'debit' stamp: 'DH 11/6/2019 23:23:12'!
+debit: anAmount from: aCreditCard
+
+	^self subclassResponsibility! !
+
+
+!classDefinition: #MerchantProcessor category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
+AbstractMerchantProcessor subclass: #MerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!MerchantProcessor methodsFor: 'debit' stamp: 'DH 11/6/2019 23:23:35'!
+debit: anAmount from: aCreditCard
+
+	^self notYetImplemented ! !
+
+
+!classDefinition: #MockedMerchantProcessor category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
+AbstractMerchantProcessor subclass: #MockedMerchantProcessor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!MockedMerchantProcessor methodsFor: 'debit' stamp: 'DH 11/6/2019 23:24:02'!
+debit: anAmount from: aCreditCard
+
+	! !
+
+
+!classDefinition: #Cart category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
@@ -419,7 +461,7 @@ itemsDo: aBlock
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -429,7 +471,7 @@ acceptingItemsOf: aCatalog
 	^self new initializeAcceptingItemsOf: aCatalog ! !
 
 
-!classDefinition: #Cashier category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: #Cashier category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 Object subclass: #Cashier
 	instanceVariableNames: 'date salesBook merchantProcessor'
 	classVariableNames: ''
@@ -444,23 +486,27 @@ initializeWithDate: aDate salesBook: aSalesBook andMerchantProcessor: aMerchantP
 	merchantProcessor _ aMerchantProcessor.! !
 
 
-!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:14:43'!
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:29:37'!
 checkout: aCart with: aCreditCard
 
-	|soldItems saleDetail|
+	|totalCost soldItems saleDetail|
 	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
 	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
 	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
 	
+	totalCost _ aCart totalCost.
 	soldItems _ OrderedCollection new.
 	aCart itemsDo: [:item | soldItems add: item.].
-	saleDetail _ SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.
+	
+	merchantProcessor debit: totalCost from: aCreditCard.
+	
+	saleDetail _ SaleDetail withTotal: totalCost andSoldItems: soldItems.
 	salesBook add: saleDetail.
 	^saleDetail! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 Cashier class
 	instanceVariableNames: ''!
 
@@ -486,7 +532,7 @@ expiredCreditCardError
 	^'Credit card is expired.'! !
 
 
-!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 Object subclass: #CreditCard
 	instanceVariableNames: 'number ownerName expirationDate'
 	classVariableNames: ''
@@ -527,7 +573,7 @@ ownerName
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 CreditCard class
 	instanceVariableNames: ''!
 
@@ -543,7 +589,7 @@ invalidCardNumberError
 	^'Credit card number must have exactly 16 digits'! !
 
 
-!classDefinition: #SaleDetail category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: #SaleDetail category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 Object subclass: #SaleDetail
 	instanceVariableNames: 'totalDebited soldItems'
 	classVariableNames: ''
@@ -570,7 +616,7 @@ initializeWithTotal: aTotalCost andItems: aCollectionOfItems
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'SaleDetail class' category: #TusLibros stamp: 'DH 11/6/2019 23:15:16'!
+!classDefinition: 'SaleDetail class' category: #TusLibros stamp: 'DH 11/6/2019 23:30:43'!
 SaleDetail class
 	instanceVariableNames: ''!
 
