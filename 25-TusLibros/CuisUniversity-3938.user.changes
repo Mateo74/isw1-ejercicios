@@ -299,3 +299,1561 @@ PASSED!
 ----SNAPSHOT----(6 November 2019 17:38:15) CuisUniversity-3938.image priorSource: 14374945!
 
 ----QUIT----(6 November 2019 17:38:33) CuisUniversity-3938.image priorSource: 14375038!
+
+----STARTUP---- (6 November 2019 18:51:56) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 18:56:38'!
+test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart
+
+	|cart item cashier saleDetail|
+	cart := self createCart.
+	item := self itemSellByTheStore.
+	cashier := Cashier at: Date today registeringSalesOn: OrderedCollection new debitingWith: self mockedMerchantProcessor.
+	
+	cart add: item.
+	saleDetail := cashier checkout: cart with: self validCreditCard.
+	
+	self deny: (saleDetail itemsSoldAre: (OrderedCollection with: self itemSellByTheStore with: self anotherItemSellByTheStore)).! !
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 18:56:41'!
+FAILURE!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 18:56:41'!
+FAILURE!
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 18:58:33' prior: 50780782!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.]
+	^SaleDetail withTotal: aCart totalCost andSoldItems: OrderedCollection new.! !
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 18:58:44' prior: 50780906!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: OrderedCollection new.! !
+!Cart methodsFor: 'traversal' stamp: 'DH 11/6/2019 18:59:54'!
+itemsDo: aBlock
+
+	items do: aBlock! !
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 19:00:03'!
+FAILURE!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 19:00:03'!
+FAILURE!
+!SaleDetail methodsFor: 'sold items' stamp: 'DH 11/6/2019 19:00:34' prior: 50780853!
+itemsSoldAre: aCollectionOfItems
+
+	^soldItems = aCollectionOfItems! !
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 19:00:38'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 19:00:38'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 19:00:38'!
+FAILURE!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 19:00:39'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 19:00:39'!
+FAILURE!
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 19:02:32' prior: 50780918!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 19:02:38'!
+PASSED!
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 19:03:13'!
+test04CashierDoesNotAcceptExpiredCreditCard
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: self today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+
+	cart add: self itemSellByTheStore.
+
+	self should: [Cashier checkout: cart with: self expiredCreditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier expiredCreditCardError.
+		self assert: salesBook isEmpty.
+	]! !
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 19:03:24' prior: 50780979!
+test04CashierDoesNotAcceptExpiredCreditCard
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: self today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+
+	cart add: self itemSellByTheStore.
+
+	self should: [cashier checkout: cart with: self expiredCreditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier expiredCreditCardError.
+		self assert: salesBook isEmpty.
+	]! !
+
+TestCase subclass: #CreditCardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCardTest category: #TusLibros stamp: 'DH 11/6/2019 19:53:42'!
+TestCase subclass: #CreditCardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CreditCardTest stamp: 'DH 11/6/2019 20:01:50'!
+TestCase subclass: #CreditCardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #CreditCard
+	instanceVariableNames: 'date salesBook merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/6/2019 20:04:44'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'date salesBook merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 20:06:12'!
+expiredCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpiratonDate: (GregorianMonthOfYear year: 2018 month: April)! !
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 20:07:42' prior: 50780694!
+validCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpiratonDate: (GregorianMonthOfYear year: 2023 month: April)! !
+!Cashier class methodsFor: 'error messages' stamp: 'DH 11/6/2019 20:08:50'!
+expiredCreditCardError
+
+	^'Credit card is expired.'! !
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 20:09:12'!
+ERROR!
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 20:09:45' prior: 50780999!
+test04CashierDoesNotAcceptExpiredCreditCard
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: self testDate registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+
+	cart add: self itemSellByTheStore.
+
+	self should: [cashier checkout: cart with: self expiredCreditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier expiredCreditCardError.
+		self assert: salesBook isEmpty.
+	]! !
+
+(2/June/1998)!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 20:11:42'!
+testDate
+
+	^Date newDay: 6 month: #November year: 2019! !
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 20:12:08' prior: 50780625!
+test01CashierDoesNotAcceptEmptyCard
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: self testDate registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+
+	self should: [cashier checkout: cart with: self validCreditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier checkoutOfEmptyCartError.
+		self assert: salesBook isEmpty.
+	]! !
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 20:12:13' prior: 50780700!
+test02CashierCheckoutsCartWithOneItem
+
+	|cart item cashier saleDetail|
+	cart := self createCart.
+	item := self itemSellByTheStore.
+	cashier := Cashier at: self testDate registeringSalesOn: OrderedCollection new debitingWith: self mockedMerchantProcessor.
+	
+	cart add: item.
+	saleDetail := cashier checkout: cart with: self validCreditCard.
+	
+	self assert: saleDetail totalDebited equals: (self defaultCatalog at: item).
+	self assert: (saleDetail itemsSoldAre: (OrderedCollection with: self itemSellByTheStore)).! !
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 20:12:20' prior: 50780880!
+test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart
+
+	|cart item cashier saleDetail|
+	cart := self createCart.
+	item := self itemSellByTheStore.
+	cashier := Cashier at: self testDate registeringSalesOn: OrderedCollection new debitingWith: self mockedMerchantProcessor.
+	
+	cart add: item.
+	saleDetail := cashier checkout: cart with: self validCreditCard.
+	
+	self deny: (saleDetail itemsSoldAre: (OrderedCollection with: self itemSellByTheStore with: self anotherItemSellByTheStore)).! !
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 20:12:27'!
+ERROR!
+!CreditCard class methodsFor: 'instance creation' stamp: 'DH 11/6/2019 20:14:45'!
+newWithNumber: aCreditCardNumber name: anOwnerName andExpirationDate: aDate
+
+	^self new initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aDate! !
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/6/2019 20:15:02'!
+initializeWithNumber: a! !
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/6/2019 20:16:40'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'date salesBook merchantProcessor number'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/6/2019 20:16:43'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'date salesBook merchantProcessor number ownerName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/6/2019 20:16:45'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'date salesBook merchantProcessor number ownerName expirationDate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/6/2019 20:16:38'!
+initializeWithNumber: aCreditCardNumber name: anOwnerName andExpirationDate: aDate
+
+	number _ aCreditCardNumber.
+	ownerName _ anOwnerName.
+	expirationDate _ aDate! !
+
+Object subclass: #CreditCard
+	instanceVariableNames: 'number ownerName expirationDate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/6/2019 20:16:54'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'number ownerName expirationDate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CreditCard class methodsFor: 'instance creation' stamp: 'DH 11/6/2019 20:17:35'!
+newWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aDate
+
+	^self new initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aDate! !
+
+!methodRemoval: CreditCard class #newWithNumber:name:andExpirationDate: stamp: 'DH 11/6/2019 20:17:37'!
+newWithNumber: aCreditCardNumber name: anOwnerName andExpirationDate: aDate
+
+	^self new initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aDate!
+
+!methodRemoval: CreditCard #initializeWithNumber: stamp: 'DH 11/6/2019 20:17:54'!
+initializeWithNumber: a!
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/6/2019 20:17:58'!
+initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aDate
+
+	number _ aCreditCardNumber.
+	ownerName _ anOwnerName.
+	expirationDate _ aDate! !
+
+!methodRemoval: CreditCard #initializeWithNumber:name:andExpirationDate: stamp: 'DH 11/6/2019 20:18:00'!
+initializeWithNumber: aCreditCardNumber name: anOwnerName andExpirationDate: aDate
+
+	number _ aCreditCardNumber.
+	ownerName _ anOwnerName.
+	expirationDate _ aDate!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 20:18:28' prior: 50781048!
+expiredCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpirationDate: (GregorianMonthOfYear year: 2018 month: April)! !
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 20:18:33' prior: 50781056!
+validCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789010111213' 
+	owner: 'Pepe Sanchez' 
+	andExpirationDate: (GregorianMonthOfYear year: 2023 month: April)! !
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 20:20:50'!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate year month: aDate month.
+	^expirationDate < dateAsMonthOfYear! !
+
+a := GregorianMonthOfYear year: 2000 month: June!
+
+d := Date today!
+
+d!
+
+a < (GregorianMonthOfYear year: d year month: d month)!
+
+a < (GregorianMonthOfYear year: d year month: d month)!
+
+d year!
+
+d year asNumber!
+
+a!
+
+b := GregorianMonthOfYear year: 2001 month: June!
+
+b!
+
+a < b!
+
+d := Date today!
+
+d year!
+
+d month!
+
+d month!
+
+d monthName!
+
+d yearNumber!
+
+b < GregorianMonthOfYear year: d yearNumber month: d month!
+
+b < (GregorianMonthOfYear year: d yearNumber month: d monthName)!
+
+b < (GregorianMonthOfYear year: d yearNumber month: d month)!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 20:32:37' prior: 50781266!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate month.
+	^expirationDate < dateAsMonthOfYear! !
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 20:32:53'!
+FAILURE!
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 20:40:27' prior: 50780964!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	"aCreditCard expiredOn: "
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+
+TestCase subclass: #CreditCardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CreditCardTest category: #TusLibros stamp: 'DH 11/6/2019 20:40:39'!
+TestCase subclass: #CreditCardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 20:46:37'!
+test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly
+
+	|card number owner date|
+	number _ '123456789101112'.
+	owner _ 'John Doe'.
+	date _ GregorianMonthOfYear year: 2015 month: June.
+	
+	card := CreditCard
+	newWithNumber: number
+	owner: owner
+	andExpirationDate: date.
+	
+	self assert: number equals: card number.
+	self assert: owner equals: card ownerName.
+	self assert: date equals: card expirationDate.! !
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 20:47:11' prior: 50781291!
+expiredOn: aDate
+
+	"|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate month.
+	^expirationDate < dateAsMonthOfYear"! !
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 20:47:21' prior: 50781342!
+expiredOn: aDate
+	^true
+	"|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate month.
+	^expirationDate < dateAsMonthOfYear"! !
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 20:47:31'!
+ERROR!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 20:47:31'!
+ERROR!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 20:48:06'!
+number
+
+	^number! !
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 20:48:14'!
+ownerName
+
+	^ownerName ! !
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 20:48:21'!
+expirationDate
+
+	^expirationDate ! !
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 20:48:29'!
+PASSED!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 20:52:37'!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: June year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: May year: 2015)).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 20:52:39'!
+ERROR!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 20:53:31' prior: 50781380!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: #June year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: #May year: 2015)).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 20:53:32'!
+FAILURE!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 20:54:10'!
+FAILURE!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 20:54:14' prior: 50781397!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: #June year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: May year: 2015)).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 20:54:14'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 20:54:18'!
+ERROR!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 20:54:27' prior: 50781417!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: #June year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: #May year: 2015)).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 20:54:28'!
+FAILURE!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 20:54:44' prior: 50781350!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate month.
+	^expirationDate < dateAsMonthOfYear! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 20:54:48'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 20:54:48'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 20:59:38'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 21:07:04'!
+ERROR!
+
+----SNAPSHOT----(6 November 2019 21:07:28) CuisUniversity-3938.image priorSource: 14375131!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 21:44:24' prior: 50781454!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate monthName.
+	^expirationDate < dateAsMonthOfYear! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 21:44:30'!
+ERROR!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 21:46:04' prior: 50781437!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: June year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: May year: 2015)).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 21:46:05'!
+ERROR!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 21:46:43' prior: 50781490!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: #June year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: #May year: 2015)).! !
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 21:47:26' prior: 50781478!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate month.
+	^expirationDate < dateAsMonthOfYear! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 21:47:31'!
+ERROR!
+
+a := GregorianMonthOfYear year: 2015 month: June!
+
+d := Date today.!
+
+d := Date today.!
+
+d!
+
+b := GregorianMonthOfYear year: d yearNumber month: d month.!
+
+a!
+
+d!
+
+b!
+
+a < b!
+
+b < a!
+
+a!
+
+b!
+
+c := GregorianMonthOfYear year: 2015 month: #June!
+
+c!
+
+e := GregorianMonthOfYear year: c yearNumber month: c month.!
+
+e := GregorianMonthOfYear year: d yearNumber month: d month.!
+
+e!
+
+a := GregorianMonthOfYear year: 2015 month: June!
+
+d := Date newDay: 6 month: November year: 2019!
+
+d := Date newDay: 6 month: #November year: 2019!
+
+d !
+
+b := GregorianMonthOfYear year: d yearNumber month: d month.!
+
+b!
+
+b := GregorianMonthOfYear year: d yearNumber month: d monthName.!
+
+b := GregorianMonthOfYear year: d yearNumber month: d monthName.!
+
+a < b!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 21:53:39' prior: 50781521!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate monthName.
+	^expirationDate < dateAsMonthOfYear! !
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/6/2019 21:53:57' prior: 50781233!
+initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aMonthOfYear
+
+	number _ aCreditCardNumber.
+	ownerName _ anOwnerName.
+	expirationDate _ aMonthOfYear! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'DH 11/6/2019 21:54:11' prior: 50781213!
+newWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aMonthOfYear
+
+	^self new initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aMonthOfYear! !
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 21:54:56' prior: 50781507!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: #June).
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: #June year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: #May year: 2015)).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 21:54:58'!
+FAILURE!
+
+a < a!
+
+a <= a!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 21:55:48' prior: 50781556!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate monthName.
+	^expirationDate <= dateAsMonthOfYear! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 21:55:51'!
+FAILURE!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 21:55:52'!
+FAILURE!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 21:56:04'!
+FAILURE!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 21:56:55'!
+FAILURE!
+
+(GregorianMonthOfYear year: 2015 month: June) <= (GregorianMonthOfYear year: 2015 month: May)!
+
+(GregorianMonthOfYear year: 2015 month: #June) <= (GregorianMonthOfYear year: 2015 month: #May)!
+
+(GregorianMonthOfYear year: 2015 month: #May) <= (GregorianMonthOfYear year: 2015 month: #June)!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:01:30' prior: 50781583!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: June year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: May year: 2015)).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:01:32'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:02:22'!
+ERROR!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:06:27' prior: 50781631!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: 'June').
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: 'June' year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: 'May' year: 2015)).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:06:34'!
+FAILURE!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:06:34'!
+FAILURE!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 22:07:36' prior: 50781600!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate month.
+	^expirationDate <= dateAsMonthOfYear! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:07:40'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:07:40'!
+ERROR!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 22:11:09' prior: 50781671!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate yearNumber month: aDate monthName asString.
+	^expirationDate <= dateAsMonthOfYear! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:11:22'!
+FAILURE!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:11:22'!
+FAILURE!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:11:48' prior: 50781651!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: (Date newDay: 24 month: June year: 2015)).
+	self deny: (card expiredOn: (Date newDay: 4 month: May year: 2015)).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:11:57'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:11:57'!
+ERROR!
+
+15,June,1997!
+
+15/June/1997!
+
+(15/June/1997)!
+
+(June/15/1997)!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:15:06' prior: 50781701!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	"self assert: (card expiredOn: (Date newDay: 24 month: June year: 2015))."
+	self assert: (card expiredOn: (June/24/2015)).
+	"self deny: (card expiredOn: (Date newDay: 4 month: May year: 2015))."! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:15:11'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:15:11'!
+ERROR!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 22:15:32' prior: 50781686!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate year month: aDate monthName asString.
+	^expirationDate <= dateAsMonthOfYear! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:15:36'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:15:36'!
+ERROR!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 22:15:54' prior: 50781744!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate year month: aDate month.
+	^expirationDate <= dateAsMonthOfYear! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:15:58'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:15:58'!
+ERROR!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 22:16:41' prior: 50781759!
+expiredOn: aDate
+
+	|dateAsMonthOfYear|
+	dateAsMonthOfYear := GregorianMonthOfYear year: aDate year month: aDate month.
+	"^expirationDate <= dateAsMonthOfYear"
+	^expirationDate <= aDate! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:16:54'!
+ERROR!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:16:54'!
+ERROR!
+
+a := GregorianMonthOfYear year: 2015 month: June!
+
+a asDate!
+
+a!
+
+a year!
+
+a month!
+
+a month isKindOf: Month!
+
+a month isKindOf: String!
+
+a month class!
+
+(a month/24/a year)!
+
+(a month/24/a year) < (4/November/2017)!
+
+(a month/24/a year) < (November/4/2017)!
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/6/2019 22:23:05' prior: 50781565!
+initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aMonthOfYear
+
+	number _ aCreditCardNumber.
+	ownerName _ anOwnerName.
+	expirationDate _ (aMonthOfYear month/1/aMonthOfYear year)! !
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 22:23:55' prior: 50781372!
+expirationDate
+
+	^GregorianMonthOfYear year: expirationDate year month: expirationDate month! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:24:18'!
+PASSED!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:24:58' prior: 50781723!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	"self assert: (card expiredOn: (Date newDay: 24 month: June year: 2015))."
+	self assert: (card expiredOn: (June/24/2015)).
+	self deny: (card expiredOn: (May/4/2015)).
+	"self deny: (card expiredOn: (Date newDay: 4 month: May year: 2015))."! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:24:59'!
+PASSED!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:25:13' prior: 50781816!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '123456789101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: June/24/2015).
+	self deny: (card expiredOn: May/4/2015).! !
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:25:14'!
+PASSED!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:25:14'!
+FAILURE!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:25:14'!
+PASSED!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:25:14'!
+FAILURE!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:25:27'!
+PASSED!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:25:38'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:25:38'!
+FAILURE!
+
+a := (June/4/2015)!
+
+a !
+
+a year!
+
+a yearNumber!
+
+a year asNumber!
+
+a year class!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:26:56'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:26:56'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:27:37'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:27:37'!
+FAILURE!
+
+a year asNumber!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 22:29:29' prior: 50781807!
+expirationDate
+
+	"^GregorianMonthOfYear year: expirationDate year month: expirationDate month"
+	^expirationDate monthOfYear! !
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:29:32'!
+FAILURE!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:29:32'!
+FAILURE!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:29:37'!
+PASSED!
+
+a := (June/4/2015)!
+
+a class!
+
+a immutableValue !
+
+a year class !
+
+GregorianNonLeapYear!
+
+a year number!
+!CreditCard methodsFor: 'queries' stamp: 'DH 11/6/2019 22:32:32' prior: 50781893!
+expirationDate
+
+	^GregorianMonthOfYear year: expirationDate year number month: expirationDate month! !
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:32:34'!
+PASSED!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:32:36'!
+PASSED!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:36:49'!
+test03CannotCreateCreditCardWithNumberNotOf16Digits
+
+	self should: [
+		CreditCard
+		newWithNumber: '123456789'
+		owner: 'John Doe'
+		andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: CreditCard invalidCardNumberError equals: anError messageText.
+	].! !
+!CreditCardTest methodsFor: 'assertions' stamp: 'DH 11/6/2019 22:38:09'!
+assertThatCreditCardCannotBeCreatedWithNumber: anInvalidCreditCardNumber
+
+	self should: [
+		CreditCard
+		newWithNumber: anInvalidCreditCardNumber
+		owner: 'John Doe'
+		andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: CreditCard invalidCardNumberError equals: anError messageText.
+	].! !
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:38:45' prior: 50781928!
+test03CannotCreateCreditCardWithNumberNotOf16Digits
+
+	self assertThatCreditCardCannotBeCreatedWithNumber: '12345678'
+	self assertThatCreditCardCannotBeCreatedWithNumber: '12345678910111213'! !
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:38:54' prior: 50781957!
+test03CannotCreateCreditCardWithNumberNotOf16Digits
+
+	self assertThatCreditCardCannotBeCreatedWithNumber: '12345678'.
+	self assertThatCreditCardCannotBeCreatedWithNumber: '12345678910111213'! !
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:38:56' prior: 50781966!
+test03CannotCreateCreditCardWithNumberNotOf16Digits
+
+	self assertThatCreditCardCannotBeCreatedWithNumber: '12345678'.
+	self assertThatCreditCardCannotBeCreatedWithNumber: '12345678910111213'.! !
+
+!testRun: #CreditCardTest #test03CannotCreateCreditCardWithNumberNotOf16Digits stamp: 'DH 11/6/2019 22:38:58'!
+FAILURE!
+
+!testRun: #CreditCardTest #test03CannotCreateCreditCardWithNumberNotOf16Digits stamp: 'DH 11/6/2019 22:38:58'!
+FAILURE!
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/6/2019 22:39:50' prior: 50781797!
+initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aMonthOfYear
+
+	aCreditCardNumber size = 16 ifFalse: (self error: self class invalidCardNumberError).
+	number _ aCreditCardNumber.
+	ownerName _ anOwnerName.
+	expirationDate _ (aMonthOfYear month/1/aMonthOfYear year)! !
+!CreditCard class methodsFor: 'error messages' stamp: 'DH 11/6/2019 22:40:36'!
+invalidCardNumberError
+
+	^'Credit card number must have exactly 16 digits'! !
+
+!testRun: #CreditCardTest #test03CannotCreateCreditCardWithNumberNotOf16Digits stamp: 'DH 11/6/2019 22:40:46'!
+PASSED!
+
+----SNAPSHOT----(6 November 2019 22:41:11) CuisUniversity-3938.image priorSource: 14394364!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 22:41:26'!
+FAILURE!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 22:41:55' prior: 50781250!
+expiredCreditCard
+
+	^CreditCard 
+	newWithNumber: '1234567890101112' 
+	owner: 'Pepe Sanchez' 
+	andExpirationDate: (GregorianMonthOfYear year: 2018 month: April)! !
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 22:42:01' prior: 50782020!
+expiredCreditCard
+
+	^CreditCard 
+	newWithNumber: '123456789101112' 
+	owner: 'Pepe Sanchez' 
+	andExpirationDate: (GregorianMonthOfYear year: 2018 month: April)! !
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 22:42:15'!
+FAILURE!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 22:42:15'!
+FAILURE!
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:43:00' prior: 50781072!
+test04CashierDoesNotAcceptExpiredCreditCard
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: self testDate registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+
+	cart add: self itemSellByTheStore.
+
+	self should: [cashier checkout: cart with: self expiredCreditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: Cashier expiredCreditCardError equals: anError messageText.
+		self assert: salesBook isEmpty.
+	]! !
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 22:43:05'!
+FAILURE!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 22:43:05'!
+FAILURE!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 22:43:44' prior: 50781258!
+validCreditCard
+
+	^CreditCard 
+	newWithNumber: '1234567890101112' 
+	owner: 'Pepe Sanchez' 
+	andExpirationDate: (GregorianMonthOfYear year: 2023 month: April)! !
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 22:44:19' prior: 50782028!
+expiredCreditCard
+
+	^CreditCard 
+	newWithNumber: '1234567890101112' 
+	owner: 'Pepe Sanchez' 
+	andExpirationDate: (GregorianMonthOfYear year: 2018 month: April)! !
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 22:44:25'!
+FAILURE!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 22:44:25'!
+FAILURE!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 22:44:33'!
+FAILURE!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 22:44:33'!
+FAILURE!
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:44:52' prior: 50781097!
+test01CashierDoesNotAcceptEmptyCard
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: self testDate registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+
+	self should: [cashier checkout: cart with: self validCreditCard]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: Cashier checkoutOfEmptyCartError equals: anError messageText.
+		self assert: salesBook isEmpty.
+	]! !
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 22:44:59'!
+ERROR!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 22:44:59'!
+ERROR!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 22:45:10'!
+FAILURE!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 22:45:10'!
+FAILURE!
+
+!testRun: #CreditCardTest #test03CannotCreateCreditCardWithNumberNotOf16Digits stamp: 'DH 11/6/2019 22:45:32'!
+PASSED!
+
+'123' size!
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/6/2019 22:46:27' prior: 50781992!
+initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aMonthOfYear
+
+	(aCreditCardNumber size = 16) ifFalse: (self error: self class invalidCardNumberError).
+	number _ aCreditCardNumber.
+	ownerName _ anOwnerName.
+	expirationDate _ (aMonthOfYear month/1/aMonthOfYear year)! !
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/6/2019 22:46:56' prior: 50782135!
+initializeWithNumber: aCreditCardNumber owner: anOwnerName andExpirationDate: aMonthOfYear
+
+	aCreditCardNumber size = 16 ifFalse: [self error: self class invalidCardNumberError.].
+	number _ aCreditCardNumber.
+	ownerName _ anOwnerName.
+	expirationDate _ (aMonthOfYear month/1/aMonthOfYear year)! !
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:47:05'!
+ERROR!
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:47:05'!
+ERROR!
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:47:12' prior: 50781326!
+test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly
+
+	|card number owner date|
+	number _ '1234567890101112'.
+	owner _ 'John Doe'.
+	date _ GregorianMonthOfYear year: 2015 month: June.
+	
+	card := CreditCard
+	newWithNumber: number
+	owner: owner
+	andExpirationDate: date.
+	
+	self assert: number equals: card number.
+	self assert: owner equals: card ownerName.
+	self assert: date equals: card expirationDate.! !
+!CreditCardTest methodsFor: 'tests' stamp: 'DH 11/6/2019 22:47:20' prior: 50781836!
+test02CreditCardAnswersIfIsExpired
+
+	|card|
+	card := CreditCard
+	newWithNumber: '1234567890101112'
+	owner: 'John Doe'
+	andExpirationDate: (GregorianMonthOfYear year: 2015 month: June).
+	
+	self assert: (card expiredOn: June/24/2015).
+	self deny: (card expiredOn: May/4/2015).! !
+
+!testRun: #CreditCardTest #test01CreditCardAnswersNumberOwnerAndExpirationDateCorrectly stamp: 'DH 11/6/2019 22:47:26'!
+PASSED!
+
+!testRun: #CreditCardTest #test02CreditCardAnswersIfIsExpired stamp: 'DH 11/6/2019 22:47:28'!
+PASSED!
+
+!testRun: #CreditCardTest #test03CannotCreateCreditCardWithNumberNotOf16Digits stamp: 'DH 11/6/2019 22:47:30'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 22:47:36'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 22:47:37'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 22:47:39'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 22:47:42'!
+FAILURE!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 22:47:42'!
+FAILURE!
+
+----SNAPSHOT----(6 November 2019 22:47:48) CuisUniversity-3938.image priorSource: 14411589!
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:00:06' prior: 50781303!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:00:53' prior: 50781092!
+testDate
+
+	^(November/6/2019)! !
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:01:02'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:01:04'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:01:06'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:01:07'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:01:08'!
+PASSED!
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 23:02:13'!
+test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: Date today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+	
+	cart add: self itemSellByTheStore.
+
+	self should: [Cashier checkout: cart with: self creditCardWithLongOwnerName]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier creditCardWithTooLongOwnerNameError.
+		self assert: salesBook isEmpty.
+	]
+! !
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 23:02:22' prior: 50782262!
+test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: Date today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+	
+	cart add: self itemSellByTheStore.
+
+	self should: [cashier checkout: cart with: self creditCardWithLongOwnerName]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: anError messageText equals: Cashier creditCardWithTooLongOwnerNameError.
+		self assert: salesBook isEmpty.
+	]
+! !
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:02:23'!
+ERROR!
+!Cashier class methodsFor: 'error messages' stamp: 'DH 11/6/2019 23:02:50'!
+creditCardWithTooLongOwnerNameError
+
+	^'Credit card owner name has more than 30 characters.'! !
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:04:23'!
+creditCardWithLongOwnerName
+
+	^CreditCard
+	newWithNumber: '1234567890101112'
+	owner: ''
+	andExpirationDate: (6/May/2023)! !
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:05:37' prior: 50782314!
+creditCardWithLongOwnerName
+
+	^CreditCard
+	newWithNumber: '1234567890101112'
+	owner: 'An owner with a really long name'
+	andExpirationDate: (6/May/2023)! !
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:05:41'!
+ERROR!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:05:41'!
+ERROR!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:06:01' prior: 50782321!
+creditCardWithLongOwnerName
+
+	^CreditCard
+	newWithNumber: '1234567890101112'
+	owner: 'An owner with a really long name'
+	andExpirationDate: (May/6/2023)! !
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:06:05'!
+FAILURE!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:06:05'!
+FAILURE!
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:07:07' prior: 50782227!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:07:16' prior: 50782353!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
+	
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:07:41' prior: 50782371!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
+	
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:07:46'!
+FAILURE!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:07:46'!
+FAILURE!
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 23:08:07' prior: 50782283!
+test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: Date today registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+	
+	cart add: self itemSellByTheStore.
+
+	self should: [cashier checkout: cart with: self creditCardWithLongOwnerName]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: Cashier creditCardWithTooLongOwnerNameError equals: anError messageText.
+		self assert: salesBook isEmpty.
+	]
+! !
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:08:26'!
+FAILURE!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:08:26'!
+FAILURE!
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:09:24' prior: 50782389!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
+	
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:10:12' prior: 50782445!
+checkout: aCart with: aCreditCard
+
+	|soldItems|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
+	
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:10:16'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:10:17'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:10:18'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:10:20'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:10:22'!
+FAILURE!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:10:22'!
+FAILURE!
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:11:09' prior: 50782337!
+creditCardWithLongOwnerName
+
+	^CreditCard
+	newWithNumber: '1234567890101112'
+	owner: 'An owner with a really long name'
+	andExpirationDate: (GregorianMonthOfYear year: 2023 month: May).! !
+!CashierTest methodsFor: 'support' stamp: 'DH 11/6/2019 23:11:42' prior: 50782503!
+creditCardWithLongOwnerName
+
+	^CreditCard
+	newWithNumber: '1234567890101112'
+	owner: 'An owner with a really long name'
+	andExpirationDate: (GregorianMonthOfYear year: 2023 month: May)! !
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:12:00'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:12:02'!
+PASSED!
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 23:12:11' prior: 50782415!
+test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30
+
+	|cart cashier salesBook|
+	cart := self createCart.
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: self testDate registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+	
+	cart add: self itemSellByTheStore.
+
+	self should: [cashier checkout: cart with: self creditCardWithLongOwnerName]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError | 
+		self assert: Cashier creditCardWithTooLongOwnerNameError equals: anError messageText.
+		self assert: salesBook isEmpty.
+	]
+! !
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:12:13'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:12:18'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:12:18'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:12:18'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:12:18'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:12:18'!
+PASSED!
+
+!testRun: #CashierTest #testDate stamp: 'DH 11/6/2019 23:12:18'!
+PASSED!
+!CashierTest methodsFor: 'tests' stamp: 'DH 11/6/2019 23:13:29'!
+test06CashierSalesAreRegisteredOnSalesBook
+
+	|cart item cashier firstSaleDetail secondSaleDetail salesBook|
+	salesBook := OrderedCollection new.
+	cashier := Cashier at: self testDate registeringSalesOn: salesBook debitingWith: self mockedMerchantProcessor.
+	
+	cart := self createCart.
+	item := self itemSellByTheStore.
+	cart add: item.
+	firstSaleDetail := cashier checkout: cart with: self validCreditCard.
+	
+	cart := self createCart.
+	item := self anotherItemSellByTheStore.
+	cart add: item.
+	secondSaleDetail := cashier checkout: cart with: self validCreditCard.
+	
+	self assert: (OrderedCollection with: firstSaleDetail with: secondSaleDetail) equals: salesBook
+! !
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:13:35'!
+FAILURE!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:13:35'!
+FAILURE!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:13:41'!
+FAILURE!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:13:41'!
+FAILURE!
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:14:01' prior: 50782463!
+checkout: aCart with: aCreditCard
+
+	|soldItems saleDetail|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
+	
+	soldItems := OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	^SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:14:22' prior: 50782610!
+checkout: aCart with: aCreditCard
+
+	|soldItems saleDetail|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
+	
+	soldItems _ OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	saleDetail _ SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.! !
+!Cashier methodsFor: 'checkout' stamp: 'DH 11/6/2019 23:14:43' prior: 50782628!
+checkout: aCart with: aCreditCard
+
+	|soldItems saleDetail|
+	aCart isEmpty ifTrue: [self error: self class checkoutOfEmptyCartError.].
+	(aCreditCard expiredOn: date) ifTrue: [self error: self class expiredCreditCardError.].
+	aCreditCard ownerName size > 30 ifTrue: [self error: self class creditCardWithTooLongOwnerNameError.].
+	
+	soldItems _ OrderedCollection new.
+	aCart itemsDo: [:item | soldItems add: item.].
+	saleDetail _ SaleDetail withTotal: aCart totalCost andSoldItems: soldItems.
+	salesBook add: saleDetail.
+	^saleDetail! !
+!Cashier methodsFor: 'initialization' stamp: 'DH 11/6/2019 23:14:57' prior: 50780671!
+initializeWithDate: aDate salesBook: aSalesBook andMerchantProcessor: aMerchantProcessor
+
+	date _ aDate.
+	salesBook _ aSalesBook.
+	merchantProcessor _ aMerchantProcessor.! !
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:15:02'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:15:04'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierDoesNotAcceptEmptyCard stamp: 'DH 11/6/2019 23:15:07'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCheckoutsCartWithOneItem stamp: 'DH 11/6/2019 23:15:07'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierSaleDetailDoesNotIncludeItemsThatWereNotInCart stamp: 'DH 11/6/2019 23:15:07'!
+PASSED!
+
+!testRun: #CashierTest #test04CashierDoesNotAcceptExpiredCreditCard stamp: 'DH 11/6/2019 23:15:07'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierDoesNotAcceptCreditCardWithOwnerNameLengthGreaterThan30 stamp: 'DH 11/6/2019 23:15:07'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierSalesAreRegisteredOnSalesBook stamp: 'DH 11/6/2019 23:15:07'!
+PASSED!
+
+!testRun: #CashierTest #testDate stamp: 'DH 11/6/2019 23:15:07'!
+PASSED!
+
+----SNAPSHOT----(6 November 2019 23:15:12) CuisUniversity-3938.image priorSource: 14418330!
+
+----QUIT----(6 November 2019 23:15:25) CuisUniversity-3938.image priorSource: 14433719!
