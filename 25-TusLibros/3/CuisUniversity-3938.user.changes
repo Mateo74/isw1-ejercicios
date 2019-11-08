@@ -1,0 +1,990 @@
+
+
+----STARTUP---- (7 November 2019 19:10:50) as /home/dhuaier/Desktop/linux64/CuisUniversity-3938.image!
+
+
+----End fileIn of /home/dhuaier/Desktop/linux64/TusLibros-33.st----!
+
+----SNAPSHOT----(7 November 2019 19:11:31) CuisUniversity-3938.image priorSource: 14319118!
+
+TestCase subclass: #InterfaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #InterfaceTest category: #TusLibros stamp: 'DH 11/7/2019 19:12:23'!
+TestCase subclass: #InterfaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/7/2019 19:28:21'!
+Object subclass: #Interface
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 19:27:55'!
+test01CannotCreateCartWithInvalidClientID
+
+	|interface|
+	interface _ self createInterface.
+	self should: [interface createCartWithClientID: self invalidClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidIDErrorMessage equals: anError messageText.
+		]
+	"Habría que chequear que no se creó ningún carrito... Cómo lo hacemos????"! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 19:28:38'!
+ERROR!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 19:28:38'!
+ERROR!
+
+TestCase subclass: #InterfaceTest
+	instanceVariableNames: 'storeTestObjectFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #InterfaceTest category: #TusLibros stamp: 'DH 11/7/2019 19:30:42'!
+TestCase subclass: #InterfaceTest
+	instanceVariableNames: 'storeTestObjectFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!InterfaceTest methodsFor: 'nil' stamp: 'DH 11/7/2019 19:31:12'!
+setUp
+
+	storeTestObjectFactory := StoreTestObjectsFactory new.
+	! !
+
+TestCase subclass: #InterfaceTest
+	instanceVariableNames: 'testObjectFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #InterfaceTest category: #TusLibros stamp: 'DH 11/7/2019 19:31:39'!
+TestCase subclass: #InterfaceTest
+	instanceVariableNames: 'testObjectFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 19:31:50' prior: 50777965!
+setUp
+
+	testObjectFactory := StoreTestObjectsFactory new.
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 19:32:45' prior: 50777931!
+test01CannotCreateCartWithInvalidClientID
+
+	|interface|
+	interface _ testObjectFactory createInterface.
+	self should: [interface createCartWithClientID: self invalidClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidIDErrorMessage equals: anError messageText.
+		]
+	"Habría que chequear que no se creó ningún carrito... Cómo lo hacemos????"! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 19:33:08' prior: 50777988!
+test01CannotCreateCartWithInvalidClientID
+
+	|interface|
+	interface _ testObjectFactory createInterface.
+	self should: [interface createCartWithClientID: testObjectFactory invalidClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidIDErrorMessage equals: anError messageText.
+		]
+	"Habría que chequear que no se creó ningún carrito... Cómo lo hacemos????"! !
+!StoreTestObjectsFactory methodsFor: 'nil' stamp: 'DH 11/7/2019 19:34:02'!
+createInterface
+	
+	^ Interface new! !
+!StoreTestObjectsFactory methodsFor: 'nil' stamp: 'DH 11/7/2019 19:34:49'!
+invalidClientID
+	
+	^ 42! !
+!Interface class methodsFor: 'nil' stamp: 'DH 11/7/2019 19:35:23'!
+invalidIDErrorMessage
+
+	^ 'Invalid client ID.'! !
+!Interface methodsFor: 'nil' stamp: 'DH 11/7/2019 19:36:30'!
+createCartWithClientID: aClientID andPassword: aPassword
+
+	! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 19:37:06' prior: 50778032!
+createCartWithClientID: aClientID andPassword: aPassword
+
+	self error: self class invalidIDErrorMessage.! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 19:37:13'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 19:38:23'!
+test02CannotCreateCartWithIncorrectPassword
+
+	|interface|
+	interface _ testObjectFactory createInterface.
+	self should: [interface createCartWithClientID: testObjectFactory validClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: Interface incorrectPasswordErrorMessage equals: anError messageText.
+		]
+	"Habría que chequear que no se creó ningún carrito... Cómo lo hacemos????"! !
+!Interface class methodsFor: 'errorMessages' stamp: 'DH 11/7/2019 19:38:47'!
+incorrectPasswordErrorMessage
+
+	^ 'Incorrect password.'! !
+!StoreTestObjectsFactory methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 19:39:11'!
+validClientID
+	
+	^ 123456! !
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 19:39:21'!
+FAILURE!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 19:39:21'!
+FAILURE!
+
+Object subclass: #Interface
+	instanceVariableNames: 'clients'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/7/2019 19:40:08'!
+Object subclass: #Interface
+	instanceVariableNames: 'clients'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Interface methodsFor: 'nil' stamp: 'DH 11/7/2019 19:41:37'!
+initializeWith: aClientDictionary
+
+	clients _ aClientDictionary.! !
+!Interface class methodsFor: 'nil' stamp: 'DH 11/7/2019 19:42:19'!
+newWith: aClientDictionary
+
+	^ self new initializeWith: aClientDictionary.! !
+!StoreTestObjectsFactory methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 19:45:55' prior: 50778021!
+createInterface
+
+	|clients|
+	
+	clients _ Dictionary new.
+	clients at: self validClientID put: 'flan'.  
+		
+	^ Interface newWith: clients.! !
+
+----End fileIn of /home/dhuaier/Desktop/linux64/Packages/TerseGuide.pck.st----!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 19:48:12' prior: 50778037!
+createCartWithClientID: aClientID andPassword: aPassword
+
+	(clients includesKey: aClientID) ifTrue: [self error: self class incorrectPasswordErrorMessage.].
+	self error: self class invalidIDErrorMessage.! !
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 19:48:22'!
+PASSED!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 19:48:22'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 19:48:22'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 19:53:23'!
+test03IDsOfTwoCreatedCartsAreDifferent
+
+	|interface clientID1 clientID2|
+	clientID1 _ testObjectFactory validClientID.
+	clientID2 _ testObjectFactory anotherValidClientID.
+	interface _ testObjectFactory createInterface.
+	interface createCartWithClientID: clientID1 andPassword: (testObjectFactory clients at: clientID1)! !
+!StoreTestObjectsFactory methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 19:55:12'!
+clients
+
+	|clients|
+	clients _ Dictionary new.
+	clients at: self validClientID put: 'flan'.
+	clients at: self anotherValidClientID put: 'rosebud'.
+	^clients! !
+!StoreTestObjectsFactory methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 19:55:51'!
+anotherValidClientID
+
+	^8128! !
+!StoreTestObjectsFactory methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 19:56:16' prior: 50778100!
+createInterface
+		
+	^ Interface newWith: self clients.! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 19:57:25' prior: 50781137!
+test03IDsOfTwoCreatedCartsAreDifferent
+
+	|interface clientID1 clientID2 cartID1 cartID2|
+	clientID1 _ testObjectFactory validClientID.
+	clientID2 _ testObjectFactory anotherValidClientID.
+	interface _ testObjectFactory createInterface.
+	cartID1 _ interface createCartWithClientID: clientID1 andPassword: (testObjectFactory clients at: clientID1).
+	cartID2 _ interface createCartWithClientID: clientID2 andPassword: (testObjectFactory clients at: clientID2)
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 19:58:30' prior: 50781168!
+test03IDsOfTwoCreatedCartsAreDifferent
+
+	|interface clientID1 clientID2 cartID1 cartID2|
+	clientID1 _ testObjectFactory validClientID.
+	clientID2 _ testObjectFactory anotherValidClientID.
+	interface _ testObjectFactory createInterface.
+	cartID1 _ interface createCartWithClientID: clientID1 andPassword: (testObjectFactory clients at: clientID1).
+	cartID2 _ interface createCartWithClientID: clientID2 andPassword: (testObjectFactory clients at: clientID2).
+	
+	self deny: cartID1 = cartID2.
+	! !
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/7/2019 19:58:41'!
+ERROR!
+
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/7/2019 20:02:23'!
+Object subclass: #Interface
+	instanceVariableNames: 'clients nextCartID'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:02:20' prior: 50781118!
+createCartWithClientID: aClientID andPassword: aPassword
+
+	(clients includesKey: aClientID) ifTrue: [self error: self class incorrectPasswordErrorMessage.].
+	((clients at: aClientID) = aPassword) ifFalse: [self error: self class invalidIDErrorMessage.].
+	
+	nextCartID _ nextCartID +1.
+	^ nextCartID! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:02:41' prior: 50778089!
+initializeWith: aClientDictionary
+
+	clients _ aClientDictionary.
+	nextCartID _ 0.! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:03:04' prior: 50781215!
+createCartWithClientID: aClientID andPassword: aPassword
+
+	(clients includesKey: aClientID) ifTrue: [self error: self class incorrectPasswordErrorMessage.].
+	((clients at: aClientID) = aPassword) ifFalse: [self error: self class invalidIDErrorMessage.].
+	
+	nextCartID _ nextCartID + 1.
+	^ nextCartID! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 20:03:19'!
+FAILURE!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 20:03:19'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/7/2019 20:03:19'!
+ERROR!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 20:03:36'!
+FAILURE!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 20:03:36'!
+FAILURE!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:05:08' prior: 50781234!
+createCartWithClientID: aClientID andPassword: aPassword
+
+	(clients includesKey: aClientID) ifFalse: [self error: self class invalidIDErrorMessage.].
+	((clients at: aClientID) = aPassword) ifFalse: [self error: self class incorrectPasswordErrorMessage.].
+	
+	nextCartID _ nextCartID + 1.
+	^ nextCartID! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 20:05:12'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 20:05:12'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/7/2019 20:05:12'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:14:31'!
+test04CannotAddBookToNonExistentCart
+
+	|interface clientID1 clientID2 cartID1 cartID2|
+	clientID1 _ testObjectFactory validClientID.
+	clientID2 _ testObjectFactory anotherValidClientID.
+	interface _ testObjectFactory createInterface.
+	cartID1 _ interface createCartWithClientID: clientID1 andPassword: (testObjectFactory clients at: clientID1).
+	cartID2 _ interface createCartWithClientID: clientID2 andPassword: (testObjectFactory clients at: clientID2).
+	
+	self deny: cartID1 = cartID2.
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:22:49' prior: 50781286!
+test04CannotAddBookToNonExistentCart
+
+	|interface book invalidCart|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemSellByTheStore.
+	invalidCart _ 95173.
+	
+	self should: [interface add: book to: invalidCart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidCartIDErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	! !
+!Interface class methodsFor: 'errorMessages' stamp: 'DH 11/7/2019 20:23:19'!
+invalidCartIDErrorMessage
+
+	^ 'Cart ID does not exist.'! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 20:23:29'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 20:23:29'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/7/2019 20:23:29'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/7/2019 20:23:29'!
+ERROR!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/7/2019 20:23:29'!
+ERROR!
+!Interface methodsFor: 'nil' stamp: 'DH 11/7/2019 20:24:46'!
+add: aBookISBN to: aCartID
+
+	self error: self class invalidCartIDErrorMessage.! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 20:25:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 20:25:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/7/2019 20:25:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/7/2019 20:25:06'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:28:38'!
+test05CannotAddBookThatDoesNotBelongToEditorial
+
+	|interface book cart client|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemNotSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self should: [interface add: book to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface bookNotFromEditorialErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	! !
+!Interface class methodsFor: 'errorMessages' stamp: 'DH 11/7/2019 20:29:02'!
+bookNotFromEditorialErrorMessage
+
+	^ 'Book does not belong to editorial.'! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:38:56' prior: 50781364!
+test05CannotAddBookThatDoesNotBelongToEditorial
+
+	|interface book cart client|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemNotSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self should: [interface add: book to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface bookNotFromEditorialErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	
+	
+	
+	"
+	CannotAddBookToNonExistentCart
+	CannotListANonExistentCart
+	ListingAnEmptyCartResultsInEmptyList
+	CannotAddBookThatDoesNotBelongToEditorial
+	CannotAddBookWithQuantityLessThanOne
+	ListingACartShowsAddedBooks
+	"
+	
+	! !
+
+!testRun: #InterfaceTest #test05CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/7/2019 20:39:06'!
+FAILURE!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:41:31'!
+test07CannotAddBookThatDoesNotBelongToEditorial
+
+	|interface book cart client|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemNotSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self should: [interface add: book to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface bookNotFromEditorialErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	
+	
+	
+	"
+	CannotAddBookToNonExistentCart
+	CannotListANonExistentCart
+	ListingAnEmptyCartResultsInEmptyList
+	CannotAddBookThatDoesNotBelongToEditorial
+	CannotAddBookWithQuantityLessThanOne
+	ListingACartShowsAddedBooks
+	"
+	
+	! !
+
+!methodRemoval: InterfaceTest #test05CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/7/2019 20:41:31'!
+test05CannotAddBookThatDoesNotBelongToEditorial
+
+	|interface book cart client|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemNotSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self should: [interface add: book to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface bookNotFromEditorialErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	
+	
+	
+	"
+	CannotAddBookToNonExistentCart
+	CannotListANonExistentCart
+	ListingAnEmptyCartResultsInEmptyList
+	CannotAddBookThatDoesNotBelongToEditorial
+	CannotAddBookWithQuantityLessThanOne
+	ListingACartShowsAddedBooks
+	"
+	
+	!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:41:52'!
+test05CannotAddBookToNonExistentCart
+
+	|interface book invalidCart|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemSellByTheStore.
+	invalidCart _ 95173.
+	
+	self should: [interface add: book to: invalidCart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidCartIDErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:42:13'!
+test05CannotListANonExistentCart
+
+	|interface book invalidCart|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemSellByTheStore.
+	invalidCart _ 95173.
+	
+	self should: [interface add: book to: invalidCart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidCartIDErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:42:55' prior: 50781503!
+test05CannotListANonExistentCart
+
+	|interface invalidCart|
+	
+	interface _ testObjectFactory createInterface.
+	invalidCart _ 95173.
+	
+	self should: [interface add: 2 to: invalidCart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidCartIDErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	! !
+
+!methodRemoval: InterfaceTest #test05CannotAddBookToNonExistentCart stamp: 'DH 11/7/2019 20:43:07'!
+test05CannotAddBookToNonExistentCart
+
+	|interface book invalidCart|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemSellByTheStore.
+	invalidCart _ 95173.
+	
+	self should: [interface add: book to: invalidCart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidCartIDErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/7/2019 20:43:13'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:43:58' prior: 50781522!
+test05CannotListANonExistentCart
+
+	|interface invalidCart|
+	
+	interface _ testObjectFactory createInterface.
+	invalidCart _ 95173.
+	
+	self should: [interface list: invalidCart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidCartIDErrorMessage equals: anError messageText
+		].
+	! !
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/7/2019 20:44:00'!
+ERROR!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:44:37'!
+list: aCartID
+
+	self error: self invalidCartIDErrorMessage.! !
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/7/2019 20:44:41'!
+ERROR!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/7/2019 20:44:41'!
+ERROR!
+!Interface class methodsFor: 'errorMessages' stamp: 'DH 11/7/2019 20:45:05' prior: 50778028!
+invalidIDErrorMessage
+
+	^ 'Invalid client ID.'! !
+!Interface class methodsFor: 'errorMessages' stamp: 'DH 11/7/2019 20:45:47'!
+invalidClientIDErrorMessage
+
+	^ 'Invalid client ID.'! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:45:47' prior: 50781264!
+createCartWithClientID: aClientID andPassword: aPassword
+
+	(clients includesKey: aClientID) ifFalse: [self error: self class invalidClientIDErrorMessage.].
+	((clients at: aClientID) = aPassword) ifFalse: [self error: self class incorrectPasswordErrorMessage.].
+	
+	nextCartID _ nextCartID + 1.
+	^ nextCartID! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:45:47' prior: 50778004!
+test01CannotCreateCartWithInvalidClientID
+
+	|interface|
+	interface _ testObjectFactory createInterface.
+	self should: [interface createCartWithClientID: testObjectFactory invalidClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidClientIDErrorMessage equals: anError messageText.
+		]
+	"Habría que chequear que no se creó ningún carrito... Cómo lo hacemos????"! !
+
+!methodRemoval: Interface class #invalidIDErrorMessage stamp: 'DH 11/7/2019 20:45:47'!
+invalidIDErrorMessage
+
+	^ 'Invalid client ID.'!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 20:46:01'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 20:46:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/7/2019 20:46:05'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/7/2019 20:46:13'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/7/2019 20:46:19'!
+ERROR!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/7/2019 20:46:19'!
+ERROR!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:46:45' prior: 50781578!
+list: aCartID
+
+	self error: self class invalidCartIDErrorMessage.! !
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/7/2019 20:46:49'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:47:27'!
+test06ListingAnEmptyCartResultsInEmptyList
+
+	|interface client cart|
+	
+	interface _ testObjectFactory createInterface.
+	cart _ 95173.
+	
+	self should: [interface list: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidCartIDErrorMessage equals: anError messageText
+		].
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:49:11' prior: 50781661!
+test06ListingAnEmptyCartResultsInEmptyList
+
+	|interface client cart|
+	
+	interface _ testObjectFactory createInterface.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self assert: (interface list: cart) isEmpty
+	! !
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/7/2019 20:49:16'!
+ERROR!
+
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts nextCartID'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/7/2019 20:50:43'!
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts nextCartID'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:51:01' prior: 50781228!
+initializeWith: aClientDictionary
+
+	clients _ aClientDictionary.
+	carts _ OrderedCollection new.
+	nextCartID _ 0.! !
+
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/7/2019 20:52:14'!
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts nextCartID lastCartID'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:52:12' prior: 50781599!
+createCartWithClientID: aClientID andPassword: aPassword
+
+	(clients includesKey: aClientID) ifFalse: [self error: self class invalidClientIDErrorMessage.].
+	((clients at: aClientID) = aPassword) ifFalse: [self error: self class incorrectPasswordErrorMessage.].
+	
+	lastCartID _ lastCartID + 1.
+	carts add: lastCartID.
+	^ lastCartID! !
+
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts lastCartID'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/7/2019 20:52:18'!
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts lastCartID'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:52:25' prior: 50781703!
+initializeWith: aClientDictionary
+
+	clients _ aClientDictionary.
+	carts _ OrderedCollection new.
+	lastCartID _ 0.! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:53:04' prior: 50781653!
+list: aCartID
+
+	(carts includes: aCartID) ifFalse: [self error: self class invalidCartIDErrorMessage.].
+	^OrderedCollection new! !
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/7/2019 20:53:11'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:53:57' prior: 50781425!
+test07CannotAddBookThatDoesNotBelongToEditorial
+
+	|interface book cart client|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemNotSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self should: [interface add: book to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface bookNotFromEditorialErrorMessage equals: anError messageText.
+		self assert: (interface list: cart) isEmpty.
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	
+	
+	
+	"
+	CannotAddBookToNonExistentCart
+	CannotListANonExistentCart
+	ListingAnEmptyCartResultsInEmptyList
+	CannotAddBookThatDoesNotBelongToEditorial
+	CannotAddBookWithQuantityLessThanOne
+	ListingACartShowsAddedBooks
+	"
+	
+	! !
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/7/2019 20:54:01'!
+FAILURE!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 20:56:14' prior: 50781345!
+add: aBookISBN to: aCartID
+
+	(carts includes: aCartID) ifFalse: [self error: self class invalidCartIDErrorMessage.].
+	self error: self class bookNotFromEditorialErrorMessage.! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 20:56:19'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 20:56:19'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/7/2019 20:56:19'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/7/2019 20:56:19'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/7/2019 20:56:19'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/7/2019 20:56:19'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/7/2019 20:56:19'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:58:03'!
+test08CannotAddBookWithQuantityLessThanOne
+
+	|interface book cart client|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self should: [interface add: 0 of: book to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface bookNotFromEditorialErrorMessage equals: anError messageText.
+		self assert: (interface list: cart) isEmpty.
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	
+	
+	
+	"
+	CannotAddBookToNonExistentCart
+	CannotListANonExistentCart
+	ListingAnEmptyCartResultsInEmptyList
+	CannotAddBookThatDoesNotBelongToEditorial
+	CannotAddBookWithQuantityLessThanOne
+	ListingACartShowsAddedBooks
+	"
+	
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:59:20' prior: 50781830!
+test08CannotAddBookWithQuantityLessThanOne
+
+	|interface book cart client|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self should: [interface add: 0 of: book to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface CannotAddLessThanOneBookToCartErrorMessage equals: anError messageText.
+		self assert: (interface list: cart) isEmpty.
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	
+	
+	
+	"
+	CannotAddBookToNonExistentCart
+	CannotListANonExistentCart
+	ListingAnEmptyCartResultsInEmptyList
+	CannotAddBookThatDoesNotBelongToEditorial
+	CannotAddBookWithQuantityLessThanOne
+	ListingACartShowsAddedBooks
+	"
+	
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 20:59:48' prior: 50781862!
+test08CannotAddBookWithQuantityLessThanOne
+
+	|interface book cart client|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self should: [interface add: 0 of: book to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface cannotAddLessThanOneBookToCartErrorMessage equals: anError messageText.
+		self assert: (interface list: cart) isEmpty.
+		].	
+	
+
+	! !
+!Interface class methodsFor: 'errorMessages' stamp: 'DH 11/7/2019 21:00:10'!
+cannotAddLessThanOneBookToCartErrorMessage
+
+	^ 'Cannot add less than one book to cart.'! !
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/7/2019 21:00:23'!
+ERROR!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/7/2019 21:00:23'!
+ERROR!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 21:00:33' prior: 50781762!
+test07CannotAddBookThatDoesNotBelongToEditorial
+
+	|interface book cart client|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemNotSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
+	
+	self should: [interface add: 1 of: book to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface bookNotFromEditorialErrorMessage equals: anError messageText.
+		self assert: (interface list: cart) isEmpty.
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	
+	
+	
+	"
+	CannotAddBookToNonExistentCart
+	CannotListANonExistentCart
+	ListingAnEmptyCartResultsInEmptyList
+	CannotAddBookThatDoesNotBelongToEditorial
+	CannotAddBookWithQuantityLessThanOne
+	ListingACartShowsAddedBooks
+	"
+	
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/7/2019 21:00:50' prior: 50781305!
+test04CannotAddBookToNonExistentCart
+
+	|interface book invalidCart|
+	
+	interface _ testObjectFactory createInterface.
+	book _ testObjectFactory itemSellByTheStore.
+	invalidCart _ 95173.
+	
+	self should: [interface add: 1 of: book to: invalidCart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Interface invalidCartIDErrorMessage equals: anError messageText
+		].
+	
+	"En este caso no hay que chequear que no se haya agregado el libro porque el Carrito ni siquiera existe."
+	! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 21:01:19'!
+add: aNumberOfBooks of: aBookISBN to: aCartID
+
+	(carts includes: aCartID) ifFalse: [self error: self class invalidCartIDErrorMessage.].
+	self error: self class bookNotFromEditorialErrorMessage.! !
+
+!methodRemoval: Interface #add:to: stamp: 'DH 11/7/2019 21:01:27'!
+add: aBookISBN to: aCartID
+
+	(carts includes: aCartID) ifFalse: [self error: self class invalidCartIDErrorMessage.].
+	self error: self class bookNotFromEditorialErrorMessage.!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/7/2019 21:01:39'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/7/2019 21:01:43'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/7/2019 21:01:46'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/7/2019 21:01:55'!
+FAILURE!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/7/2019 21:01:55'!
+FAILURE!
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/7/2019 21:02:52' prior: 50781980!
+add: aNumberOfBooks of: aBookISBN to: aCartID
+
+	aNumberOfBooks < 1 ifTrue: [self error: self class cannotAddLessThanOneBookToCartErrorMessage].
+	(carts includes: aCartID) ifFalse: [self error: self class invalidCartIDErrorMessage.].
+	self error: self class bookNotFromEditorialErrorMessage.! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/7/2019 21:02:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/7/2019 21:02:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/7/2019 21:02:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/7/2019 21:02:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/7/2019 21:02:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/7/2019 21:02:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/7/2019 21:02:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/7/2019 21:02:54'!
+PASSED!
+
+----SNAPSHOT----(7 November 2019 21:03:00) CuisUniversity-3938.image priorSource: 14280313!
+
+----QUIT----(7 November 2019 21:03:26) CuisUniversity-3938.image priorSource: 14412870!
