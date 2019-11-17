@@ -5776,3 +5776,2151 @@ PASSED!
 ----SNAPSHOT----(16 November 2019 16:11:19) CuisUniversity-3938.image priorSource: 14522161!
 
 ----QUIT----(16 November 2019 16:11:30) CuisUniversity-3938.image priorSource: 14595544!
+
+----STARTUP---- (17 November 2019 08:45:47) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/17/2019 08:46:01'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/17/2019 08:46:01'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/17/2019 08:46:01'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/17/2019 08:46:01'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 08:46:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 08:46:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 08:46:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 08:46:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 08:46:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 08:46:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 08:46:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 08:46:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 08:46:03'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/17/2019 08:47:46'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/17/2019 08:47:46'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/17/2019 08:47:46'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/17/2019 08:47:46'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/17/2019 08:47:46'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/17/2019 08:47:46'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/17/2019 08:47:46'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/17/2019 08:47:46'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/17/2019 08:47:46'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 08:47:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 08:47:48'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 08:47:48'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 08:47:48'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 08:47:48'!
+PASSED!
+
+a := Date now!
+
+a := Date today!
+
+a!
+
+a := Date dateAndTimeNow!
+
+a!
+
+a first!
+
+a second !
+
+a := Time now!
+
+a := Date dateAndTimeNow!
+
+b := Date dateAndTimeNow !
+
+a < b!
+
+Object subclass: #TimeProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #TimeProvider category: #TusLibros stamp: 'DH 11/17/2019 08:57:04'!
+Object subclass: #TimeProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 09:14:39'!
+stubTimeProvider
+	
+	^ today! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 09:14:39' prior: 50777712!
+test05CashierChargesCreditCardUsingMerchantProcessor
+
+	| cart cashier salesBook total creditCard debitedAmout debitedCreditCard  |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore.
+	creditCard := testObjectsFactory notExpiredCreditCard.
+	salesBook := OrderedCollection new.
+ 
+	cashier:= Cashier 
+		toCheckout: cart 
+		charging: creditCard
+		throught: self
+		on: testObjectsFactory stubTimeProvider
+		registeringOn: salesBook.
+		
+	debitBehavior := [ :anAmount :aCreditCard | 
+		debitedAmout := anAmount.
+		debitedCreditCard := aCreditCard ].
+	total := cashier checkOut.
+					
+	self assert: debitedCreditCard = creditCard.
+	self assert: debitedAmout = total.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 09:14:39' prior: 50777754!
+test02CalculatedTotalIsCorrect
+
+	| cart cashier |
+	
+	cart := testObjectsFactory createCart.
+	cart add: 2 of: testObjectsFactory itemSellByTheStore.
+	
+	cashier :=  Cashier
+		toCheckout: cart 
+		charging: testObjectsFactory notExpiredCreditCard 
+		throught: self
+		on: testObjectsFactory stubTimeProvider 
+		registeringOn: OrderedCollection new.
+		
+	self assert: cashier checkOut = (testObjectsFactory itemSellByTheStorePrice * 2)! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 09:14:39' prior: 50777668!
+test04CheckoutRegistersASale
+
+	| cart cashier salesBook total |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore.
+	salesBook := OrderedCollection new.
+ 
+	cashier:= Cashier 
+		toCheckout: cart 
+		charging: testObjectsFactory notExpiredCreditCard
+		throught: self
+		on: testObjectsFactory stubTimeProvider
+		registeringOn: salesBook.
+		
+	total := cashier checkOut.
+					
+	self assert: salesBook size = 1.
+	self assert: salesBook first total = total.! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 09:14:39' prior: 50777647!
+test03CanNotCheckoutWithAnExpiredCreditCart
+
+	| cart salesBook |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore.
+	salesBook := OrderedCollection new.
+	
+	self
+		should: [ Cashier 
+				toCheckout: cart 
+				charging: testObjectsFactory expiredCreditCard 
+				throught: self
+				on: testObjectsFactory stubTimeProvider
+				registeringOn: salesBook ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError | 
+			self assert: anError messageText = Cashier canNotChargeAnExpiredCreditCardErrorMessage.
+			self assert: salesBook isEmpty ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 09:14:39' prior: 50777686!
+test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit
+
+	| cart cashier salesBook creditCard |
+
+	cart := testObjectsFactory createCart.
+	cart add: testObjectsFactory itemSellByTheStore.
+	creditCard := testObjectsFactory notExpiredCreditCard.
+	salesBook := OrderedCollection new.
+ 	debitBehavior := [ :anAmount :aCreditCard | self error: Cashier creditCardHasNoCreditErrorMessage].
+	
+	cashier:= Cashier 
+		toCheckout: cart 
+		charging: creditCard
+		throught: self
+		on: testObjectsFactory stubTimeProvider
+		registeringOn: salesBook.
+		
+	self 
+		should: [cashier checkOut ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier creditCardHasNoCreditErrorMessage.
+			self assert: salesBook isEmpty ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 09:14:39' prior: 50777736!
+test01CanNotCheckoutAnEmptyCart
+
+	| salesBook |
+	
+	salesBook := OrderedCollection new.
+	self 
+		should: [ Cashier 
+			toCheckout: testObjectsFactory createCart 
+			charging: testObjectsFactory notExpiredCreditCard 
+			throught: self
+			on: testObjectsFactory stubTimeProvider
+			registeringOn:  salesBook ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Cashier cartCanNotBeEmptyErrorMessage.
+			self assert: salesBook isEmpty ]! !
+
+!methodRemoval: StoreTestObjectsFactory #today stamp: 'DH 11/17/2019 09:14:39'!
+today
+	
+	^ today!
+
+----STARTUP---- (17 November 2019 09:15:41) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/17/2019 09:17:06'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 09:17:07'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 09:17:08'!
+PASSED!
+
+----QUIT----(17 November 2019 09:17:12) CuisUniversity-3938.image priorSource: 14595638!
+
+----STARTUP---- (17 November 2019 12:06:31) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 12:07:59'!
+test17CannotListACartIf30MinutesPassedSincleLastUsed
+
+	|interface book1 book2 client password cart cardNumber expirationDate owner|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	book1 _ testObjectFactory itemSellByTheStore.
+	book2 _ testObjectFactory anotherItemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	password _ testObjectFactory passwordFor: client.
+	cardNumber _ testObjectFactory validCreditCardNumber.
+	expirationDate _ testObjectFactory futureDate.
+	owner _ testObjectFactory validOwner.
+	
+	cart _ interface createCartWithClientID: client andPassword: password.
+	interface add: 1 of: book1 to: cart.
+	interface add: 1 of: book2 to: cart.
+	interface checkout: cart withCardNumber: cardNumber withExpirationDate: expirationDate withOwner: owner.
+	
+	cart _ interface createCartWithClientID: client andPassword: password.
+	interface add: 2 of: book1 to: cart.
+	interface checkout: cart withCardNumber: cardNumber withExpirationDate: expirationDate withOwner: owner.
+	
+	self assert: (Dictionary new at: book1 put: 3; at: book2 put: 1; yourself)
+		equals: (interface listPurchasesOf: client withPassword: password).! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 13:31:24'!
+test17CannotListACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	
+
+	! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 13:39:04' prior: 50787916!
+test17CannotListACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 30.
+	
+	self should: [interface list: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+
+!methodRemoval: InterfaceTest #test17CannotListACartIf30MinutesPassedSincleLastUsed stamp: 'DH 11/17/2019 13:39:08'!
+test17CannotListACartIf30MinutesPassedSincleLastUsed
+
+	|interface book1 book2 client password cart cardNumber expirationDate owner|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	book1 _ testObjectFactory itemSellByTheStore.
+	book2 _ testObjectFactory anotherItemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	password _ testObjectFactory passwordFor: client.
+	cardNumber _ testObjectFactory validCreditCardNumber.
+	expirationDate _ testObjectFactory futureDate.
+	owner _ testObjectFactory validOwner.
+	
+	cart _ interface createCartWithClientID: client andPassword: password.
+	interface add: 1 of: book1 to: cart.
+	interface add: 1 of: book2 to: cart.
+	interface checkout: cart withCardNumber: cardNumber withExpirationDate: expirationDate withOwner: owner.
+	
+	cart _ interface createCartWithClientID: client andPassword: password.
+	interface add: 2 of: book1 to: cart.
+	interface checkout: cart withCardNumber: cardNumber withExpirationDate: expirationDate withOwner: owner.
+	
+	self assert: (Dictionary new at: book1 put: 3; at: book2 put: 1; yourself)
+		equals: (interface listPurchasesOf: client withPassword: password).!
+
+!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 11/17/2019 13:40:15'!
+Object subclass: #StoreTestObjectsFactory
+	instanceVariableNames: 'today stubTimeProvider'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 13:40:14'!
+stubTimeProvider
+	
+	^stubTimeProvider! !
+
+!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 11/17/2019 13:42:45'!
+Object subclass: #StubTimeProvider
+	instanceVariableNames: 'date time'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!StoreTestObjectsFactory methodsFor: 'initialization' stamp: 'DH 11/17/2019 13:41:18' prior: 50777901!
+initialize
+
+	today := DateAndTime now.
+	stubTimeProvider := StubTimeProvider newWithActualDateAndTime.! !
+!StoreTestObjectsFactory methodsFor: 'initialization' stamp: 'DH 11/17/2019 13:43:43' prior: 50788018!
+initialize
+
+	stubTimeProvider := StubTimeProvider newWithActualDateAndTime.! !
+
+today := DateAndTime now!
+
+today!
+
+t := DateAndTime now.!
+
+t2 := DateAndTime now.!
+
+t2 - t!
+
+diff := t2 - t.!
+
+diff!
+
+diff totalMinutes !
+
+t2 + 30 !
+
+t2 + 30!
+
+t2 year!
+
+t2 yearNumber!
+
+t2 monthIndex!
+
+t2 day!
+
+t2 dayNumber!
+
+t2 minutes!
+
+t2 dayOfMonth!
+
+DateAndTime year: 2020 month: 5 day: 24  hour: 8 minute: 36  second: 24. !
+
+t3 := DateAndTime year: 2020 month: 5 day: 24  hour: 8 minute: 36  second: 24. !
+
+t3 year!
+
+t3 monthIndex!
+
+t3 dayOfMonth!
+
+t3 hour!
+
+t3 minute!
+!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'DH 11/17/2019 14:00:21' prior: 50783061!
+expiredCreditCard
+	
+	^CreditCard
+	newWithNumber: '1234567891011120'
+	owner: self validOwner
+	expiringOn:
+		(Month
+			month: stubTimeProvider dateAndTime monthIndex
+			year: stubTimeProvider dateAndTime yearNumber - 1)! !
+!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'DH 11/17/2019 14:01:14' prior: 50783070!
+notExpiredCreditCard
+	
+	^CreditCard
+	newWithNumber: '1234567891011120'
+	owner: self validOwner
+	expiringOn:
+		(Month
+			month: stubTimeProvider dateAndTime monthIndex
+			year: stubTimeProvider dateAndTime yearNumber + 1)! !
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 14:03:01' prior: 50782609!
+futureDate
+
+	^Month month: stubTimeProvider now monthIndex year: stubTimeProvider now yearNumber + 1! !
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 14:04:35' prior: 50777905!
+today
+	
+	^stubTimeProvider now! !
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 14:05:20' prior: 50788068!
+futureDate
+
+	^Month month: self today monthIndex year: self today yearNumber + 1! !
+!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'DH 11/17/2019 14:06:46' prior: 50788046!
+expiredCreditCard
+	
+	^CreditCard
+	newWithNumber: '1234567891011120'
+	owner: self validOwner
+	expiringOn: self pastDate! !
+!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'DH 11/17/2019 14:06:57' prior: 50788057!
+notExpiredCreditCard
+	
+	^CreditCard
+	newWithNumber: '1234567891011120'
+	owner: self validOwner
+	expiringOn: self futureDate! !
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 14:07:21'!
+pastDate
+
+	^Month month: self today monthIndex year: self today yearNumber - 1! !
+
+Object subclass: #StoreTestObjectsFactory
+	instanceVariableNames: 'stubTimeProvider'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 11/17/2019 14:07:44'!
+Object subclass: #StoreTestObjectsFactory
+	instanceVariableNames: 'stubTimeProvider'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #StubTimeProvider
+	instanceVariableNames: 'dateAndTime'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 11/17/2019 14:08:11'!
+Object subclass: #StubTimeProvider
+	instanceVariableNames: 'dateAndTime'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #TimeProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #TimeProvider category: #TusLibros stamp: 'DH 11/17/2019 14:08:33'!
+Object subclass: #TimeProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!TimeProvider methodsFor: 'query time' stamp: 'DH 11/17/2019 14:09:45'!
+now
+
+	^self subclassResponsibility! !
+
+TimeProvider subclass: #StubTimeProvider
+	instanceVariableNames: 'dateAndTime'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 11/17/2019 14:10:01'!
+TimeProvider subclass: #StubTimeProvider
+	instanceVariableNames: 'dateAndTime'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!StubTimeProvider class methodsFor: 'instance creation' stamp: 'DH 11/17/2019 14:10:39'!
+newWithActualDateAndTime
+
+	^self new initializeWithActualDateAndTime! !
+!StubTimeProvider methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:11:00'!
+initializeWithActualDateAndTime
+
+	dateAndTime _ DateAndTime now! !
+!StubTimeProvider methodsFor: 'query time' stamp: 'DH 11/17/2019 14:11:12'!
+now
+
+	^dateAndTime! !
+
+DateAndTime year: 2018 month: 3 day: 18 hour: 5 minute: 40 second: 35. !
+
+d := DateAndTime year: 2018 month: 3 day: 18 hour: 5 minute: 40 second: 35. !
+
+d!
+
+d := DateAndTime year: 2018 month: 3 day: 18 hour: 5 minute: 70 second: 35.!
+
+d := DateAndTime year: 2018 month: 3 day: 18 hour: 5 minute: 70 second: 35.!
+
+d !
+
+DateAndTime now minutes!
+
+DateAndTime now minute!
+
+DateAndTime now second!
+!StubTimeProvider methodsFor: 'time manipulation' stamp: 'DH 11/17/2019 14:18:41'!
+advanceMinutes: anAmountOfMinutes
+
+	dateAndTime _ DateAndTime 
+		year: dateAndTime yearNumber
+		month: dateAndTime monthIndex
+		day: dateAndTime dayOfMonth
+		hour: dateAndTime hour
+		minute: dateAndTime minute + anAmountOfMinutes
+		second: dateAndTime second! !
+!StubTimeProvider methodsFor: 'time manipulation' stamp: 'DH 11/17/2019 14:19:09'!
+advanceDays: anAmountOfDays
+
+	dateAndTime _ DateAndTime 
+		year: dateAndTime yearNumber
+		month: dateAndTime monthIndex
+		day: dateAndTime dayOfMonth + anAmountOfDays
+		hour: dateAndTime hour
+		minute: dateAndTime minute
+		second: dateAndTime second! !
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:20:40'!
+FAILURE!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:20:40'!
+FAILURE!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 14:20:51'!
+ERROR!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 14:20:51'!
+ERROR!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 14:22:35'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 14:22:37'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 14:22:38'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 14:22:40'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 14:22:41'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 14:22:44'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 14:22:45'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 14:22:47'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 14:22:49'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 14:22:51'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 14:22:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 14:22:55'!
+ERROR!
+!StoreTestObjectsFactory methodsFor: 'interface' stamp: 'DH 11/17/2019 14:24:20' prior: 50784417!
+createInterfaceWithSalesBook: aSalesBook andMerchantProcessor: aMerchantProcessor
+		
+	^Interface
+	newWithClients: self clientsWithPasswords
+	salesBook: aSalesBook
+	date: self today
+	catalog: self defaultCatalog
+	andMerchantProcessor: aMerchantProcessor ! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 14:24:24'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 14:24:24'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 14:24:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:24:25'!
+FAILURE!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:24:25'!
+FAILURE!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 14:24:37'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:24:42'!
+FAILURE!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:24:42'!
+FAILURE!
+
+----SNAPSHOT----(17 November 2019 14:25:00) CuisUniversity-3938.image priorSource: 14599054!
+!Interface class methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 14:35:02'!
+newWithClients: aClientDictionary
+salesBook: aSalesBook
+timeProvider: aTimeProvider
+catalog: aCatalog
+andMerchantProcessor: aMerchantProcessor
+
+	^ self new
+	initializeWith: aClientDictionary
+	salesBook: aSalesBook
+	timeProvider: aTimeProvider
+	catalog: aCatalog
+	andMerchantProcessor: aMerchantProcessor! !
+
+!methodRemoval: Interface class #newWithClients:salesBook:date:catalog:andMerchantProcessor: stamp: 'DH 11/17/2019 14:35:20'!
+newWithClients: aClientDictionary
+salesBook: aSalesBook
+date: aTodayDate
+catalog: aCatalog
+andMerchantProcessor: aMerchantProcessor
+
+	^ self new
+	initializeWith: aClientDictionary
+	salesBook: aSalesBook
+	date: aTodayDate
+	catalog: aCatalog
+	andMerchantProcessor: aMerchantProcessor!
+
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/17/2019 14:35:46'!
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts lastCartID catalog salesBook today merchantProcessor timeProvider'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Interface methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:35:44'!
+initializeWith: aClientDictionary
+salesBook: aSalesBook
+timeProvider: aTimeProvider
+catalog: aCatalog
+andMerchantProcessor: aMerchantProcessor
+
+	clients _ aClientDictionary.
+	carts _ Dictionary new.
+	lastCartID _ 0.
+	catalog _ aCatalog.
+	salesBook _ aSalesBook.
+	timeProvider _ aTimeProvider.
+	merchantProcessor _ aMerchantProcessor.! !
+
+!methodRemoval: Interface #initializeWith:salesBook:date:catalog:andMerchantProcessor: stamp: 'DH 11/17/2019 14:35:50'!
+initializeWith: aClientDictionary
+salesBook: aSalesBook
+date: aTodayDate
+catalog: aCatalog
+andMerchantProcessor: aMerchantProcessor
+
+	clients _ aClientDictionary.
+	carts _ Dictionary new.
+	lastCartID _ 0.
+	catalog _ aCatalog.
+	salesBook _ aSalesBook.
+	today _ aTodayDate.
+	merchantProcessor _ aMerchantProcessor.!
+
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts lastCartID catalog salesBook merchantProcessor timeProvider'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/17/2019 14:37:23'!
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts lastCartID catalog salesBook merchantProcessor timeProvider'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts lastCartID catalog salesBook timeProvider merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/17/2019 14:37:28'!
+Object subclass: #Interface
+	instanceVariableNames: 'clients carts lastCartID catalog salesBook timeProvider merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 14:37:41' prior: 50787487!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier|
+	cartInfo _ self getInfoFromCartWithID: aCartID.
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	cashier checkOut.
+	self addItemsFrom: cartInfo cart to: cartInfo ownerID.
+	self removeCart: aCartID.! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 14:37:55'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 14:37:55'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 14:37:55'!
+ERROR!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 14:37:56'!
+ERROR!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 14:37:56'!
+ERROR!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 14:37:56'!
+ERROR!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:37:56'!
+ERROR!
+!StoreTestObjectsFactory methodsFor: 'interface' stamp: 'DH 11/17/2019 14:38:20' prior: 50788262!
+createInterfaceWithSalesBook: aSalesBook andMerchantProcessor: aMerchantProcessor
+		
+	^Interface
+	newWithClients: self clientsWithPasswords
+	salesBook: aSalesBook
+	timeProvider: stubTimeProvider
+	catalog: self defaultCatalog
+	andMerchantProcessor: aMerchantProcessor ! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 14:38:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 14:38:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 14:38:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 14:38:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 14:38:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 14:38:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 14:38:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 14:38:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 14:38:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 14:38:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 14:38:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 14:38:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 14:38:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 14:38:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 14:38:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 14:38:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:38:26'!
+FAILURE!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:38:26'!
+FAILURE!
+
+Object subclass: #CartInfo
+	instanceVariableNames: 'cart ownerID lastUsed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CartInfo category: #TusLibros stamp: 'DH 11/17/2019 14:39:02'!
+Object subclass: #CartInfo
+	instanceVariableNames: 'cart ownerID lastUsed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartInfo class methodsFor: 'instance creation' stamp: 'DH 11/17/2019 14:39:58'!
+for: aCart ownedBy: aClientID createdOn: aDateAndTime
+
+	^self new initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime.! !
+
+!methodRemoval: CartInfo class #for:ownedBy: stamp: 'DH 11/17/2019 14:40:06'!
+for: aCart ownedBy: aClientID
+
+	^self new initializeWithCart: aCart andOwner: aClientID!
+!CartInfo methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:40:25'!
+initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime
+
+	cart _ aCart.
+	ownerID _ aClientID! !
+
+!methodRemoval: CartInfo #initializeWithCart:andOwner: stamp: 'DH 11/17/2019 14:40:27'!
+initializeWithCart: aCart andOwner: aClientID
+
+	cart _ aCart.
+	ownerID _ aClientID!
+!CartInfo methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:40:44' prior: 50788617!
+initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime
+
+	cart _ aCart.
+	ownerID _ aClientID! !
+!CartInfo methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:41:03' prior: 50788629!
+initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime
+
+	cart _ aCart.
+	ownerID _ aClientID.
+	lastUsed _ aDateAndTime.! !
+!CartInfo methodsFor: 'queries' stamp: 'DH 11/17/2019 14:41:32'!
+lastTimeUsed
+
+	^lastUsed! !
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 14:41:52' prior: 50787449!
+createCartWithClientID: aClientID andPassword: aPassword
+
+	self getInfoFromClientWithID: aClientID validatingPassword: aPassword.
+	lastCartID _ lastCartID + 1.
+	carts at: lastCartID put: (CartInfo for: (Cart acceptingItemsOf: catalog) ownedBy: aClientID createdOn: timeProvider now).
+	^lastCartID! !
+!CartInfo methodsFor: 'modifiers' stamp: 'DH 11/17/2019 14:43:14'!
+setLastTimeUsed: aDateAndTime
+
+	lastUsed _ aDateAndTime! !
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 14:44:24' prior: 50787476!
+list: aCartID
+
+	|cartInfo cartItemsWithQuantities|
+	cartInfo _ self getInfoFromCartWithID: aCartID.
+	cartItemsWithQuantities _ Dictionary new.
+	self update: cartItemsWithQuantities withItemsFrom: cartInfo cart.
+	cartInfo setLastTimeUsed: timeProvider now.
+	^cartItemsWithQuantities! !
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 14:46:36' prior: 50787468!
+add: aNumberOfBooks of: aBookISBN to: aCartID
+
+	|cartInfo|
+	cartInfo _ self getInfoFromCartWithID: aCartID.
+	cartInfo cart add: aNumberOfBooks of: aBookISBN.
+	cartInfo setLastTimeUsed: timeProvider now.! !
+
+d := DateAndTime now.!
+
+diff := DateAndTime now - d.!
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 14:49:45' prior: 50788664!
+list: aCartID
+
+	|cartInfo cartItemsWithQuantities|
+	cartInfo _ self getInfoFromCartWithID: aCartID.
+	(timeProvider now - cartInfo lastTimeUsed) totalMinutes >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	cartItemsWithQuantities _ Dictionary new.
+	self update: cartItemsWithQuantities withItemsFrom: cartInfo cart.
+	cartInfo setLastTimeUsed: timeProvider now.
+	^cartItemsWithQuantities! !
+!Interface class methodsFor: 'errorMessages' stamp: 'DH 11/17/2019 14:50:37'!
+cartNoLongerValidErrorMessage
+
+	^'30 minutes or more passed since last time cart was used.'! !
+!Interface class methodsFor: 'errorMessages' stamp: 'DH 11/17/2019 14:50:46' prior: 50788703!
+cartNoLongerValidErrorMessage
+
+	^'30 minutes or more passed since cart was used.'! !
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:50:58'!
+FAILURE!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:50:58'!
+FAILURE!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 14:51:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:51:07'!
+FAILURE!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 14:51:07'!
+FAILURE!
+
+----SNAPSHOT----(17 November 2019 14:51:17) CuisUniversity-3938.image priorSource: 14614262!
+
+----QUIT----(17 November 2019 14:51:38) CuisUniversity-3938.image priorSource: 14628278!
+
+----STARTUP---- (17 November 2019 17:41:02) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+
+4!
+
+timeProvider now!
+
+interface now!
+
+stubTimeProvider now!
+
+stubTimeProvider now!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:13:46' prior: 50787933!
+test17CannotListACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface list: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:13:49'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 18:13:53'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:13:54'!
+PASSED!
+!StubTimeProvider methodsFor: 'time manipulation' stamp: 'DH 11/17/2019 18:14:39' prior: 50788184!
+advanceMinutes: anAmountOfMinutes
+
+	dateAndTime _ DateAndTime 
+		year: dateAndTime yearNumber
+		month: dateAndTime monthIndex
+		day: dateAndTime dayOfMonth
+		hour: dateAndTime hour
+		minute: dateAndTime minute + anAmountOfMinutes
+		second: dateAndTime second! !
+
+DateAndTime now second!
+
+d := DateAndTime now!
+
+d !
+
+d nanoSecond !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:26:32'!
+test18CannotModifyACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface add: 2 of: testObjectFactory anotherItemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:26:35'!
+FAILURE!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:26:35'!
+FAILURE!
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:27:23' prior: 50788676!
+add: aNumberOfBooks of: aBookISBN to: aCartID
+
+	|cartInfo|
+	cartInfo _ self getInfoFromCartWithID: aCartID.
+	(timeProvider now - cartInfo lastTimeUsed) totalMinutes >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	cartInfo cart add: aNumberOfBooks of: aBookISBN.
+	cartInfo setLastTimeUsed: timeProvider now.! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 18:27:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 18:27:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 18:27:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 18:27:25'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:27:26'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:27:39'!
+test18CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface add: 2 of: testObjectFactory anotherItemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:27:46'!
+test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface add: 2 of: testObjectFactory anotherItemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+
+!methodRemoval: InterfaceTest #test18CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:27:46'!
+test18CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface add: 2 of: testObjectFactory anotherItemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+	]!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:29:07' prior: 50789079!
+test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface checkout: cart 
+		withCardNumber: testObjectFactory validCreditCardNumber 
+		withExpirationDate: testObjectFactory futureDate 
+		withOwner: testObjectFactory validOwner
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+
+!testRun: #InterfaceTest #test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:29:08'!
+FAILURE!
+
+!testRun: #InterfaceTest #test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:29:09'!
+FAILURE!
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:29:31' prior: 50788441!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier|
+	cartInfo _ self getInfoFromCartWithID: aCartID.
+	
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	cashier checkOut.
+	self addItemsFrom: cartInfo cart to: cartInfo ownerID.
+	self removeCart: aCartID.! !
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:29:42' prior: 50788977!
+add: aNumberOfBooks of: aBookISBN to: aCartID
+
+	|cartInfo|
+	cartInfo _ self getInfoFromCartWithID: aCartID.
+	cartInfo cart add: aNumberOfBooks of: aBookISBN.
+	cartInfo setLastTimeUsed: timeProvider now.! !
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:30:24' prior: 50789170!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier|
+	cartInfo _ self getInfoFromCartWithID: aCartID.
+	(timeProvider now - cartInfo lastTimeUsed) totalMinutes >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	cashier checkOut.
+	self addItemsFrom: cartInfo cart to: cartInfo ownerID.
+	self removeCart: aCartID.! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 18:30:28'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 18:30:29'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 18:30:29'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 18:30:29'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:30:29'!
+PASSED!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:30:29'!
+FAILURE!
+
+!testRun: #InterfaceTest #test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:30:29'!
+PASSED!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:30:29'!
+FAILURE!
+
+!testRun: #InterfaceTest #test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:30:38'!
+PASSED!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:30:40'!
+FAILURE!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:30:40'!
+FAILURE!
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:31:03' prior: 50789190!
+add: aNumberOfBooks of: aBookISBN to: aCartID
+
+	|cartInfo|
+	cartInfo _ self getInfoFromCartWithID: aCartID.
+	(timeProvider now - cartInfo lastTimeUsed) totalMinutes >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	cartInfo cart add: aNumberOfBooks of: aBookISBN.
+	cartInfo setLastTimeUsed: timeProvider now.! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 18:31:05'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 18:31:05'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 18:31:05'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 18:31:05'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+
+!testRun: #InterfaceTest #test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:31:06'!
+PASSED!
+!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/17/2019 18:33:40'!
+a! !
+
+!methodRemoval: Interface #a stamp: 'DH 11/17/2019 18:33:43'!
+a!
+!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/17/2019 18:34:29' prior: 50787461!
+getInfoFromCartWithID: aCartID
+
+	^carts at: aCartID ifAbsent: [self error: self class invalidCartIDErrorMessage.]! !
+!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/17/2019 18:34:51'!
+validateAndGetInfoFromCartWithID: aCartID
+
+	^carts at: aCartID ifAbsent: [self error: self class invalidCartIDErrorMessage.]! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 18:34:51' prior: 50788687!
+list: aCartID
+
+	|cartInfo cartItemsWithQuantities|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	(timeProvider now - cartInfo lastTimeUsed) totalMinutes >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	cartItemsWithQuantities _ Dictionary new.
+	self update: cartItemsWithQuantities withItemsFrom: cartInfo cart.
+	cartInfo setLastTimeUsed: timeProvider now.
+	^cartItemsWithQuantities! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 18:34:51' prior: 50789200!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	(timeProvider now - cartInfo lastTimeUsed) totalMinutes >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	cashier checkOut.
+	self addItemsFrom: cartInfo cart to: cartInfo ownerID.
+	self removeCart: aCartID.! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 18:34:51' prior: 50789305!
+add: aNumberOfBooks of: aBookISBN to: aCartID
+
+	|cartInfo|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	(timeProvider now - cartInfo lastTimeUsed) totalMinutes >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	cartInfo cart add: aNumberOfBooks of: aBookISBN.
+	cartInfo setLastTimeUsed: timeProvider now.! !
+
+!methodRemoval: Interface #getInfoFromCartWithID: stamp: 'DH 11/17/2019 18:34:51'!
+getInfoFromCartWithID: aCartID
+
+	^carts at: aCartID ifAbsent: [self error: self class invalidCartIDErrorMessage.]!
+!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/17/2019 18:36:36' prior: 50789398!
+validateAndGetInfoFromCartWithID: aCartID
+
+	|cartInfo minutesSinceLastUsed|
+	cartInfo _ carts at: aCartID ifAbsent: [self error: self class invalidCartIDErrorMessage.].
+	minutesSinceLastUsed _ (timeProvider now - cartInfo lastTimeUsed) totalMinutes.
+	minutesSinceLastUsed >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	^cartInfo! !
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:37:02' prior: 50789446!
+add: aNumberOfBooks of: aBookISBN to: aCartID
+
+	|cartInfo|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	cartInfo cart add: aNumberOfBooks of: aBookISBN.
+	cartInfo setLastTimeUsed: timeProvider now.! !
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:37:32' prior: 50789422!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	cashier checkOut.
+	self addItemsFrom: cartInfo cart to: cartInfo ownerID.
+	self removeCart: aCartID.! !
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:38:59' prior: 50789405!
+list: aCartID
+
+	|cartInfo cartItemsWithQuantities|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	cartItemsWithQuantities _ Dictionary new.
+	self update: cartItemsWithQuantities withItemsFrom: cartInfo cart.
+	cartInfo setLastTimeUsed: timeProvider now.
+	^cartItemsWithQuantities! !
+!Interface methodsFor: 'client operations - private' stamp: 'DH 11/17/2019 18:41:13'!
+registerPurchasesFor: aCart madeWith: aClientID
+
+	|clientPurchases|
+	clientPurchases _ (clients at: aClientID) purchases.
+	self update: clientPurchases withItemsFrom: aCart.! !
+!Interface methodsFor: 'as yet unclassified' stamp: 'DH 11/17/2019 18:41:13' prior: 50789491!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	cashier checkOut.
+	self registerPurchasesFor: cartInfo cart madeWith: cartInfo ownerID.
+	self removeCart: aCartID.! !
+
+!methodRemoval: Interface #addItemsFrom:to: stamp: 'DH 11/17/2019 18:41:13'!
+addItemsFrom: aCart to: aClientID
+
+	|clientPurchases|
+	clientPurchases _ (clients at: aClientID) purchases.
+	self update: clientPurchases withItemsFrom: aCart.!
+!Interface methodsFor: 'client operations - private' stamp: 'DH 11/17/2019 18:41:29' prior: 50789523!
+registerPurchasesFor: aClientID madeWith: aCart
+
+	|clientPurchases|
+	clientPurchases _ (clients at: aClientID) purchases.
+	self update: clientPurchases withItemsFrom: aCart.! !
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:41:54' prior: 50789532!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	cashier checkOut.
+	self registerPurchasesFor: cartInfo ownerID madeWith: cartInfo cart.
+	self removeCart: aCartID.! !
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 18:42:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 18:42:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 18:42:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 18:42:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 18:42:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 18:42:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 18:42:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+
+!testRun: #InterfaceTest #test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:42:04'!
+PASSED!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:43:49' prior: 50789132!
+test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client salesBook interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	salesBook _ OrderedCollection new.
+	interface _ testObjectFactory createInterfaceWithSalesBook: salesBook andMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface checkout: cart 
+		withCardNumber: testObjectFactory validCreditCardNumber 
+		withExpirationDate: testObjectFactory futureDate 
+		withOwner: testObjectFactory validOwner
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+		self assert: salesBook isEmpty.
+	]! !
+
+!testRun: #InterfaceTest #test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:43:52'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/17/2019 18:43:56'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:43:57'!
+PASSED!
+
+!testRun: #InterfaceTest #test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:43:58'!
+PASSED!
+
+!testRun: #InterfaceTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/17/2019 18:44:02'!
+PASSED!
+
+!testRun: #InterfaceTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test05CannotListANonExistentCart stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test07CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test08CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test09ListingACartShowsAddedBooks stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test10CannotCheckoutANonExistentCart stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test11CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test12CheckoutedCartCannotBeModified stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test13CheckoutedCartCannotBeListed stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test14CannotListPurchasesOfNonExistentClient stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test15CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test16ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test17CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test18CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+!testRun: #InterfaceTest #test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/17/2019 18:44:03'!
+PASSED!
+
+----SNAPSHOT----(17 November 2019 18:44:20) CuisUniversity-3938.image priorSource: 14628372!
+
+----QUIT----(17 November 2019 18:44:30) CuisUniversity-3938.image priorSource: 14663033!

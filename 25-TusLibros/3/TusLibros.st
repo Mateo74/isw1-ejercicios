@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #CartTest category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 TestCase subclass: #CartTest
 	instanceVariableNames: 'testObjectsFactory'
 	classVariableNames: ''
@@ -98,7 +98,7 @@ setUp
 	testObjectsFactory := StoreTestObjectsFactory new.! !
 
 
-!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: 'testObjectsFactory debitBehavior'
 	classVariableNames: ''
@@ -246,7 +246,7 @@ debit: anAmount from: aCreditCard
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
 
-!classDefinition: #InterfaceTest category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #InterfaceTest category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 TestCase subclass: #InterfaceTest
 	instanceVariableNames: 'testObjectFactory debitBehavior'
 	classVariableNames: ''
@@ -518,6 +518,72 @@ test16ListingPurchasesOfClientShowsAllPurchases
 	self assert: (Dictionary new at: book1 put: 3; at: book2 put: 1; yourself)
 		equals: (interface listPurchasesOf: client withPassword: password).! !
 
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:13:46'!
+test17CannotListACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface list: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:26:32'!
+test18CannotModifyACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface add: 2 of: testObjectFactory anotherItemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:43:49'!
+test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+
+	|stubTimeProvider client salesBook interface cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	salesBook _ OrderedCollection new.
+	interface _ testObjectFactory createInterfaceWithSalesBook: salesBook andMerchantProcessor: self.
+
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	
+	stubTimeProvider advanceMinutes: 31.
+	
+	self should: [interface checkout: cart 
+		withCardNumber: testObjectFactory validCreditCardNumber 
+		withExpirationDate: testObjectFactory futureDate 
+		withOwner: testObjectFactory validOwner
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
+		self assert: salesBook isEmpty.
+	]! !
+
 
 !InterfaceTest methodsFor: 'setUp/tearDown' stamp: 'DH 11/11/2019 20:08:50'!
 setUp
@@ -533,7 +599,7 @@ debit: anAmount from: aCreditCard
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
 
-!classDefinition: #Cart category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #Cart category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
@@ -613,7 +679,7 @@ add: aQuantity of: anItem
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -623,18 +689,19 @@ acceptingItemsOf: aCatalog
 	^self new initializeAcceptingItemsOf: aCatalog ! !
 
 
-!classDefinition: #CartInfo category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #CartInfo category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Object subclass: #CartInfo
-	instanceVariableNames: 'cart ownerID'
+	instanceVariableNames: 'cart ownerID lastUsed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CartInfo methodsFor: 'initialization' stamp: 'DH 11/16/2019 15:16:56'!
-initializeWithCart: aCart andOwner: aClientID
+!CartInfo methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:41:03'!
+initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime
 
 	cart _ aCart.
-	ownerID _ aClientID! !
+	ownerID _ aClientID.
+	lastUsed _ aDateAndTime.! !
 
 
 !CartInfo methodsFor: 'queries' stamp: 'DH 11/16/2019 15:17:29'!
@@ -642,24 +709,35 @@ cart
 
 	^cart! !
 
+!CartInfo methodsFor: 'queries' stamp: 'DH 11/17/2019 14:41:32'!
+lastTimeUsed
+
+	^lastUsed! !
+
 !CartInfo methodsFor: 'queries' stamp: 'DH 11/16/2019 15:17:38'!
 ownerID
 
 	^ownerID! !
 
+
+!CartInfo methodsFor: 'modifiers' stamp: 'DH 11/17/2019 14:43:14'!
+setLastTimeUsed: aDateAndTime
+
+	lastUsed _ aDateAndTime! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CartInfo class' category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: 'CartInfo class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 CartInfo class
 	instanceVariableNames: ''!
 
-!CartInfo class methodsFor: 'instance creation' stamp: 'DH 11/16/2019 15:15:53'!
-for: aCart ownedBy: aClientID
+!CartInfo class methodsFor: 'instance creation' stamp: 'DH 11/17/2019 14:39:58'!
+for: aCart ownedBy: aClientID createdOn: aDateAndTime
 
-	^self new initializeWithCart: aCart andOwner: aClientID! !
+	^self new initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime.! !
 
 
-!classDefinition: #Cashier category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #Cashier category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Object subclass: #Cashier
 	instanceVariableNames: 'cart salesBook merchantProcessor creditCard total'
 	classVariableNames: ''
@@ -710,7 +788,7 @@ initializeToCheckout: aCart charging: aCreditCard throught: aMerchantProcessor r
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Cashier class
 	instanceVariableNames: ''!
 
@@ -750,7 +828,7 @@ creditCardHasNoCreditErrorMessage
 	^'Credit card has no credit'! !
 
 
-!classDefinition: #ClientInfo category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #ClientInfo category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Object subclass: #ClientInfo
 	instanceVariableNames: 'password purchases'
 	classVariableNames: ''
@@ -776,7 +854,7 @@ purchases
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'ClientInfo class' category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: 'ClientInfo class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 ClientInfo class
 	instanceVariableNames: ''!
 
@@ -786,7 +864,7 @@ forClientWithPassword: aPassword
 	^self new initializeWithPassword: aPassword! !
 
 
-!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Object subclass: #CreditCard
 	instanceVariableNames: 'expiration number owner'
 	classVariableNames: ''
@@ -809,7 +887,7 @@ initializeWithNumber: aCreditCardNumber owner: anOwnerName expiringOn: aMonth
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 CreditCard class
 	instanceVariableNames: ''!
 
@@ -825,64 +903,71 @@ invalidCreditCardNumberErrorMessage
 	^'Credit card number does not have 16 digits.'! !
 
 
-!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Object subclass: #Interface
-	instanceVariableNames: 'clients carts lastCartID catalog salesBook today merchantProcessor'
+	instanceVariableNames: 'clients carts lastCartID catalog salesBook timeProvider merchantProcessor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!Interface methodsFor: 'cart operations' stamp: 'DH 11/16/2019 16:08:33'!
+!Interface methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:35:44'!
+initializeWith: aClientDictionary
+salesBook: aSalesBook
+timeProvider: aTimeProvider
+catalog: aCatalog
+andMerchantProcessor: aMerchantProcessor
+
+	clients _ aClientDictionary.
+	carts _ Dictionary new.
+	lastCartID _ 0.
+	catalog _ aCatalog.
+	salesBook _ aSalesBook.
+	timeProvider _ aTimeProvider.
+	merchantProcessor _ aMerchantProcessor.! !
+
+
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:37:02'!
 add: aNumberOfBooks of: aBookISBN to: aCartID
 
-	|cart|
-	cart _ (self getInfoFromCartWithID: aCartID) cart.
-	cart add: aNumberOfBooks of: aBookISBN.! !
+	|cartInfo|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	cartInfo cart add: aNumberOfBooks of: aBookISBN.
+	cartInfo setLastTimeUsed: timeProvider now.! !
 
-!Interface methodsFor: 'cart operations' stamp: 'DH 11/16/2019 16:09:31'!
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:41:54'!
 checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
 	
 	|cartInfo creditCard cashier|
-	cartInfo _ self getInfoFromCartWithID: aCartID.
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
 	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
 	cashier _ Cashier
 		toCheckout: cartInfo cart
 		charging: creditCard
 		throught: merchantProcessor
-		on: today
+		on: timeProvider now
 		registeringOn: salesBook.
 	
 	cashier checkOut.
-	self addItemsFrom: cartInfo cart to: cartInfo ownerID.
+	self registerPurchasesFor: cartInfo ownerID madeWith: cartInfo cart.
 	self removeCart: aCartID.! !
 
-!Interface methodsFor: 'cart operations' stamp: 'DH 11/16/2019 16:05:42'!
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 14:41:52'!
 createCartWithClientID: aClientID andPassword: aPassword
 
 	self getInfoFromClientWithID: aClientID validatingPassword: aPassword.
 	lastCartID _ lastCartID + 1.
-	carts at: lastCartID put: (CartInfo for: (Cart acceptingItemsOf: catalog) ownedBy: aClientID).
+	carts at: lastCartID put: (CartInfo for: (Cart acceptingItemsOf: catalog) ownedBy: aClientID createdOn: timeProvider now).
 	^lastCartID! !
 
-!Interface methodsFor: 'cart operations' stamp: 'DH 11/16/2019 16:08:57'!
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:38:59'!
 list: aCartID
 
-	|cart cartItemsWithQuantities|
-	cart _ (self getInfoFromCartWithID: aCartID) cart.
+	|cartInfo cartItemsWithQuantities|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
 	cartItemsWithQuantities _ Dictionary new.
-	self update: cartItemsWithQuantities withItemsFrom: cart. 
+	self update: cartItemsWithQuantities withItemsFrom: cartInfo cart.
+	cartInfo setLastTimeUsed: timeProvider now.
 	^cartItemsWithQuantities! !
-
-
-!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/16/2019 16:08:10'!
-getInfoFromCartWithID: aCartID
-
-	^carts at: aCartID ifAbsent: [self error: self class invalidCartIDErrorMessage.]! !
-
-!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/16/2019 13:46:11'!
-removeCart: aCartID
-
-	carts removeKey: aCartID.! !
 
 
 !Interface methodsFor: 'client operations' stamp: 'DH 11/16/2019 16:04:31'!
@@ -893,12 +978,20 @@ listPurchasesOf: aClientID withPassword: aPassword
 	^clientInfo purchases.! !
 
 
-!Interface methodsFor: 'client operations - private' stamp: 'DH 11/16/2019 15:59:14'!
-addItemsFrom: aCart to: aClientID
+!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/16/2019 13:46:11'!
+removeCart: aCartID
 
-	|clientPurchases|
-	clientPurchases _ (clients at: aClientID) purchases.
-	self update: clientPurchases withItemsFrom: aCart.! !
+	carts removeKey: aCartID.! !
+
+!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/17/2019 18:36:36'!
+validateAndGetInfoFromCartWithID: aCartID
+
+	|cartInfo minutesSinceLastUsed|
+	cartInfo _ carts at: aCartID ifAbsent: [self error: self class invalidCartIDErrorMessage.].
+	minutesSinceLastUsed _ (timeProvider now - cartInfo lastTimeUsed) totalMinutes.
+	minutesSinceLastUsed >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	^cartInfo! !
+
 
 !Interface methodsFor: 'client operations - private' stamp: 'DH 11/16/2019 16:02:08'!
 getInfoFromClientWithID: aClientID validatingPassword: aPassword
@@ -908,21 +1001,12 @@ getInfoFromClientWithID: aClientID validatingPassword: aPassword
 	clientInfo password = aPassword ifFalse: [self error: self class incorrectPasswordErrorMessage.].
 	^clientInfo! !
 
+!Interface methodsFor: 'client operations - private' stamp: 'DH 11/17/2019 18:41:29'!
+registerPurchasesFor: aClientID madeWith: aCart
 
-!Interface methodsFor: 'initialization' stamp: 'DH 11/11/2019 20:40:23'!
-initializeWith: aClientDictionary
-salesBook: aSalesBook
-date: aTodayDate
-catalog: aCatalog
-andMerchantProcessor: aMerchantProcessor
-
-	clients _ aClientDictionary.
-	carts _ Dictionary new.
-	lastCartID _ 0.
-	catalog _ aCatalog.
-	salesBook _ aSalesBook.
-	today _ aTodayDate.
-	merchantProcessor _ aMerchantProcessor.! !
+	|clientPurchases|
+	clientPurchases _ (clients at: aClientID) purchases.
+	self update: clientPurchases withItemsFrom: aCart.! !
 
 
 !Interface methodsFor: 'utility - private' stamp: 'DH 11/16/2019 15:54:16'!
@@ -935,7 +1019,7 @@ update: aDictionary withItemsFrom: aCart
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Interface class' category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: 'Interface class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Interface class
 	instanceVariableNames: ''!
 
@@ -948,6 +1032,11 @@ bookNotFromEditorialErrorMessage
 cannotAddLessThanOneBookToCartErrorMessage
 
 	^ 'Cannot add less than one book to cart.'! !
+
+!Interface class methodsFor: 'errorMessages' stamp: 'DH 11/17/2019 14:50:46'!
+cartNoLongerValidErrorMessage
+
+	^'30 minutes or more passed since cart was used.'! !
 
 !Interface class methodsFor: 'errorMessages' stamp: 'DH 11/7/2019 19:38:47'!
 incorrectPasswordErrorMessage
@@ -965,22 +1054,22 @@ invalidClientIDErrorMessage
 	^ 'Invalid client ID.'! !
 
 
-!Interface class methodsFor: 'as yet unclassified' stamp: 'DH 11/11/2019 20:39:31'!
+!Interface class methodsFor: 'instance creation' stamp: 'DH 11/17/2019 14:35:02'!
 newWithClients: aClientDictionary
 salesBook: aSalesBook
-date: aTodayDate
+timeProvider: aTimeProvider
 catalog: aCatalog
 andMerchantProcessor: aMerchantProcessor
 
 	^ self new
 	initializeWith: aClientDictionary
 	salesBook: aSalesBook
-	date: aTodayDate
+	timeProvider: aTimeProvider
 	catalog: aCatalog
 	andMerchantProcessor: aMerchantProcessor! !
 
 
-!classDefinition: #Sale category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #Sale category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Object subclass: #Sale
 	instanceVariableNames: 'total'
 	classVariableNames: ''
@@ -1006,7 +1095,7 @@ initializeTotal: aTotal
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Sale class' category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: 'Sale class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Sale class
 	instanceVariableNames: ''!
 
@@ -1017,9 +1106,9 @@ of: aTotal
 	^self new initializeTotal: aTotal ! !
 
 
-!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 11/16/2019 16:11:23'!
+!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
 Object subclass: #StoreTestObjectsFactory
-	instanceVariableNames: 'today'
+	instanceVariableNames: 'stubTimeProvider'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
@@ -1069,21 +1158,21 @@ invalidCartID
 	^ -8! !
 
 
-!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'DH 11/11/2019 19:31:28'!
+!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'DH 11/17/2019 14:06:46'!
 expiredCreditCard
 	
 	^CreditCard
 	newWithNumber: '1234567891011120'
 	owner: self validOwner
-	expiringOn: (Month month: today monthIndex year: today yearNumber - 1)! !
+	expiringOn: self pastDate! !
 
-!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'DH 11/11/2019 19:31:35'!
+!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'DH 11/17/2019 14:06:57'!
 notExpiredCreditCard
 	
 	^CreditCard
 	newWithNumber: '1234567891011120'
 	owner: self validOwner
-	expiringOn: (Month month: today monthIndex year: today yearNumber + 1)! !
+	expiringOn: self futureDate! !
 
 !StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'DH 11/14/2019 18:47:09'!
 validCreditCardNumber
@@ -1096,21 +1185,31 @@ validOwner
 	^'Juan Juan'! !
 
 
-!StoreTestObjectsFactory methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2013 18:37'!
+!StoreTestObjectsFactory methodsFor: 'initialization' stamp: 'DH 11/17/2019 13:43:43'!
 initialize
 
-	today := DateAndTime now! !
+	stubTimeProvider := StubTimeProvider newWithActualDateAndTime.! !
 
 
-!StoreTestObjectsFactory methodsFor: 'date' stamp: 'DH 11/11/2019 18:43:58'!
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 14:05:20'!
 futureDate
 
-	^Month month: today monthIndex year: today yearNumber + 1! !
+	^Month month: self today monthIndex year: self today yearNumber + 1! !
 
-!StoreTestObjectsFactory methodsFor: 'date' stamp: 'HernanWilkinson 6/17/2013 18:37'!
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 14:07:21'!
+pastDate
+
+	^Month month: self today monthIndex year: self today yearNumber - 1! !
+
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 13:40:14'!
+stubTimeProvider
+	
+	^stubTimeProvider! !
+
+!StoreTestObjectsFactory methodsFor: 'date and time' stamp: 'DH 11/17/2019 14:04:35'!
 today
 	
-	^ today! !
+	^stubTimeProvider now! !
 
 
 !StoreTestObjectsFactory methodsFor: 'clients' stamp: 'DH 11/7/2019 19:55:51'!
@@ -1148,12 +1247,78 @@ createInterfaceWithMerchantProcessor: aMerchantProcessor
 		
 	^self createInterfaceWithSalesBook: OrderedCollection new andMerchantProcessor: aMerchantProcessor! !
 
-!StoreTestObjectsFactory methodsFor: 'interface' stamp: 'DH 11/14/2019 18:46:44'!
+!StoreTestObjectsFactory methodsFor: 'interface' stamp: 'DH 11/17/2019 14:38:20'!
 createInterfaceWithSalesBook: aSalesBook andMerchantProcessor: aMerchantProcessor
 		
 	^Interface
 	newWithClients: self clientsWithPasswords
 	salesBook: aSalesBook
-	date: today
+	timeProvider: stubTimeProvider
 	catalog: self defaultCatalog
 	andMerchantProcessor: aMerchantProcessor ! !
+
+
+!classDefinition: #TimeProvider category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+Object subclass: #TimeProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!TimeProvider methodsFor: 'query time' stamp: 'DH 11/17/2019 14:09:45'!
+now
+
+	^self subclassResponsibility! !
+
+
+!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+TimeProvider subclass: #StubTimeProvider
+	instanceVariableNames: 'dateAndTime'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!StubTimeProvider methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:11:00'!
+initializeWithActualDateAndTime
+
+	dateAndTime _ DateAndTime now! !
+
+
+!StubTimeProvider methodsFor: 'query time' stamp: 'DH 11/17/2019 14:11:12'!
+now
+
+	^dateAndTime! !
+
+
+!StubTimeProvider methodsFor: 'time manipulation' stamp: 'DH 11/17/2019 14:19:09'!
+advanceDays: anAmountOfDays
+
+	dateAndTime _ DateAndTime 
+		year: dateAndTime yearNumber
+		month: dateAndTime monthIndex
+		day: dateAndTime dayOfMonth + anAmountOfDays
+		hour: dateAndTime hour
+		minute: dateAndTime minute
+		second: dateAndTime second! !
+
+!StubTimeProvider methodsFor: 'time manipulation' stamp: 'DH 11/17/2019 18:14:39'!
+advanceMinutes: anAmountOfMinutes
+
+	dateAndTime _ DateAndTime 
+		year: dateAndTime yearNumber
+		month: dateAndTime monthIndex
+		day: dateAndTime dayOfMonth
+		hour: dateAndTime hour
+		minute: dateAndTime minute + anAmountOfMinutes
+		second: dateAndTime second! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'StubTimeProvider class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+StubTimeProvider class
+	instanceVariableNames: ''!
+
+!StubTimeProvider class methodsFor: 'instance creation' stamp: 'DH 11/17/2019 14:10:39'!
+newWithActualDateAndTime
+
+	^self new initializeWithActualDateAndTime! !
