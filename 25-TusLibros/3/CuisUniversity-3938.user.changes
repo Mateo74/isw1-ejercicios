@@ -10077,3 +10077,1039 @@ PASSED!
 ----SNAPSHOT----(18 November 2019 22:07:33) CuisUniversity-3938.image priorSource: 14729604!
 
 ----QUIT----(18 November 2019 22:07:41) CuisUniversity-3938.image priorSource: 14745333!
+
+----STARTUP---- (18 November 2019 22:42:23) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50784580!
+test04CannotAddBookToNonExistentCart
+
+	|interface book|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	book _ testObjectFactory itemSellByTheStore.
+	
+	self should: [interface add: 1 of: book to: testObjectFactory invalidCartID.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText
+	].
+	! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50792000!
+test18CartNotUsedFor30MinutesIsDeleted
+
+	|interface cart|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
+	
+	self should: [interface list: cart]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self should: [interface list: cart]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:aSecondError |
+			self assert: PurchaseSystem invalidCartIDErrorMessage equals: aSecondError messageText.
+		]
+	]! !
+!StoreTestObjectsFactory methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50788519!
+createInterfaceWithSalesBook: aSalesBook andMerchantProcessor: aMerchantProcessor
+		
+	^PurchaseSystem
+	newWithClients: self clientsWithPasswords
+	salesBook: aSalesBook
+	timeProvider: stubTimeProvider
+	catalog: self defaultCatalog
+	andMerchantProcessor: aMerchantProcessor ! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50791497!
+test13CannotListPurchasesOfClientUsingWrongPassword
+
+	|interface|
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	self should: [interface listPurchasesOf: testObjectFactory validClientID withPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem incorrectPasswordErrorMessage equals: anError messageText.
+	]! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50791675!
+test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+
+	|salesBook interface cart|
+	
+	salesBook _ OrderedCollection new.
+	interface _ testObjectFactory createInterfaceWithSalesBook: salesBook andMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
+	
+	self should: [interface checkout: cart 
+		withCardNumber: testObjectFactory validCreditCardNumber 
+		withExpirationDate: testObjectFactory futureDate 
+		withOwner: testObjectFactory validOwner
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem cartNoLongerValidErrorMessage equals: anError messageText.
+		self assert: salesBook isEmpty.
+	]! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50791467!
+test12CannotListPurchasesOfNonExistentClient
+
+	|interface|
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	self should: [interface listPurchasesOf: testObjectFactory invalidClientID withPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidClientIDErrorMessage equals: anError messageText.
+	]! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50791406!
+test10CheckoutedCartCannotBeModified
+
+	|interface cart|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	cart _ self createAndCheckoutACartUsing: interface.
+	
+	self should: [interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText.
+	].! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50790007!
+test02CannotCreateCartWithIncorrectPassword
+
+	|interface|
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	self should: [interface createCartWithClientID: testObjectFactory validClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem incorrectPasswordErrorMessage equals: anError messageText.
+		]! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50791607!
+test15CannotListACartIf30MinutesPassedSinceLastUsed
+
+	|interface cart|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
+	
+	self should: [interface list: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50789992!
+test01CannotCreateCartWithInvalidClientID
+
+	|interface|
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	self should: [interface createCartWithClientID: testObjectFactory invalidClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidClientIDErrorMessage equals: anError messageText.
+		]! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50791314!
+test08CannotCheckoutANonExistentCart
+
+	|interface|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+
+	self should: [interface checkout: testObjectFactory invalidCartID 
+		withCardNumber: testObjectFactory validCreditCardNumber 
+		withExpirationDate: testObjectFactory futureDate 
+		withOwner: testObjectFactory validOwner
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText.
+	].	
+	
+	! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:37' prior: 50791438!
+test11CheckoutedCartCannotBeListed
+
+	|interface cart|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	cart _ self createAndCheckoutACartUsing: interface.
+	
+	self should: [interface list: cart.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText.
+	].! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:38' prior: 50784636!
+test05CannotListANonExistentCart
+
+	|interface|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	
+	self should: [interface list: testObjectFactory invalidCartID.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText
+		].
+	! !
+!InterfaceTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:42:38' prior: 50791639!
+test16CannotModifyACartIf30MinutesPassedSinceLastUsed
+
+	|interface cart|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
+	
+	self should: [interface add: 2 of: testObjectFactory anotherItemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+!StoreTestObjectsFactory methodsFor: 'purchase system' stamp: 'DH 11/18/2019 22:44:51'!
+createPurchaseSystemWithMerchantProcessor: aMerchantProcessor
+		
+	^self createInterfaceWithSalesBook: OrderedCollection new andMerchantProcessor: aMerchantProcessor! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50792660!
+test05CannotListANonExistentCart
+
+	|interface|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	
+	self should: [interface list: testObjectFactory invalidCartID.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText
+		].
+	! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50792608!
+test01CannotCreateCartWithInvalidClientID
+
+	|interface|
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self should: [interface createCartWithClientID: testObjectFactory invalidClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidClientIDErrorMessage equals: anError messageText.
+		]! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50786755!
+test03IDsOfTwoCreatedCartsAreDifferent
+
+	|interface clientID1 clientID2 cartID1 cartID2|
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	clientID1 _ testObjectFactory validClientID.
+	clientID2 _ testObjectFactory anotherValidClientID.
+	cartID1 _ interface createCartWithClientID: clientID1 andPassword: (testObjectFactory passwordFor: clientID1).
+	cartID2 _ interface createCartWithClientID: clientID2 andPassword: (testObjectFactory passwordFor: clientID2).
+	
+	self deny: cartID1 = cartID2.
+	! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50792575!
+test02CannotCreateCartWithIncorrectPassword
+
+	|interface|
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self should: [interface createCartWithClientID: testObjectFactory validClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem incorrectPasswordErrorMessage equals: anError messageText.
+		]! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50792452!
+test04CannotAddBookToNonExistentCart
+
+	|interface book|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book _ testObjectFactory itemSellByTheStore.
+	
+	self should: [interface add: 1 of: book to: testObjectFactory invalidCartID.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText
+	].
+	! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50792501!
+test13CannotListPurchasesOfClientUsingWrongPassword
+
+	|interface|
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self should: [interface listPurchasesOf: testObjectFactory validClientID withPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem incorrectPasswordErrorMessage equals: anError messageText.
+	]! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50791528!
+test14ListingPurchasesOfClientShowsAllPurchases
+
+	|interface book1 book2 client password cart cardNumber expirationDate owner|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book1 _ testObjectFactory itemSellByTheStore.
+	book2 _ testObjectFactory anotherItemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	password _ testObjectFactory passwordFor: client.
+	cardNumber _ testObjectFactory validCreditCardNumber.
+	expirationDate _ testObjectFactory futureDate.
+	owner _ testObjectFactory validOwner.
+	
+	cart _ interface createCartWithClientID: client andPassword: password.
+	interface add: 1 of: book1 to: cart.
+	interface add: 1 of: book2 to: cart.
+	interface checkout: cart withCardNumber: cardNumber withExpirationDate: expirationDate withOwner: owner.
+	
+	cart _ interface createCartWithClientID: client andPassword: password.
+	interface add: 2 of: book1 to: cart.
+	interface checkout: cart withCardNumber: cardNumber withExpirationDate: expirationDate withOwner: owner.
+	
+	self assert: (Dictionary new at: book1 put: 3; at: book2 put: 1; yourself)
+		equals: (interface listPurchasesOf: client withPassword: password).! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50792469!
+test18CartNotUsedFor30MinutesIsDeleted
+
+	|interface cart|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
+	
+	self should: [interface list: cart]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self should: [interface list: cart]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:aSecondError |
+			self assert: PurchaseSystem invalidCartIDErrorMessage equals: aSecondError messageText.
+		]
+	]! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50791234!
+test07ListingACartShowsAddedBooks
+
+	|interface book1 book2 client cart|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book1 _ testObjectFactory itemSellByTheStore.
+	book2 _ testObjectFactory anotherItemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	interface add: 1 of: book1 to: cart.
+	interface add: 2 of: book2 to: cart.
+	self assert: (Dictionary new at: book1 put: 1; at: book2 put: 2; yourself) equals: (interface list: cart).
+
+
+	! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50792591!
+test15CannotListACartIf30MinutesPassedSinceLastUsed
+
+	|interface cart|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
+	
+	self should: [interface list: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50792624!
+test08CannotCheckoutANonExistentCart
+
+	|interface|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+
+	self should: [interface checkout: testObjectFactory invalidCartID 
+		withCardNumber: testObjectFactory validCreditCardNumber 
+		withExpirationDate: testObjectFactory futureDate 
+		withOwner: testObjectFactory validOwner
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText.
+	].	
+	
+	! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:51' prior: 50792161!
+test20CannotAddBookWithQuantityLessThanOne
+
+	"Test adicional. No se hace en el marco de TDD."
+	|interface cart client|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	
+	self should: [interface add: 0 of: testObjectFactory itemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Cart invalidQuantityErrorMessage equals: anError messageText.
+		self assert: (interface list: cart) isEmpty.
+		].	
+
+
+	! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:52' prior: 50786775!
+test06ListingAnEmptyCartResultsInEmptyList
+
+	|interface client cart|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	
+	self assert: (interface list: cart) isEmpty
+	! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:52' prior: 50792115!
+test19CannotAddBookThatDoesNotBelongToEditorial
+
+	"Test adicional. No se hace en el marco de TDD."
+	|interface cart client|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	
+	self should: [interface add: 1 of: testObjectFactory itemNotSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Cart invalidItemErrorMessage equals: anError messageText.
+		self assert: (interface list: cart) isEmpty.
+		].
+
+	! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:52' prior: 50792542!
+test12CannotListPurchasesOfNonExistentClient
+
+	|interface|
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self should: [interface listPurchasesOf: testObjectFactory invalidClientID withPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidClientIDErrorMessage equals: anError messageText.
+	]! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:52' prior: 50792558!
+test10CheckoutedCartCannotBeModified
+
+	|interface cart|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndCheckoutACartUsing: interface.
+	
+	self should: [interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText.
+	].! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:52' prior: 50792644!
+test11CheckoutedCartCannotBeListed
+
+	|interface cart|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndCheckoutACartUsing: interface.
+	
+	self should: [interface list: cart.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText.
+	].! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:44:52' prior: 50792675!
+test16CannotModifyACartIf30MinutesPassedSinceLastUsed
+
+	|interface cart|
+	
+	interface _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
+	
+	self should: [interface add: 2 of: testObjectFactory anotherItemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+
+!methodRemoval: StoreTestObjectsFactory #createInterfaceWithMerchantProcessor: stamp: 'DH 11/18/2019 22:44:52'!
+createInterfaceWithMerchantProcessor: aMerchantProcessor
+		
+	^self createInterfaceWithSalesBook: OrderedCollection new andMerchantProcessor: aMerchantProcessor!
+!StoreTestObjectsFactory methodsFor: 'purchase system' stamp: 'DH 11/18/2019 22:45:09'!
+createPurchaseSystemWithSalesBook: aSalesBook andMerchantProcessor: aMerchantProcessor
+		
+	^PurchaseSystem
+	newWithClients: self clientsWithPasswords
+	salesBook: aSalesBook
+	timeProvider: stubTimeProvider
+	catalog: self defaultCatalog
+	andMerchantProcessor: aMerchantProcessor ! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:45:09' prior: 50792517!
+test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+
+	|salesBook interface cart|
+	
+	salesBook _ OrderedCollection new.
+	interface _ testObjectFactory createPurchaseSystemWithSalesBook: salesBook andMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
+	
+	self should: [interface checkout: cart 
+		withCardNumber: testObjectFactory validCreditCardNumber 
+		withExpirationDate: testObjectFactory futureDate 
+		withOwner: testObjectFactory validOwner
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem cartNoLongerValidErrorMessage equals: anError messageText.
+		self assert: salesBook isEmpty.
+	]! !
+!PurchaseSystemTest methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:45:10' prior: 50791352!
+test09CheckoutOfValidCartMakesTheSaleWithCorrectCost
+
+	|interface client cart book salesBook|
+	
+	salesBook _ OrderedCollection new.
+	interface _ testObjectFactory createPurchaseSystemWithSalesBook: salesBook andMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	interface add: 1 of: book to: cart.
+	
+	interface checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	self assert: (OrderedCollection with: (Sale of: testObjectFactory itemSellByTheStorePrice)) equals: salesBook.! !
+!StoreTestObjectsFactory methodsFor: 'as yet unclassified' stamp: 'DH 11/18/2019 22:45:10' prior: 50792693!
+createPurchaseSystemWithMerchantProcessor: aMerchantProcessor
+		
+	^self createPurchaseSystemWithSalesBook: OrderedCollection new andMerchantProcessor: aMerchantProcessor! !
+
+!methodRemoval: StoreTestObjectsFactory #createInterfaceWithSalesBook:andMerchantProcessor: stamp: 'DH 11/18/2019 22:45:10'!
+createInterfaceWithSalesBook: aSalesBook andMerchantProcessor: aMerchantProcessor
+		
+	^PurchaseSystem
+	newWithClients: self clientsWithPasswords
+	salesBook: aSalesBook
+	timeProvider: stubTimeProvider
+	catalog: self defaultCatalog
+	andMerchantProcessor: aMerchantProcessor !
+!PurchaseSystemTest methodsFor: 'utility' stamp: 'DH 11/18/2019 22:45:37' prior: 50790022!
+createAndCheckoutACartUsing: aPurchaseSystem
+
+	|client cart book|
+	
+	client _ testObjectFactory validClientID.
+	cart _ aPurchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	aPurchaseSystem add: 1 of: book to: cart.
+	
+	aPurchaseSystem checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	^cart! !
+!PurchaseSystemTest methodsFor: 'utility' stamp: 'DH 11/18/2019 22:45:45' prior: 50790155!
+createAndUseACartUsing: aPurchaseSystem andAdvanceMinutes: anAmountOfMinutes
+	
+	|stubTimeProvider client cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	cart _ aPurchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	aPurchaseSystem add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	stubTimeProvider advanceMinutes: anAmountOfMinutes.
+	^cart! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:46:04' prior: 50792717!
+test01CannotCreateCartWithInvalidClientID
+
+	|purchaseSystem|
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self should: [purchaseSystem createCartWithClientID: testObjectFactory invalidClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidClientIDErrorMessage equals: anError messageText.
+		]! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:46:12' prior: 50792753!
+test02CannotCreateCartWithIncorrectPassword
+
+	|purchaseSystem|
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self should: [purchaseSystem createCartWithClientID: testObjectFactory validClientID andPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem incorrectPasswordErrorMessage equals: anError messageText.
+		]! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:46:20' prior: 50792733!
+test03IDsOfTwoCreatedCartsAreDifferent
+
+	|purchaseSystem clientID1 clientID2 cartID1 cartID2|
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	clientID1 _ testObjectFactory validClientID.
+	clientID2 _ testObjectFactory anotherValidClientID.
+	cartID1 _ purchaseSystem createCartWithClientID: clientID1 andPassword: (testObjectFactory passwordFor: clientID1).
+	cartID2 _ purchaseSystem createCartWithClientID: clientID2 andPassword: (testObjectFactory passwordFor: clientID2).
+	
+	self deny: cartID1 = cartID2.
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:46:32' prior: 50792769!
+test04CannotAddBookToNonExistentCart
+
+	|purchaseSystem book|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book _ testObjectFactory itemSellByTheStore.
+	
+	self should: [purchaseSystem add: 1 of: book to: testObjectFactory invalidCartID.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText
+	].
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:46:38' prior: 50792702!
+test05CannotListANonExistentCart
+
+	|purchaseSystem|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	
+	self should: [purchaseSystem list: testObjectFactory invalidCartID.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText
+		].
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:46:46' prior: 50792945!
+test06ListingAnEmptyCartResultsInEmptyList
+
+	|purchaseSystem client cart|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	
+	self assert: (purchaseSystem list: cart) isEmpty
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:46:58' prior: 50792862!
+test07ListingACartShowsAddedBooks
+
+	|purchaseSystem book1 book2 client cart|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book1 _ testObjectFactory itemSellByTheStore.
+	book2 _ testObjectFactory anotherItemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	purchaseSystem add: 1 of: book1 to: cart.
+	purchaseSystem add: 2 of: book2 to: cart.
+	self assert: (Dictionary new at: book1 put: 1; at: book2 put: 2; yourself) equals: (purchaseSystem list: cart).
+
+
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:47:06' prior: 50792901!
+test08CannotCheckoutANonExistentCart
+
+	|purchaseSystem|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+
+	self should: [purchaseSystem checkout: testObjectFactory invalidCartID 
+		withCardNumber: testObjectFactory validCreditCardNumber 
+		withExpirationDate: testObjectFactory futureDate 
+		withOwner: testObjectFactory validOwner
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText.
+	].	
+	
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:47:16' prior: 50793097!
+test09CheckoutOfValidCartMakesTheSaleWithCorrectCost
+
+	|purchaseSystem client cart book salesBook|
+	
+	salesBook _ OrderedCollection new.
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithSalesBook: salesBook andMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	purchaseSystem add: 1 of: book to: cart.
+	
+	purchaseSystem checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	self assert: (OrderedCollection with: (Sale of: testObjectFactory itemSellByTheStorePrice)) equals: salesBook.! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:47:23' prior: 50793000!
+test10CheckoutedCartCannotBeModified
+
+	|purchaseSystem cart|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndCheckoutACartUsing: purchaseSystem.
+	
+	self should: [purchaseSystem add: 1 of: testObjectFactory itemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText.
+	].! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:47:30' prior: 50793017!
+test11CheckoutedCartCannotBeListed
+
+	|purchaseSystem cart|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndCheckoutACartUsing: purchaseSystem.
+	
+	self should: [purchaseSystem list: cart.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText.
+	].! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:47:39' prior: 50792984!
+test12CannotListPurchasesOfNonExistentClient
+
+	|purchaseSystem|
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self should: [purchaseSystem listPurchasesOf: testObjectFactory invalidClientID withPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidClientIDErrorMessage equals: anError messageText.
+	]! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:47:44' prior: 50792786!
+test13CannotListPurchasesOfClientUsingWrongPassword
+
+	|purchaseSystem|
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self should: [purchaseSystem listPurchasesOf: testObjectFactory validClientID withPassword: 'pepito'.]
+	raise: Error - MessageNotUnderstood
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem incorrectPasswordErrorMessage equals: anError messageText.
+	]! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:47:59' prior: 50792802!
+test14ListingPurchasesOfClientShowsAllPurchases
+
+	|purchaseSystem book1 book2 client password cart cardNumber expirationDate owner|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book1 _ testObjectFactory itemSellByTheStore.
+	book2 _ testObjectFactory anotherItemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	password _ testObjectFactory passwordFor: client.
+	cardNumber _ testObjectFactory validCreditCardNumber.
+	expirationDate _ testObjectFactory futureDate.
+	owner _ testObjectFactory validOwner.
+	
+	cart _ purchaseSystem createCartWithClientID: client andPassword: password.
+	purchaseSystem add: 1 of: book1 to: cart.
+	purchaseSystem add: 1 of: book2 to: cart.
+	purchaseSystem checkout: cart withCardNumber: cardNumber withExpirationDate: expirationDate withOwner: owner.
+	
+	cart _ purchaseSystem createCartWithClientID: client andPassword: password.
+	purchaseSystem add: 2 of: book1 to: cart.
+	purchaseSystem checkout: cart withCardNumber: cardNumber withExpirationDate: expirationDate withOwner: owner.
+	
+	self assert: (Dictionary new at: book1 put: 3; at: book2 put: 1; yourself)
+		equals: (purchaseSystem listPurchasesOf: client withPassword: password).! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:48:07' prior: 50792884!
+test15CannotListACartIf30MinutesPassedSinceLastUsed
+
+	|purchaseSystem cart|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: purchaseSystem andAdvanceMinutes: 31.
+	
+	self should: [purchaseSystem list: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:48:15' prior: 50793033!
+test16CannotModifyACartIf30MinutesPassedSinceLastUsed
+
+	|purchaseSystem cart|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: purchaseSystem andAdvanceMinutes: 31.
+	
+	self should: [purchaseSystem add: 2 of: testObjectFactory anotherItemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem cartNoLongerValidErrorMessage equals: anError messageText.
+	]! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:48:25' prior: 50793072!
+test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+
+	|salesBook purchaseSystem cart|
+	
+	salesBook _ OrderedCollection new.
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithSalesBook: salesBook andMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: purchaseSystem andAdvanceMinutes: 31.
+	
+	self should: [purchaseSystem checkout: cart 
+		withCardNumber: testObjectFactory validCreditCardNumber 
+		withExpirationDate: testObjectFactory futureDate 
+		withOwner: testObjectFactory validOwner
+	]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self assert: PurchaseSystem cartNoLongerValidErrorMessage equals: anError messageText.
+		self assert: salesBook isEmpty.
+	]! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:48:34' prior: 50792842!
+test18CartNotUsedFor30MinutesIsDeleted
+
+	|purchaseSystem cart|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: purchaseSystem andAdvanceMinutes: 31.
+	
+	self should: [purchaseSystem list: cart]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self should: [purchaseSystem list: cart]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:aSecondError |
+			self assert: PurchaseSystem invalidCartIDErrorMessage equals: aSecondError messageText.
+		]
+	]! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:48:41' prior: 50792960!
+test19CannotAddBookThatDoesNotBelongToEditorial
+
+	"Test adicional. No se hace en el marco de TDD."
+	|purchaseSystem cart client|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	
+	self should: [purchaseSystem add: 1 of: testObjectFactory itemNotSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Cart invalidItemErrorMessage equals: anError messageText.
+		self assert: (purchaseSystem list: cart) isEmpty.
+		].
+
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:48:51' prior: 50792921!
+test20CannotAddBookWithQuantityLessThanOne
+
+	"Test adicional. No se hace en el marco de TDD."
+	|purchaseSystem cart client|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	
+	self should: [purchaseSystem add: 0 of: testObjectFactory itemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Cart invalidQuantityErrorMessage equals: anError messageText.
+		self assert: (purchaseSystem list: cart) isEmpty.
+		].	
+
+
+	! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/18/2019 22:49:04'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/18/2019 22:49:05'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/18/2019 22:49:09'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/18/2019 22:49:10'!
+PASSED!
+
+----SNAPSHOT----(18 November 2019 22:49:15) CuisUniversity-3938.image priorSource: 14745427!
+
+----QUIT----(18 November 2019 22:49:25) CuisUniversity-3938.image priorSource: 14789680!
