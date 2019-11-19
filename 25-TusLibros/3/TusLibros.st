@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #CartTest category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 TestCase subclass: #CartTest
 	instanceVariableNames: 'testObjectsFactory'
 	classVariableNames: ''
@@ -10,7 +10,7 @@ test01NewCartsAreCreatedEmpty
 
 	self assert: testObjectsFactory createCart isEmpty! !
 
-!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 18:10'!
+!CartTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:29:44'!
 test02CanNotAddItemsThatDoNotBelongToStore
 
 	| cart |
@@ -21,7 +21,7 @@ test02CanNotAddItemsThatDoNotBelongToStore
 		should: [ cart add: testObjectsFactory itemNotSellByTheStore ]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
-			self assert: anError messageText = cart invalidItemErrorMessage.
+			self assert: anError messageText = Cart invalidItemErrorMessage.
 			self assert: cart isEmpty ]! !
 
 !CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 18:10'!
@@ -34,7 +34,7 @@ test03AfterAddingAnItemTheCartIsNotEmptyAnymore
 	cart add: testObjectsFactory itemSellByTheStore.
 	self deny: cart isEmpty ! !
 
-!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 18:10'!
+!CartTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:32:07'!
 test04CanNotAddNonPositiveNumberOfItems
 
 	| cart |
@@ -45,10 +45,10 @@ test04CanNotAddNonPositiveNumberOfItems
 		should: [cart add: 0 of: testObjectsFactory itemSellByTheStore ]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
-			self assert: anError messageText = cart invalidQuantityErrorMessage.
+			self assert: anError messageText = Cart invalidQuantityErrorMessage.
 			self assert: cart isEmpty ]! !
 
-!CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 18:10'!
+!CartTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:29:48'!
 test05CanNotAddMoreThanOneItemNotSellByTheStore
 
 	| cart |
@@ -59,7 +59,7 @@ test05CanNotAddMoreThanOneItemNotSellByTheStore
 		should: [cart add: 2 of: testObjectsFactory itemNotSellByTheStore  ]
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
-			self assert: anError messageText = cart invalidItemErrorMessage.
+			self assert: anError messageText = Cart invalidItemErrorMessage.
 			self assert: cart isEmpty ]! !
 
 !CartTest methodsFor: 'tests' stamp: 'HernanWilkinson 6/17/2013 18:11'!
@@ -98,7 +98,7 @@ setUp
 	testObjectsFactory := StoreTestObjectsFactory new.! !
 
 
-!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: 'testObjectsFactory debitBehavior'
 	classVariableNames: ''
@@ -246,14 +246,14 @@ debit: anAmount from: aCreditCard
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
 
-!classDefinition: #InterfaceTest category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #InterfaceTest category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 TestCase subclass: #InterfaceTest
 	instanceVariableNames: 'testObjectFactory debitBehavior'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/14/2019 18:43:33'!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 19:48:36'!
 test01CannotCreateCartWithInvalidClientID
 
 	|interface|
@@ -262,10 +262,9 @@ test01CannotCreateCartWithInvalidClientID
 	raise: Error - MessageNotUnderstood
 	withExceptionDo: [ :anError | 
 		self assert: Interface invalidClientIDErrorMessage equals: anError messageText.
-		]
-	"Habría que chequear que no se creó ningún carrito... Cómo lo hacemos????"! !
+		]! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/14/2019 18:43:33'!
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 19:48:49'!
 test02CannotCreateCartWithIncorrectPassword
 
 	|interface|
@@ -274,8 +273,7 @@ test02CannotCreateCartWithIncorrectPassword
 	raise: Error - MessageNotUnderstood
 	withExceptionDo: [ :anError | 
 		self assert: Interface incorrectPasswordErrorMessage equals: anError messageText.
-		]
-	"Habría que chequear que no se creó ningún carrito... Cómo lo hacemos????"! !
+		]! !
 
 !InterfaceTest methodsFor: 'tests' stamp: 'DH 11/16/2019 15:41:20'!
 test03IDsOfTwoCreatedCartsAreDifferent
@@ -331,48 +329,8 @@ test06ListingAnEmptyCartResultsInEmptyList
 	self assert: (interface list: cart) isEmpty
 	! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/14/2019 18:53:49'!
-test07CannotAddBookThatDoesNotBelongToEditorial
-"
-	|interface book cart client|
-	
-	interface _ testObjectFactory createInterface.
-	book _ testObjectFactory itemNotSellByTheStore.
-	client _ testObjectFactory validClientID.
-	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
-	
-	self should: [interface add: 1 of: book to: cart.]
-	raise: Error - MessageNotUnderstood 
-	withExceptionDo: [ :anError | 
-		self assert: Interface bookNotFromEditorialErrorMessage equals: anError messageText.
-		self assert: (interface list: cart) isEmpty.
-		].
-		
-	"
-	! !
-
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/11/2019 18:55:42'!
-test08CannotAddBookWithQuantityLessThanOne
-"
-	|interface book cart client|
-	
-	interface _ testObjectFactory createInterface.
-	book _ testObjectFactory itemSellByTheStore.
-	client _ testObjectFactory validClientID.
-	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory clients at: client).
-	
-	self should: [interface add: 0 of: book to: cart.]
-	raise: Error - MessageNotUnderstood 
-	withExceptionDo: [ :anError | 
-		self assert: Interface cannotAddLessThanOneBookToCartErrorMessage equals: anError messageText.
-		self assert: (interface list: cart) isEmpty.
-		].	
-"
-
-	! !
-
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/16/2019 15:42:17'!
-test09ListingACartShowsAddedBooks
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:52:20'!
+test07ListingACartShowsAddedBooks
 
 	|interface book1 book2 client cart|
 	
@@ -388,8 +346,8 @@ test09ListingACartShowsAddedBooks
 
 	! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/14/2019 18:56:39'!
-test10CannotCheckoutANonExistentCart
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:52:35'!
+test08CannotCheckoutANonExistentCart
 
 	|interface|
 	
@@ -407,8 +365,8 @@ test10CannotCheckoutANonExistentCart
 	
 	! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/16/2019 15:43:05'!
-test11CheckoutOfValidCartMakesTheSaleWithCorrectCost
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:52:41'!
+test09CheckoutOfValidCartMakesTheSaleWithCorrectCost
 
 	|interface client cart book salesBook|
 	
@@ -426,43 +384,27 @@ test11CheckoutOfValidCartMakesTheSaleWithCorrectCost
 	
 	self assert: (OrderedCollection with: (Sale of: testObjectFactory itemSellByTheStorePrice)) equals: salesBook.! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/16/2019 15:43:51'!
-test12CheckoutedCartCannotBeModified
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:52:46'!
+test10CheckoutedCartCannotBeModified
 
-	|interface client cart book|
+	|interface cart|
 	
 	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
-	client _ testObjectFactory validClientID.
-	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
-	book _ testObjectFactory itemSellByTheStore.
-	interface add: 1 of: book to: cart.
+	cart _ self createAndCheckoutACartUsing: interface.
 	
-	interface checkout: cart
-		withCardNumber: testObjectFactory validCreditCardNumber
-	 	withExpirationDate:  testObjectFactory futureDate
-		withOwner: testObjectFactory validOwner.
-	
-	self should: [interface add: 1 of: book to: cart.]
+	self should: [interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.]
 	raise: Error - MessageNotUnderstood
 	withExceptionDo: [:anError |
 		self assert: Interface invalidCartIDErrorMessage equals: anError messageText.
 	].! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/16/2019 15:43:58'!
-test13CheckoutedCartCannotBeListed
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:52:49'!
+test11CheckoutedCartCannotBeListed
 
-	|interface client cart book|
+	|interface cart|
 	
 	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
-	client _ testObjectFactory validClientID.
-	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
-	book _ testObjectFactory itemSellByTheStore.
-	interface add: 1 of: book to: cart.
-	
-	interface checkout: cart
-		withCardNumber: testObjectFactory validCreditCardNumber
-	 	withExpirationDate:  testObjectFactory futureDate
-		withOwner: testObjectFactory validOwner.
+	cart _ self createAndCheckoutACartUsing: interface.
 	
 	self should: [interface list: cart.]
 	raise: Error - MessageNotUnderstood
@@ -470,8 +412,8 @@ test13CheckoutedCartCannotBeListed
 		self assert: Interface invalidCartIDErrorMessage equals: anError messageText.
 	].! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/14/2019 19:19:14'!
-test14CannotListPurchasesOfNonExistentClient
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:52:54'!
+test12CannotListPurchasesOfNonExistentClient
 
 	|interface|
 	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
@@ -481,8 +423,8 @@ test14CannotListPurchasesOfNonExistentClient
 		self assert: Interface invalidClientIDErrorMessage equals: anError messageText.
 	]! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/14/2019 19:20:19'!
-test15CannotListPurchasesOfClientUsingWrongPassword
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:52:58'!
+test13CannotListPurchasesOfClientUsingWrongPassword
 
 	|interface|
 	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
@@ -492,8 +434,8 @@ test15CannotListPurchasesOfClientUsingWrongPassword
 		self assert: Interface incorrectPasswordErrorMessage equals: anError messageText.
 	]! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/16/2019 15:45:55'!
-test16ListingPurchasesOfClientShowsAllPurchases
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:53:02'!
+test14ListingPurchasesOfClientShowsAllPurchases
 
 	|interface book1 book2 client password cart cardNumber expirationDate owner|
 	
@@ -518,19 +460,13 @@ test16ListingPurchasesOfClientShowsAllPurchases
 	self assert: (Dictionary new at: book1 put: 3; at: book2 put: 1; yourself)
 		equals: (interface listPurchasesOf: client withPassword: password).! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:13:46'!
-test17CannotListACartIf30MinutesPassedSinceLastUsed
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:53:07'!
+test15CannotListACartIf30MinutesPassedSinceLastUsed
 
-	|stubTimeProvider client interface cart|
+	|interface cart|
 	
-	stubTimeProvider _ testObjectFactory stubTimeProvider.
-	client _ testObjectFactory validClientID.
 	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
-
-	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
-	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
-	
-	stubTimeProvider advanceMinutes: 31.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
 	
 	self should: [interface list: cart.]
 	raise: Error - MessageNotUnderstood 
@@ -538,19 +474,13 @@ test17CannotListACartIf30MinutesPassedSinceLastUsed
 		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
 	]! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:26:32'!
-test18CannotModifyACartIf30MinutesPassedSinceLastUsed
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:53:12'!
+test16CannotModifyACartIf30MinutesPassedSinceLastUsed
 
-	|stubTimeProvider client interface cart|
+	|interface cart|
 	
-	stubTimeProvider _ testObjectFactory stubTimeProvider.
-	client _ testObjectFactory validClientID.
 	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
-
-	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
-	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
-	
-	stubTimeProvider advanceMinutes: 31.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
 	
 	self should: [interface add: 2 of: testObjectFactory anotherItemSellByTheStore to: cart.]
 	raise: Error - MessageNotUnderstood 
@@ -558,20 +488,14 @@ test18CannotModifyACartIf30MinutesPassedSinceLastUsed
 		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
 	]! !
 
-!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/17/2019 18:43:49'!
-test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 20:53:17'!
+test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed
 
-	|stubTimeProvider client salesBook interface cart|
+	|salesBook interface cart|
 	
-	stubTimeProvider _ testObjectFactory stubTimeProvider.
-	client _ testObjectFactory validClientID.
 	salesBook _ OrderedCollection new.
 	interface _ testObjectFactory createInterfaceWithSalesBook: salesBook andMerchantProcessor: self.
-
-	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
-	interface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
-	
-	stubTimeProvider advanceMinutes: 31.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
 	
 	self should: [interface checkout: cart 
 		withCardNumber: testObjectFactory validCreditCardNumber 
@@ -583,6 +507,63 @@ test19CannotCheckoutACartIf30MinutesPassedSinceLastUsed
 		self assert: Interface cartNoLongerValidErrorMessage equals: anError messageText.
 		self assert: salesBook isEmpty.
 	]! !
+
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 21:58:34'!
+test18CartNotUsedFor30MinutesIsDeleted
+
+	|interface cart|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	cart _ self createAndUseACartUsing: interface andAdvanceMinutes: 31.
+	
+	self should: [interface list: cart]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [:anError |
+		self should: [interface list: cart]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:aSecondError |
+			self assert: Interface invalidCartIDErrorMessage equals: aSecondError messageText.
+		]
+	]! !
+
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 21:59:57'!
+test19CannotAddBookThatDoesNotBelongToEditorial
+
+	"Test adicional. No se hace en el marco de TDD."
+	|interface cart client|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	
+	self should: [interface add: 1 of: testObjectFactory itemNotSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Cart invalidItemErrorMessage equals: anError messageText.
+		self assert: (interface list: cart) isEmpty.
+		].
+
+	! !
+
+!InterfaceTest methodsFor: 'tests' stamp: 'DH 11/18/2019 22:00:05'!
+test20CannotAddBookWithQuantityLessThanOne
+
+	"Test adicional. No se hace en el marco de TDD."
+	|interface cart client|
+	
+	interface _ testObjectFactory createInterfaceWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ interface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	
+	self should: [interface add: 0 of: testObjectFactory itemSellByTheStore to: cart.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: Cart invalidQuantityErrorMessage equals: anError messageText.
+		self assert: (interface list: cart) isEmpty.
+		].	
+
+
+	! !
 
 
 !InterfaceTest methodsFor: 'setUp/tearDown' stamp: 'DH 11/11/2019 20:08:50'!
@@ -598,34 +579,53 @@ debit: anAmount from: aCreditCard
 
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
+
+!InterfaceTest methodsFor: 'utility' stamp: 'DH 11/18/2019 19:54:35'!
+createAndCheckoutACartUsing: anInterface
+
+	|client cart book|
+	
+	client _ testObjectFactory validClientID.
+	cart _ anInterface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	anInterface add: 1 of: book to: cart.
+	
+	anInterface checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	^cart! !
+
+!InterfaceTest methodsFor: 'utility' stamp: 'DH 11/18/2019 20:05:02'!
+createAndUseACartUsing: anInterface andAdvanceMinutes: anAmountOfMinutes
+	
+	|stubTimeProvider client cart|
+	
+	stubTimeProvider _ testObjectFactory stubTimeProvider.
+	client _ testObjectFactory validClientID.
+	cart _ anInterface createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	anInterface add: 1 of: testObjectFactory itemSellByTheStore to: cart.
+	stubTimeProvider advanceMinutes: anAmountOfMinutes.
+	^cart! !
+
 
-!classDefinition: #Cart category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #Cart category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!Cart methodsFor: 'error messages' stamp: 'HernanWilkinson 6/17/2013 17:45'!
-invalidItemErrorMessage
-	
-	^'Item is not in catalog'! !
-
-!Cart methodsFor: 'error messages' stamp: 'HernanWilkinson 6/17/2013 17:45'!
-invalidQuantityErrorMessage
-	
-	^'Invalid number of items'! !
-
-
-!Cart methodsFor: 'assertions' stamp: 'HernanWilkinson 6/17/2013 18:06'!
+!Cart methodsFor: 'assertions' stamp: 'DH 11/18/2019 20:29:32'!
 assertIsValidItem: anItem
 
-	(catalog includesKey: anItem) ifFalse: [ self error: self invalidItemErrorMessage ]! !
+	(catalog includesKey: anItem) ifFalse: [ self error: self class invalidItemErrorMessage ]! !
 
-!Cart methodsFor: 'assertions' stamp: 'HernanWilkinson 6/17/2013 17:51'!
+!Cart methodsFor: 'assertions' stamp: 'DH 11/18/2019 20:32:02'!
 assertIsValidQuantity: aQuantity
 
-	aQuantity strictlyPositive ifFalse: [ self error: self invalidQuantityErrorMessage ]! !
+	aQuantity strictlyPositive ifFalse: [ self error: self class invalidQuantityErrorMessage ]! !
 
 
 !Cart methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2013 17:48'!
@@ -679,7 +679,7 @@ add: aQuantity of: anItem
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -688,15 +688,26 @@ acceptingItemsOf: aCatalog
 
 	^self new initializeAcceptingItemsOf: aCatalog ! !
 
+
+!Cart class methodsFor: 'error messages' stamp: 'DH 11/18/2019 20:31:34'!
+invalidItemErrorMessage
+
+	^'Item is not in catalog'! !
+
+!Cart class methodsFor: 'error messages' stamp: 'DH 11/18/2019 20:32:42'!
+invalidQuantityErrorMessage
+	
+	^'Invalid number of items'! !
+
 
-!classDefinition: #CartInfo category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
-Object subclass: #CartInfo
+!classDefinition: #CartStoreEntry category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
+Object subclass: #CartStoreEntry
 	instanceVariableNames: 'cart ownerID lastUsed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CartInfo methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:41:03'!
+!CartStoreEntry methodsFor: 'initialization' stamp: 'DH 11/17/2019 14:41:03'!
 initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime
 
 	cart _ aCart.
@@ -704,40 +715,40 @@ initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime
 	lastUsed _ aDateAndTime.! !
 
 
-!CartInfo methodsFor: 'queries' stamp: 'DH 11/16/2019 15:17:29'!
+!CartStoreEntry methodsFor: 'queries' stamp: 'DH 11/16/2019 15:17:29'!
 cart
 
 	^cart! !
 
-!CartInfo methodsFor: 'queries' stamp: 'DH 11/17/2019 14:41:32'!
+!CartStoreEntry methodsFor: 'queries' stamp: 'DH 11/17/2019 14:41:32'!
 lastTimeUsed
 
 	^lastUsed! !
 
-!CartInfo methodsFor: 'queries' stamp: 'DH 11/16/2019 15:17:38'!
+!CartStoreEntry methodsFor: 'queries' stamp: 'DH 11/16/2019 15:17:38'!
 ownerID
 
 	^ownerID! !
 
 
-!CartInfo methodsFor: 'modifiers' stamp: 'DH 11/17/2019 14:43:14'!
+!CartStoreEntry methodsFor: 'modifiers' stamp: 'DH 11/17/2019 14:43:14'!
 setLastTimeUsed: aDateAndTime
 
 	lastUsed _ aDateAndTime! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CartInfo class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
-CartInfo class
+!classDefinition: 'CartStoreEntry class' category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
+CartStoreEntry class
 	instanceVariableNames: ''!
 
-!CartInfo class methodsFor: 'instance creation' stamp: 'DH 11/17/2019 14:39:58'!
+!CartStoreEntry class methodsFor: 'instance creation' stamp: 'DH 11/17/2019 14:39:58'!
 for: aCart ownedBy: aClientID createdOn: aDateAndTime
 
 	^self new initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime.! !
 
 
-!classDefinition: #Cashier category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #Cashier category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Object subclass: #Cashier
 	instanceVariableNames: 'cart salesBook merchantProcessor creditCard total'
 	classVariableNames: ''
@@ -788,7 +799,7 @@ initializeToCheckout: aCart charging: aCreditCard throught: aMerchantProcessor r
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Cashier class
 	instanceVariableNames: ''!
 
@@ -828,43 +839,43 @@ creditCardHasNoCreditErrorMessage
 	^'Credit card has no credit'! !
 
 
-!classDefinition: #ClientInfo category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
-Object subclass: #ClientInfo
+!classDefinition: #ClientStoreEntry category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
+Object subclass: #ClientStoreEntry
 	instanceVariableNames: 'password purchases'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!ClientInfo methodsFor: 'initialization' stamp: 'DH 11/16/2019 15:56:40'!
+!ClientStoreEntry methodsFor: 'initialization' stamp: 'DH 11/16/2019 15:56:40'!
 initializeWithPassword: aPassword
 
 	password _ aPassword.
 	purchases _ Dictionary new.! !
 
 
-!ClientInfo methodsFor: 'queries' stamp: 'DH 11/16/2019 15:21:03'!
+!ClientStoreEntry methodsFor: 'queries' stamp: 'DH 11/16/2019 15:21:03'!
 password
 
 	^password! !
 
-!ClientInfo methodsFor: 'queries' stamp: 'DH 11/16/2019 15:56:21'!
+!ClientStoreEntry methodsFor: 'queries' stamp: 'DH 11/16/2019 15:56:21'!
 purchases
 
 	^purchases! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'ClientInfo class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
-ClientInfo class
+!classDefinition: 'ClientStoreEntry class' category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
+ClientStoreEntry class
 	instanceVariableNames: ''!
 
-!ClientInfo class methodsFor: 'instance creation' stamp: 'DH 11/16/2019 15:46:34'!
+!ClientStoreEntry class methodsFor: 'instance creation' stamp: 'DH 11/16/2019 15:46:34'!
 forClientWithPassword: aPassword
 
 	^self new initializeWithPassword: aPassword! !
 
 
-!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Object subclass: #CreditCard
 	instanceVariableNames: 'expiration number owner'
 	classVariableNames: ''
@@ -887,7 +898,7 @@ initializeWithNumber: aCreditCardNumber owner: anOwnerName expiringOn: aMonth
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 CreditCard class
 	instanceVariableNames: ''!
 
@@ -903,7 +914,7 @@ invalidCreditCardNumberErrorMessage
 	^'Credit card number does not have 16 digits.'! !
 
 
-!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #Interface category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Object subclass: #Interface
 	instanceVariableNames: 'clients carts lastCartID catalog salesBook timeProvider merchantProcessor'
 	classVariableNames: ''
@@ -951,12 +962,12 @@ checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwn
 	self registerPurchasesFor: cartInfo ownerID madeWith: cartInfo cart.
 	self removeCart: aCartID.! !
 
-!Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 14:41:52'!
+!Interface methodsFor: 'cart operations' stamp: 'DH 11/18/2019 22:06:36'!
 createCartWithClientID: aClientID andPassword: aPassword
 
 	self getInfoFromClientWithID: aClientID validatingPassword: aPassword.
 	lastCartID _ lastCartID + 1.
-	carts at: lastCartID put: (CartInfo for: (Cart acceptingItemsOf: catalog) ownedBy: aClientID createdOn: timeProvider now).
+	carts at: lastCartID put: (self cartStoreEntryForNewCartWithOwner: aClientID).
 	^lastCartID! !
 
 !Interface methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:38:59'!
@@ -983,13 +994,16 @@ removeCart: aCartID
 
 	carts removeKey: aCartID.! !
 
-!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/17/2019 18:36:36'!
+!Interface methodsFor: 'cart operations - private' stamp: 'DH 11/18/2019 21:59:23'!
 validateAndGetInfoFromCartWithID: aCartID
 
 	|cartInfo minutesSinceLastUsed|
 	cartInfo _ carts at: aCartID ifAbsent: [self error: self class invalidCartIDErrorMessage.].
 	minutesSinceLastUsed _ (timeProvider now - cartInfo lastTimeUsed) totalMinutes.
-	minutesSinceLastUsed >= 30 ifTrue: [self error: self class cartNoLongerValidErrorMessage.].
+	minutesSinceLastUsed >= 30 ifTrue: [
+		self removeCart: aCartID.
+		self error: self class cartNoLongerValidErrorMessage.
+	].
 	^cartInfo! !
 
 
@@ -1009,6 +1023,11 @@ registerPurchasesFor: aClientID madeWith: aCart
 	self update: clientPurchases withItemsFrom: aCart.! !
 
 
+!Interface methodsFor: 'utility - private' stamp: 'DH 11/18/2019 22:06:52'!
+cartStoreEntryForNewCartWithOwner: aClientID
+
+	^CartStoreEntry for: (Cart acceptingItemsOf: catalog) ownedBy: aClientID createdOn: timeProvider now! !
+
 !Interface methodsFor: 'utility - private' stamp: 'DH 11/16/2019 15:54:16'!
 update: aDictionary withItemsFrom: aCart
 
@@ -1019,7 +1038,7 @@ update: aDictionary withItemsFrom: aCart
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Interface class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: 'Interface class' category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Interface class
 	instanceVariableNames: ''!
 
@@ -1069,7 +1088,7 @@ andMerchantProcessor: aMerchantProcessor
 	andMerchantProcessor: aMerchantProcessor! !
 
 
-!classDefinition: #Sale category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #Sale category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Object subclass: #Sale
 	instanceVariableNames: 'total'
 	classVariableNames: ''
@@ -1095,7 +1114,7 @@ initializeTotal: aTotal
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Sale class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: 'Sale class' category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Sale class
 	instanceVariableNames: ''!
 
@@ -1106,7 +1125,7 @@ of: aTotal
 	^self new initializeTotal: aTotal ! !
 
 
-!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Object subclass: #StoreTestObjectsFactory
 	instanceVariableNames: 'stubTimeProvider'
 	classVariableNames: ''
@@ -1217,13 +1236,13 @@ anotherValidClientID
 
 	^8128! !
 
-!StoreTestObjectsFactory methodsFor: 'clients' stamp: 'DH 11/16/2019 15:38:57'!
+!StoreTestObjectsFactory methodsFor: 'clients' stamp: 'DH 11/18/2019 22:02:34'!
 clientsWithPasswords
 
 	|clients|
 	clients _ Dictionary new.
-	clients at: self validClientID put: (ClientInfo forClientWithPassword: 'flan').
-	clients at: self anotherValidClientID put: (ClientInfo forClientWithPassword: 'rosebud').
+	clients at: self validClientID put: (ClientStoreEntry forClientWithPassword: 'flan').
+	clients at: self anotherValidClientID put: (ClientStoreEntry forClientWithPassword: 'rosebud').
 	^clients! !
 
 !StoreTestObjectsFactory methodsFor: 'clients' stamp: 'DH 11/14/2019 18:46:14'!
@@ -1258,7 +1277,7 @@ createInterfaceWithSalesBook: aSalesBook andMerchantProcessor: aMerchantProcesso
 	andMerchantProcessor: aMerchantProcessor ! !
 
 
-!classDefinition: #TimeProvider category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #TimeProvider category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 Object subclass: #TimeProvider
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1271,7 +1290,7 @@ now
 	^self subclassResponsibility! !
 
 
-!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 TimeProvider subclass: #StubTimeProvider
 	instanceVariableNames: 'dateAndTime'
 	classVariableNames: ''
@@ -1314,7 +1333,7 @@ advanceMinutes: anAmountOfMinutes
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'StubTimeProvider class' category: #TusLibros stamp: 'DH 11/17/2019 18:44:27'!
+!classDefinition: 'StubTimeProvider class' category: #TusLibros stamp: 'DH 11/18/2019 22:07:39'!
 StubTimeProvider class
 	instanceVariableNames: ''!
 
