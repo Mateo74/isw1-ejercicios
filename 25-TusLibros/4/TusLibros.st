@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #CartTest category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 TestCase subclass: #CartTest
 	instanceVariableNames: 'testObjectsFactory'
 	classVariableNames: ''
@@ -98,7 +98,7 @@ setUp
 	testObjectsFactory := StoreTestObjectsFactory new.! !
 
 
-!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: 'testObjectsFactory debitBehavior'
 	classVariableNames: ''
@@ -246,7 +246,7 @@ debit: anAmount from: aCreditCard
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
 
-!classDefinition: #PurchaseSystemTest category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #PurchaseSystemTest category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 TestCase subclass: #PurchaseSystemTest
 	instanceVariableNames: 'testObjectFactory debitBehavior'
 	classVariableNames: ''
@@ -610,7 +610,7 @@ createAndUseACartUsing: aPurchaseSystem andAdvanceMinutes: anAmountOfMinutes
 	^cart! !
 
 
-!classDefinition: #Cart category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #Cart category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
@@ -679,7 +679,7 @@ add: aQuantity of: anItem
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -700,7 +700,7 @@ invalidQuantityErrorMessage
 	^'Invalid number of items'! !
 
 
-!classDefinition: #CartStoreEntry category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #CartStoreEntry category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #CartStoreEntry
 	instanceVariableNames: 'cart ownerID lastUsed'
 	classVariableNames: ''
@@ -738,7 +738,7 @@ setLastTimeUsed: aDateAndTime
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CartStoreEntry class' category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: 'CartStoreEntry class' category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 CartStoreEntry class
 	instanceVariableNames: ''!
 
@@ -748,7 +748,7 @@ for: aCart ownedBy: aClientID createdOn: aDateAndTime
 	^self new initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime.! !
 
 
-!classDefinition: #Cashier category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #Cashier category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #Cashier
 	instanceVariableNames: 'cart salesBook merchantProcessor creditCard total'
 	classVariableNames: ''
@@ -799,7 +799,7 @@ initializeToCheckout: aCart charging: aCreditCard throught: aMerchantProcessor r
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Cashier class
 	instanceVariableNames: ''!
 
@@ -839,7 +839,7 @@ creditCardHasNoCreditErrorMessage
 	^'Credit card has no credit'! !
 
 
-!classDefinition: #ClientStoreEntry category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #ClientStoreEntry category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #ClientStoreEntry
 	instanceVariableNames: 'password purchases'
 	classVariableNames: ''
@@ -865,7 +865,7 @@ purchases
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'ClientStoreEntry class' category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: 'ClientStoreEntry class' category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 ClientStoreEntry class
 	instanceVariableNames: ''!
 
@@ -875,7 +875,7 @@ forClientWithPassword: aPassword
 	^self new initializeWithPassword: aPassword! !
 
 
-!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #CreditCard
 	instanceVariableNames: 'expiration number owner'
 	classVariableNames: ''
@@ -898,7 +898,7 @@ initializeWithNumber: aCreditCardNumber owner: anOwnerName expiringOn: aMonth
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 CreditCard class
 	instanceVariableNames: ''!
 
@@ -914,7 +914,7 @@ invalidCreditCardNumberErrorMessage
 	^'Credit card number does not have 16 digits.'! !
 
 
-!classDefinition: #PurchaseSystem category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #PurchaseSystem category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #PurchaseSystem
 	instanceVariableNames: 'clients carts lastCartID catalog salesBook timeProvider merchantProcessor'
 	classVariableNames: ''
@@ -962,13 +962,13 @@ checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwn
 	self registerPurchasesFor: cartInfo ownerID madeWith: cartInfo cart.
 	self removeCart: aCartID.! !
 
-!PurchaseSystem methodsFor: 'cart operations' stamp: 'DH 11/18/2019 22:06:36'!
+!PurchaseSystem methodsFor: 'cart operations' stamp: 'DH 11/21/2019 20:49:04'!
 createCartWithClientID: aClientID andPassword: aPassword
 
 	self getInfoFromClientWithID: aClientID validatingPassword: aPassword.
 	lastCartID _ lastCartID + 1.
-	carts at: lastCartID put: (self cartStoreEntryForNewCartWithOwner: aClientID).
-	^lastCartID! !
+	carts at: lastCartID asString put: (self cartStoreEntryForNewCartWithOwner: aClientID).
+	^lastCartID asString! !
 
 !PurchaseSystem methodsFor: 'cart operations' stamp: 'DH 11/17/2019 18:38:59'!
 list: aCartID
@@ -1038,7 +1038,7 @@ update: aDictionary withItemsFrom: aCart
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'PurchaseSystem class' category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: 'PurchaseSystem class' category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 PurchaseSystem class
 	instanceVariableNames: ''!
 
@@ -1088,7 +1088,7 @@ andMerchantProcessor: aMerchantProcessor
 	andMerchantProcessor: aMerchantProcessor! !
 
 
-!classDefinition: #Sale category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #Sale category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #Sale
 	instanceVariableNames: 'total'
 	classVariableNames: ''
@@ -1114,7 +1114,7 @@ initializeTotal: aTotal
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Sale class' category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: 'Sale class' category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Sale class
 	instanceVariableNames: ''!
 
@@ -1125,7 +1125,7 @@ of: aTotal
 	^self new initializeTotal: aTotal ! !
 
 
-!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #StoreTestObjectsFactory
 	instanceVariableNames: 'stubTimeProvider'
 	classVariableNames: ''
@@ -1277,7 +1277,7 @@ createPurchaseSystemWithSalesBook: aSalesBook andMerchantProcessor: aMerchantPro
 	andMerchantProcessor: aMerchantProcessor ! !
 
 
-!classDefinition: #TimeProvider category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #TimeProvider category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #TimeProvider
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1290,7 +1290,7 @@ now
 	^self subclassResponsibility! !
 
 
-!classDefinition: #RealTimeProvider category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #RealTimeProvider category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 TimeProvider subclass: #RealTimeProvider
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1303,7 +1303,7 @@ now
 	^DateAndTime now! !
 
 
-!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 TimeProvider subclass: #StubTimeProvider
 	instanceVariableNames: 'dateAndTime'
 	classVariableNames: ''
@@ -1346,7 +1346,7 @@ advanceMinutes: anAmountOfMinutes
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'StubTimeProvider class' category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: 'StubTimeProvider class' category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 StubTimeProvider class
 	instanceVariableNames: ''!
 
@@ -1356,19 +1356,16 @@ newWithActualDateAndTime
 	^self new initializeWithActualDateAndTime! !
 
 
-!classDefinition: #TusLibrosServerController category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: #TusLibrosServerController category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 Object subclass: #TusLibrosServerController
 	instanceVariableNames: 'webServer port purchaseSystem timeProvider clients catalog salesBook merchantProcessor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 11/19/2019 19:09:04'!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 11/21/2019 20:39:43'!
 initializeWith: aPortNumber
 
-	| stringGenius |
-	stringGenius _ 2.
-	
 	timeProvider _ RealTimeProvider new.
 	clients _ self clients.
 	catalog _ self catalog.
@@ -1385,91 +1382,97 @@ initializeWith: aPortNumber
 	port _ aPortNumber.
 	webServer := WebServer new listenOn: aPortNumber.
 	
-	webServer addService: '/sayHi' action:[:request |	
-		
-		"request send200Response: (self sayRandomHi)"
-		request send200Response: (self sayRandomHi asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		].
-	
-	webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
-		
-		[sentence := (request fields at:'sentence').
-		substrings := stringGenius substrings: sentence.
-		substringsAsJson:= WebUtils jsonEncode: (substrings).
-		"request send200Response: (substringsAsJson)"
-		request send200Response: (substringsAsJson asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		 ] 
-		on: Error 
-		do: [ :anError |
-			request send404Response: (anError messageText) ]].
-	
-	webServer addService: '/firstLetter' action:[:request | |letterAsJson word letter |
-		
-		[word := (request fields at:'word').
-		letter := stringGenius firstLetter: word.
-		letterAsJson:= WebUtils jsonEncode: (letter asString).
-		"request send200Response: (letterAsJson)"
-		request send200Response: (letterAsJson asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		 ] 
-		on: Error 
-		do: [ :anError |
-			request send404Response: (anError messageText) ]].
-	
-	webServer addService: '/vowels' action:[:request | |vowelsAsJson word vowels |
-		
-		[word := (request fields at:'word').
-		vowels := stringGenius vowels: word.
-		vowelsAsJson:= WebUtils jsonEncode: (vowels).
-		"request send200Response: (vowelsAsJson)"
-		request send200Response: (vowelsAsJson asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		 ] 
-		on: Error 
-		do: [ :anError |
-			request send404Response: (anError messageText) ]].
-	
-	webServer addService: '/toUppercase' action:[:request | |upperCasedWordAsJson word upperCasedWord |
-		
-		[word := (request fields at:'word').
-		upperCasedWord := stringGenius toUppercase: word.
-		upperCasedWordAsJson:= WebUtils jsonEncode: (upperCasedWord).
-		"request send200Response: (upperCasedWordAsJson)"
-		request send200Response: (upperCasedWordAsJson asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		 ] 
-		on: Error 
-		do: [ :anError |
-			request send404Response: (anError messageText) ]].
-	
-! !
+	webServer addService: '/createCart' action: [:request | | clientID password cartID responseAsJson |
+		self assert: request has: (OrderedCollection with: 'clientID' with: 'password').
+		clientID _ request fields at: 'clientID'.
+		password _ request fields at: 'password'.
+		self onError: [cartID _ purchaseSystem createCartWithClientID: clientID andPassword: password.] 
+			 sendErrorMessageOn: request.
+		self sendNormalResponseWithKey: 'cart_id' andValue: cartID on: request.
+	].
 
+	webServer addService: '/listCart' action: [:request | | cartItems cartID responseAsJson |
+		self assert: request has: (OrderedCollection with: 'cartID').
+		cartID _ request fields at: 'cartID'.
+		self onError: [cartItems _ purchaseSystem list: cartID]
+			 sendErrorMessageOn: request.
+		self sendNormalResponseWithKey: 'cart_items' andValue: cartItems on: request.
+	]! !
+
+
+!TusLibrosServerController methodsFor: 'private' stamp: 'DH 11/21/2019 20:30:14'!
+assert: aRequest has: aCollectionOfFields
+
+	(aRequest fields size = aCollectionOfFields size and:
+	(aCollectionOfFields allSatisfy: [:aField | aRequest fields includesKey: aField]))
+	ifFalse: [
+		aRequest send400Response.
+		]
+		
+	
+		! !
 
 !TusLibrosServerController methodsFor: 'private' stamp: 'DH 11/19/2019 19:04:48'!
 catalog
 
 	^Dictionary new at: 'validBook1' put: 20; at: 'validBook2' put: 40; yourself! !
 
-!TusLibrosServerController methodsFor: 'private' stamp: 'DH 11/19/2019 19:03:55'!
+!TusLibrosServerController methodsFor: 'private' stamp: 'DH 11/21/2019 20:31:23'!
 clients
 
-	^Dictionary new at: 1 put: 'flan'; at: 2 put: 'rosebud'; yourself! !
+	^Dictionary new
+		at: '1' put: (ClientStoreEntry forClientWithPassword: 'flan');
+		at: '2' put: (ClientStoreEntry forClientWithPassword: 'rosebud');
+		yourself! !
 
 !TusLibrosServerController methodsFor: 'private' stamp: 'DH 11/19/2019 19:08:49'!
 debit: anAmount from: aCreditCard
 
 	! !
 
+!TusLibrosServerController methodsFor: 'private' stamp: 'DH 11/21/2019 20:21:56'!
+onError: aBlock sendErrorMessageOn: aRequest
+
+	aBlock on: Error do:  [:anError | |responseAsJson|
+			responseAsJson _ WebUtils jsonEncode: 
+				(Dictionary new at: 'error' put: true; at: 'error_message' put: anError messageText; yourself).
+			aRequest send200Response: responseAsJson asUtf8 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
+		].
+	
+! !
+
+!TusLibrosServerController methodsFor: 'private' stamp: 'DH 11/21/2019 20:50:41'!
+sendNormalResponseWithKey: aKey andValue: aValue on: aRequest
+
+	|responseAsJson|
+	
+		responseAsJson _ WebUtils jsonEncode: (Dictionary new at: 'error' put: false; at: aKey put: aValue ; yourself).
+		aRequest send200Response: (responseAsJson asUtf8) 
+				 contentType: 'application/json; charset=utf-8' do: [:resp | 
+					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].
+	! !
+
+
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'DH 11/21/2019 20:41:06'!
+destroy
+	
+	webServer ifNotNil: [webServer destroy].! !
+
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'DH 11/21/2019 19:30:33'!
+port
+
+	^port! !
+
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'DH 11/21/2019 19:29:19'!
+stopListening
+	
+	webServer stopListener.
+	^'Stopped listening from port: ', self port asString! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TusLibrosServerController class' category: #TusLibros stamp: 'DH 11/19/2019 19:43:49'!
+!classDefinition: 'TusLibrosServerController class' category: #TusLibros stamp: 'DH 11/21/2019 20:53:32'!
 TusLibrosServerController class
 	instanceVariableNames: ''!
 
