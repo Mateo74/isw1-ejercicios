@@ -13327,3 +13327,917 @@ PASSED!
 ----SNAPSHOT----(21 November 2019 20:53:27) CuisUniversity-3938.image priorSource: 16044581!
 
 ----QUIT----(21 November 2019 20:53:34) CuisUniversity-3938.image priorSource: 16098084!
+
+----STARTUP---- (29 November 2019 20:38:55) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+
+!classRemoval: #TusLibrosServerController stamp: 'DH 11/29/2019 20:39:49'!
+Object subclass: #TusLibrosServerController
+	instanceVariableNames: 'webServer port purchaseSystem timeProvider clients catalog salesBook merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #StubTimeProvider stamp: 'DH 11/29/2019 20:39:49'!
+TimeProvider subclass: #StubTimeProvider
+	instanceVariableNames: 'dateAndTime'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #RealTimeProvider stamp: 'DH 11/29/2019 20:39:49'!
+TimeProvider subclass: #RealTimeProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #TimeProvider stamp: 'DH 11/29/2019 20:39:50'!
+Object subclass: #TimeProvider
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #StoreTestObjectsFactory stamp: 'DH 11/29/2019 20:39:50'!
+Object subclass: #StoreTestObjectsFactory
+	instanceVariableNames: 'stubTimeProvider'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Sale stamp: 'DH 11/29/2019 20:39:50'!
+Object subclass: #Sale
+	instanceVariableNames: 'total'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #PurchaseSystem stamp: 'DH 11/29/2019 20:39:50'!
+Object subclass: #PurchaseSystem
+	instanceVariableNames: 'clients carts lastCartID catalog salesBook timeProvider merchantProcessor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CreditCard stamp: 'DH 11/29/2019 20:39:51'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'expiration number owner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #ClientStoreEntry stamp: 'DH 11/29/2019 20:39:51'!
+Object subclass: #ClientStoreEntry
+	instanceVariableNames: 'password purchases'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cashier stamp: 'DH 11/29/2019 20:39:51'!
+Object subclass: #Cashier
+	instanceVariableNames: 'cart salesBook merchantProcessor creditCard total'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CartStoreEntry stamp: 'DH 11/29/2019 20:39:52'!
+Object subclass: #CartStoreEntry
+	instanceVariableNames: 'cart ownerID lastUsed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cart stamp: 'DH 11/29/2019 20:39:52'!
+Object subclass: #Cart
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #PurchaseSystemTest stamp: 'DH 11/29/2019 20:39:52'!
+TestCase subclass: #PurchaseSystemTest
+	instanceVariableNames: 'testObjectFactory debitBehavior'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CashierTest stamp: 'DH 11/29/2019 20:39:53'!
+TestCase subclass: #CashierTest
+	instanceVariableNames: 'testObjectsFactory debitBehavior'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CartTest stamp: 'DH 11/29/2019 20:39:53'!
+TestCase subclass: #CartTest
+	instanceVariableNames: 'testObjectsFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+----End fileIn of D:\DAMIAN\Facultad\Inge1\windows64\TusLibros.st----!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/29/2019 20:40:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/29/2019 20:40:18'!
+PASSED!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 11/29/2019 20:41:27' prior: 50836372!
+initializeWith: aPortNumber
+
+	timeProvider _ RealTimeProvider new.
+	clients _ self clients.
+	catalog _ self catalog.
+	salesBook _ OrderedCollection new.
+	merchantProcessor _ self.
+	purchaseSystem _ PurchaseSystem
+		newWithClients: clients
+		salesBook: salesBook
+		timeProvider: timeProvider
+		catalog: catalog
+		andMerchantProcessor: merchantProcessor.
+	
+
+	port _ aPortNumber.
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action: [:request | | clientID password cartID |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [cartID _ purchaseSystem createCartWithClientID: clientID andPassword: password.] 
+			sendErrorMessageOn: request.
+		self sendResponseWithBody: cartID on: request.
+	].
+
+	webServer addService: '/addToCart' action: [:request | | cartID bookIsbn quantity |
+		self validate: request has: 'cartID' has: 'bookIsbn' and: 'quantity'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		quantity _ self getAsInteger: 'quantity' from: request.
+		self onError: [purchaseSystem add: quantity of: bookIsbn to: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully added' on: request.
+	].
+
+	webServer addService: '/listCart' action: [:request | | cartID cartItems |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [cartItems _ purchaseSystem list: cartID] sendErrorMessageOn: request.
+		self sendResponseWithBody: cartItems on: request.
+	].
+
+	webServer addService: '/checkoutCart' action: [:request | | cartID ccn cced cco |
+		self validate: request has: 'cartID' has: 'ccn' has: 'cced' and: 'cco'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		ccn _ request fields at: 'ccn'.
+		cced _ self getAsMonthAndYear: 'cced' from: request.
+		cco _ request fields at: 'cco'.
+		self onError: [
+			purchaseSystem
+				checkout: cartID
+				withCardNumber: ccn
+				withExpirationDate: cced
+				withOwner: cco
+			]
+			sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Checkout successful' on: request.
+	]! !
+!TusLibrosServerController methodsFor: 'value retrieval' stamp: 'DH 11/29/2019 20:42:28'!
+getAsMonthAndYear: aMonthAndYearField from: aRequest
+
+	self validate: aMonthAndYearField isMonthAndYearOn: aRequest.
+	! !
+!TusLibrosServerController methodsFor: 'value retrieval' stamp: 'DH 11/29/2019 20:43:02' prior: 50836822!
+getAsMonthAndYear: aMonthAndYearField from: aRequest
+
+	self validate: aMonthAndYearField isMonthAndYearOn: aRequest.
+	aMonthAndYearField ! !
+
+a := '052019'.!
+
+a copyFrom: 1 to: 2!
+
+Month month: (a copyFrom: 1 to: 2) asInteger year: (a copyFrom: 3 to: 6) asInteger!
+
+a asInteger!
+!TusLibrosServerController methodsFor: 'value retrieval' stamp: 'DH 11/29/2019 23:06:22' prior: 50836830!
+getAsMonthAndYear: aMonthAndYearField from: aRequest
+
+	|monthPart yearPart|
+	monthPart := 2! !
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:09:29'!
+validate: aField isMonthAndYearOn: aRequest
+
+	|fieldValue|
+	fieldValue _ aRequest fields at: aField.
+	(fieldValue size = 6 and: fieldValue isInteger) ifFalse: [aRequest send400Response.]! !
+!TusLibrosServerController methodsFor: 'value retrieval' stamp: 'DH 11/29/2019 23:11:48' prior: 50836843!
+getAsMonthAndYear: aMonthAndYearField from: aRequest
+
+	|fieldValue monthPart yearPart|
+	self validate: aMonthAndYearField isMonthAndYearOn: aRequest.
+	fieldValue _ aRequest fields at: aMonthAndYearField.
+	monthPart _ fieldValue copyFrom: 1 to: 2.
+	yearPart _ fieldValue copyFrom: 3 to: 6.
+	^Month month: monthPart asInteger year: yearPart asInteger.! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 11/29/2019 23:16:59' prior: 50836749!
+initializeWith: aPortNumber
+
+	timeProvider _ RealTimeProvider new.
+	clients _ self clients.
+	catalog _ self catalog.
+	salesBook _ OrderedCollection new.
+	merchantProcessor _ self.
+	purchaseSystem _ PurchaseSystem
+		newWithClients: clients
+		salesBook: salesBook
+		timeProvider: timeProvider
+		catalog: catalog
+		andMerchantProcessor: merchantProcessor.
+	
+
+	port _ aPortNumber.
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action: [:request | | clientID password cartID |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [cartID _ purchaseSystem createCartWithClientID: clientID andPassword: password.] 
+			sendErrorMessageOn: request.
+		self sendResponseWithBody: cartID on: request.
+	].
+
+	webServer addService: '/addToCart' action: [:request | | cartID bookIsbn quantity |
+		self validate: request has: 'cartID' has: 'bookIsbn' and: 'quantity'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		quantity _ self getAsInteger: 'quantity' from: request.
+		self onError: [purchaseSystem add: quantity of: bookIsbn to: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully added' on: request.
+	].
+
+	webServer addService: '/listCart' action: [:request | | cartID cartItems |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [cartItems _ purchaseSystem list: cartID] sendErrorMessageOn: request.
+		self sendResponseWithBody: cartItems on: request.
+	].
+
+	webServer addService: '/checkoutCart' action: [:request | | cartID ccn cced cco |
+		self validate: request has: 'cartID' has: 'ccn' has: 'cced' and: 'cco'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		ccn _ request fields at: 'ccn'.
+		cced _ self getAsMonthAndYear: 'cced' from: request.
+		cco _ request fields at: 'cco'.
+		self onError: [
+			purchaseSystem
+				checkout: cartID
+				withCardNumber: ccn
+				withExpirationDate: cced
+				withOwner: cco
+			]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: 'Checkout successful' on: request.
+	].
+
+	webServer addService: '/listPurchases' action: [:request | | clientID password |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'cartID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [purchaseSystem listPurchasesOf: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: 'Checkout successful' on: request.
+	]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 11/29/2019 23:17:53' prior: 50836874!
+initializeWith: aPortNumber
+
+	timeProvider _ RealTimeProvider new.
+	clients _ self clients.
+	catalog _ self catalog.
+	salesBook _ OrderedCollection new.
+	merchantProcessor _ self.
+	purchaseSystem _ PurchaseSystem
+		newWithClients: clients
+		salesBook: salesBook
+		timeProvider: timeProvider
+		catalog: catalog
+		andMerchantProcessor: merchantProcessor.
+	
+
+	port _ aPortNumber.
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action: [:request | | clientID password cartID |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [cartID _ purchaseSystem createCartWithClientID: clientID andPassword: password.] 
+			sendErrorMessageOn: request.
+		self sendResponseWithBody: cartID on: request.
+	].
+
+	webServer addService: '/addToCart' action: [:request | | cartID bookIsbn quantity |
+		self validate: request has: 'cartID' has: 'bookIsbn' and: 'quantity'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		quantity _ self getAsInteger: 'quantity' from: request.
+		self onError: [purchaseSystem add: quantity of: bookIsbn to: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully added' on: request.
+	].
+
+	webServer addService: '/listCart' action: [:request | | cartID cartItems |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [cartItems _ purchaseSystem list: cartID] sendErrorMessageOn: request.
+		self sendResponseWithBody: cartItems on: request.
+	].
+
+	webServer addService: '/checkoutCart' action: [:request | | cartID ccn cced cco |
+		self validate: request has: 'cartID' has: 'ccn' has: 'cced' and: 'cco'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		ccn _ request fields at: 'ccn'.
+		cced _ self getAsMonthAndYear: 'cced' from: request.
+		cco _ request fields at: 'cco'.
+		self onError: [
+			purchaseSystem
+				checkout: cartID
+				withCardNumber: ccn
+				withExpirationDate: cced
+				withOwner: cco
+			]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: 'Checkout successful' on: request.
+	].
+
+	webServer addService: '/listPurchases' action: [:request | | clientID password purchases |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'cartID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [purchases _ purchaseSystem listPurchasesOf: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: purchases on: request.
+	]! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/29/2019 23:19:32'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/29/2019 23:19:33'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/29/2019 23:19:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/29/2019 23:19:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'DH 11/29/2019 23:19:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/29/2019 23:19:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/29/2019 23:19:34'!
+PASSED!
+
+server := TusLibrosServerController listeningOn: 3000.!
+!TusLibrosServerController methodsFor: 'value retrieval' stamp: 'DH 11/29/2019 23:27:44' prior: 50836859!
+getAsMonthAndYear: aMonthAndYearField from: aRequest
+
+	|fieldValue monthPart yearPart|
+	"self validate: aMonthAndYearField isMonthAndYearOn: aRequest."
+	fieldValue _ aRequest fields at: aMonthAndYearField.
+	monthPart _ fieldValue copyFrom: 1 to: 2.
+	yearPart _ fieldValue copyFrom: 3 to: 6.
+	^Month month: monthPart asInteger year: yearPart asInteger.! !
+!TusLibrosServerController methodsFor: 'value retrieval' stamp: 'DH 11/29/2019 23:28:04' prior: 50837169!
+getAsMonthAndYear: aMonthAndYearField from: aRequest
+
+	|fieldValue monthPart yearPart|
+	self validate: aMonthAndYearField isMonthAndYearOn: aRequest.
+	fieldValue _ aRequest fields at: aMonthAndYearField.
+	monthPart _ fieldValue copyFrom: 1 to: 2.
+	yearPart _ fieldValue copyFrom: 3 to: 6.
+	^Month month: monthPart asInteger year: yearPart asInteger.! !
+!TusLibrosServerController methodsFor: 'value retrieval' stamp: 'DH 11/29/2019 23:30:21' prior: 50837184!
+getAsMonthAndYear: aMonthAndYearField from: aRequest
+
+	|fieldValue monthPart yearPart|
+	(aRequest fields at: aMonthAndYearField) = '102015' ifTrue: [aRequest send404Response].
+	self validate: aMonthAndYearField isMonthAndYearOn: aRequest.
+	fieldValue _ aRequest fields at: aMonthAndYearField.
+	monthPart _ fieldValue copyFrom: 1 to: 2.
+	yearPart _ fieldValue copyFrom: 3 to: 6.
+	^Month month: monthPart asInteger year: yearPart asInteger.! !
+!TusLibrosServerController methodsFor: 'value retrieval' stamp: 'DH 11/29/2019 23:30:56' prior: 50837199!
+getAsMonthAndYear: aMonthAndYearField from: aRequest
+
+	|fieldValue monthPart yearPart|
+	"(aRequest fields at: aMonthAndYearField) = '102015' ifTrue: [aRequest send404Response]."
+	self validate: aMonthAndYearField isMonthAndYearOn: aRequest.
+	fieldValue _ aRequest fields at: aMonthAndYearField.
+	monthPart _ fieldValue copyFrom: 1 to: 2.
+	yearPart _ fieldValue copyFrom: 3 to: 6.
+	^Month month: monthPart asInteger year: yearPart asInteger.! !
+!TusLibrosServerController methodsFor: 'value retrieval' stamp: 'DH 11/29/2019 23:31:25' prior: 50837217!
+getAsMonthAndYear: aMonthAndYearField from: aRequest
+
+	|fieldValue monthPart yearPart|
+	self validate: aMonthAndYearField isMonthAndYearOn: aRequest.
+	fieldValue _ aRequest fields at: aMonthAndYearField.
+	monthPart _ fieldValue copyFrom: 1 to: 2.
+	yearPart _ fieldValue copyFrom: 3 to: 6.
+	^Month month: monthPart asInteger year: yearPart asInteger.! !
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:31:40' prior: 50836849!
+validate: aField isMonthAndYearOn: aRequest
+
+	|fieldValue|
+	(aRequest fields at: aField) = '102015' ifTrue: [aRequest send404Response].
+	fieldValue _ aRequest fields at: aField.
+	(fieldValue size = 6 and: fieldValue isInteger) ifFalse: [aRequest send400Response.]! !
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:31:56' prior: 50837250!
+validate: aField isMonthAndYearOn: aRequest
+
+	|fieldValue|
+	"(aRequest fields at: aField) = '102015' ifTrue: [aRequest send404Response]."
+	fieldValue _ aRequest fields at: aField.
+	(fieldValue size = 6 and: fieldValue isInteger) ifFalse: [aRequest send400Response.]! !
+
+a := '102015'!
+
+a size!
+
+a size = 6!
+
+a isInteger!
+
+a := '10'.!
+
+a := '10'.!
+
+a isInteger!
+
+a isNumber !
+
+a isNumber!
+
+a := '102015'.!
+
+a isNumber!
+
+a asNumber !
+
+a asInteger!
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:36:14' prior: 50837262!
+validate: aField isMonthAndYearOn: aRequest
+
+	|fieldValue|
+	"(aRequest fields at: aField) = '102015' ifTrue: [aRequest send404Response]."
+	fieldValue _ aRequest fields at: aField.
+	(fieldValue size = 6 and: fieldValue asInteger = nil) ifFalse: [aRequest send400Response.]! !
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:36:45' prior: 50837280!
+validate: aField isMonthAndYearOn: aRequest
+
+	|fieldValue|
+	"(aRequest fields at: aField) = '102015' ifTrue: [aRequest send404Response]."
+	fieldValue _ aRequest fields at: aField.
+	(fieldValue size = 6 and: fieldValue asInteger ~= nil) ifFalse: [aRequest send400Response.]! !
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:36:49' prior: 50837292!
+validate: aField isMonthAndYearOn: aRequest
+
+	|fieldValue|
+	fieldValue _ aRequest fields at: aField.
+	(fieldValue size = 6 and: fieldValue asInteger ~= nil) ifFalse: [aRequest send400Response.]! !
+
+a := '10a015'.!
+
+a asInteger!
+
+a asNumber!
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:44:02'!
+hasDigitsOnly: aString
+
+	^aString allSatisfy: [:character | character isDigit]! !
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:45:04' prior: 50836545!
+validate: aField isIntegerOn: aRequest
+
+	|fieldValue|
+	fieldValue _ aRequest fields at: aField.
+	(self hasDigitsOnly: fieldValue) ifTrue: [aRequest send400Response.]! !
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:45:17' prior: 50837321!
+validate: aField isIntegerOn: aRequest
+
+	|fieldValue|
+	fieldValue _ aRequest fields at: aField.
+	(self hasDigitsOnly: fieldValue) ifFalse: [aRequest send400Response.]! !
+!TusLibrosServerController methodsFor: 'validations' stamp: 'DH 11/29/2019 23:46:36' prior: 50837304!
+validate: aField isMonthAndYearOn: aRequest
+
+	|fieldValue|
+	fieldValue _ aRequest fields at: aField.
+	(fieldValue size = 6 and: (self hasDigitsOnly: fieldValue)) ifFalse: [aRequest send400Response.]! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 11/29/2019 23:51:08' prior: 50836961!
+initializeWith: aPortNumber
+
+	timeProvider _ RealTimeProvider new.
+	clients _ self clients.
+	catalog _ self catalog.
+	salesBook _ OrderedCollection new.
+	merchantProcessor _ self.
+	purchaseSystem _ PurchaseSystem
+		newWithClients: clients
+		salesBook: salesBook
+		timeProvider: timeProvider
+		catalog: catalog
+		andMerchantProcessor: merchantProcessor.
+	
+
+	port _ aPortNumber.
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action: [:request | | clientID password cartID |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [cartID _ purchaseSystem createCartWithClientID: clientID andPassword: password.] 
+			sendErrorMessageOn: request.
+		self sendResponseWithBody: cartID on: request.
+	].
+
+	webServer addService: '/addToCart' action: [:request | | cartID bookIsbn quantity |
+		self validate: request has: 'cartID' has: 'bookIsbn' and: 'quantity'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		quantity _ self getAsInteger: 'quantity' from: request.
+		self onError: [purchaseSystem add: quantity of: bookIsbn to: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully added' on: request.
+	].
+
+	webServer addService: '/listCart' action: [:request | | cartID cartItems |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [cartItems _ purchaseSystem list: cartID] sendErrorMessageOn: request.
+		self sendResponseWithBody: cartItems on: request.
+	].
+
+	webServer addService: '/checkoutCart' action: [:request | | cartID ccn cced cco |
+		self validate: request has: 'cartID' has: 'ccn' has: 'cced' and: 'cco'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		ccn _ request fields at: 'ccn'.
+		cced _ self getAsMonthAndYear: 'cced' from: request.
+		cco _ request fields at: 'cco'.
+		self onError: [
+			purchaseSystem
+				checkout: cartID
+				withCardNumber: ccn
+				withExpirationDate: cced
+				withOwner: cco
+			]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: 'Checkout successful' on: request.
+	].
+
+	webServer addService: '/listPurchases' action: [:request | | clientID password purchases |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [purchases _ purchaseSystem listPurchasesOf: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: purchases on: request.
+	]! !
+!PurchaseSystem methodsFor: 'client operations' stamp: 'DH 11/29/2019 23:52:05' prior: 50835953!
+listPurchasesOf: aClientID withPassword: aPassword
+
+	|clientInfo|
+	clientInfo _ self getInfoFromClientWithID: aClientID validatingPassword: aPassword.
+	^clientInfo purchases.! !
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 3000.!
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/29/2019 23:58:22' prior: 50835839!
+initializeWithNumber: aCreditCardNumber owner: anOwnerName expiringOn: aMonth
+
+	(aCreditCardNumber size = 16
+	and: (aCreditCardNumber allSatisfy: [:char | char isDigit]) )
+	ifFalse: [self error: self class invalidCreditCardNumberErrorMessage.].
+	number _ aCreditCardNumber. 
+	owner _ anOwnerName.
+	expiration _ aMonth! !
+!CreditCard methodsFor: 'private' stamp: 'DH 11/29/2019 23:59:23'!
+isACreditCardNumber: aString
+
+	^aString size = 16 and: (aString allSatisfy: [:character | character isDigit])! !
+!CreditCard methodsFor: 'initialization' stamp: 'DH 11/29/2019 23:59:59' prior: 50837448!
+initializeWithNumber: aCreditCardNumber owner: anOwnerName expiringOn: aMonth
+
+	(self isACreditCardNumber: aCreditCardNumber) ifFalse: [self error: self class invalidCreditCardNumberErrorMessage.].
+	number _ aCreditCardNumber. 
+	owner _ anOwnerName.
+	expiration _ aMonth! !
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 3000.!
+
+server stopListening.!
+
+server destroy.!
+
+----SNAPSHOT----(30 November 2019 00:04:34) CuisUniversity-3938.image priorSource: 16098178!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/30/2019 00:04:44'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/30/2019 00:04:44'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/30/2019 00:04:44'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/30/2019 00:04:44'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/30/2019 00:04:44'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/30/2019 00:04:44'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'DH 11/30/2019 00:04:45'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'DH 11/30/2019 00:04:46'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/30/2019 00:04:46'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/30/2019 00:04:46'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/30/2019 00:04:46'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/30/2019 00:04:46'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/30/2019 00:04:46'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'DH 11/30/2019 00:04:46'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/30/2019 00:04:46'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/30/2019 00:04:46'!
+PASSED!
+
+----QUIT----(30 November 2019 00:05:11) CuisUniversity-3938.image priorSource: 16186654!
