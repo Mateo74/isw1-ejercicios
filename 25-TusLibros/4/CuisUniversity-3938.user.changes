@@ -14241,3 +14241,142 @@ PASSED!
 PASSED!
 
 ----QUIT----(30 November 2019 00:05:11) CuisUniversity-3938.image priorSource: 16186654!
+
+----STARTUP---- (30 November 2019 00:08:52) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+
+!methodRemoval: TusLibrosServerController #sendNormalResponseOn: stamp: 'DH 11/30/2019 00:09:19'!
+sendNormalResponseOn: aRequest
+
+	aRequest
+		send200Response: '' asUtf8
+		contentType: 'application/json; charset=utf-8'
+		do: [ :resp | resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].!
+
+!methodRemoval: TusLibrosServerController #sendNormalResponseWithBody:on: stamp: 'DH 11/30/2019 00:09:19'!
+sendNormalResponseWithBody: aResponseBody on: aRequest
+	
+	|fullBody|
+	fullBody _ Dictionary new at: 'response' put: aResponseBody.
+	fullBody _ WebUtils jsonEncode: fullBody.
+	aRequest
+		send200Response: fullBody asUtf8
+		contentType: 'application/json; charset=utf-8'
+		do: [ :resp | resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].!
+
+!methodRemoval: TusLibrosServerController #sendNormalResponseWithKey:andValue:on: stamp: 'DH 11/30/2019 00:09:19'!
+sendNormalResponseWithKey: aKey andValue: aValue on: aRequest
+
+	|responseAsJson|
+	
+	responseAsJson _ WebUtils jsonEncode: (Dictionary new at: aKey put: aValue; yourself).
+	aRequest
+		send200Response: responseAsJson asUtf8
+		contentType: 'application/json; charset=utf-8'
+		do: [ :resp | resp headerAt: 'Access-Control-Allow-Origin' put: '*'.].!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 11/30/2019 00:09:23'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'DH 11/30/2019 00:09:24'!
+PASSED!
+
+----SNAPSHOT----(30 November 2019 00:09:45) CuisUniversity-3938.image priorSource: 16190536!
+
+----QUIT----(30 November 2019 00:09:55) CuisUniversity-3938.image priorSource: 16195729!
