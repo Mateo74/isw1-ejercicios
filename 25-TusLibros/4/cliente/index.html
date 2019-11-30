@@ -52,6 +52,11 @@
       ListItemIcon,
       ListItemText,
       OutlinedInput,
+    	Table,
+    	TableHead,
+    	TableBody,
+    	TableRow,
+    	TableCell,
       TextField,
       ThemeProvider,
       Toolbar,
@@ -192,85 +197,47 @@
       }
     
       handleClientIDChange(event) {
-    		const {clientID, password} = this.state
         this.setState({
-          clientID: event.target.value,
-    			password: password
+          clientID: event.target.value
         })
       }
     	
     	handlePasswordChange(event) {
-    		const {clientID, password} = this.state
         this.setState({
-          clientID: clientID,
     			password: event.target.value
         })
     	}
     
       handleCreate() {
-        const {
-          router,
-        } = this.props
-    
-        const {
-    			clientID,
-          password,
-        } = this.state
-    
+        const {clientID, password} = this.state
         getLocalAsJson(`createCart?clientID=${clientID}&password=${password}`)
-          .then(function (response) {
-            return response.json()
-          })
-          .then(function (json) {
-    				console.log(`cart ID = ${json.response}`)
-            router.navigate("/catalog", { cartID: json.response })
-          })
-          .catch(function (error) {
-            console.log('Looks like there was a problem: \n', error);
-          });
+          .then((response) => response.json())
+          .then((json) => this.props.router.navigate("/catalog", {cartID: json.response}))
+          .catch((error) => console.log('Looks like there was a problem: \n', error));
       }
     
       render() {
         const {clientID, password} = this.state
-    
-        const {
-          classes,
-        } = this.props
     
         return (
           <div>
             <Typography component="h1" gutterBottom>
               Enter your Client ID and password
              </Typography>
-            <FormControl fullWidth className={classes.textField} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-amount">Client ID</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                value={clientID}
-                onChange={(ev)=>this.handleClientIDChange(ev)}
-                startAdornment={<InputAdornment position="start">></InputAdornment>}
-                labelWidth={60}
-                multiline
-                rows="1"
-              />
-            </FormControl>
-    				<FormControl fullWidth className={classes.textField} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-amount">String</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                value={password}
-                onChange={(ev)=>this.handlePasswordChange(ev)}
-                startAdornment={<InputAdornment position="start">></InputAdornment>}
-                labelWidth={60}
-                multiline
-                rows="1"
-              />
-            </FormControl>
-    
+            <InputField
+    					label="Client ID"
+    					value={clientID}
+    					onChange={(e) => this.handleClientIDChange(e)}
+    				/>
+    				<InputField
+    					label="Password"
+    					value={password}
+    					onChange={(e) => this.handlePasswordChange(e)}
+    				/>
             <Button
               color="inherit"
-              onClick={(ev)=>this.handleCreate(ev)}>
-              Create Cart
+              onClick={(e) => this.handleCreate(e)}>
+    					Create Cart
     				</Button>
           </div>
         )
@@ -286,6 +253,18 @@
         super(props)
       }
     
+    	onClickBook() {
+    		console.log("Book clicled!")
+    	}
+    
+    	onAddBookClicked() {
+    		console.log("Book added!")
+    	}
+    	
+    	onRemoveBookClicked() {
+    		console.log("Book removed!")
+    	}
+    
       render() {
         const {
           router,
@@ -293,30 +272,56 @@
           classes,
         } = this.props
     
-    		let catalog = {
-    			validBook1: 20,
-    			validBook2: 40
+    		let catalog = [
+    			{
+    				isbn: "isbn1",
+    				title: "A Book",
+    				author: "An Author",
+    				price: 45,
+    			},
+    			{
+    				isbn: "isbn2",
+    				title: "Another Book",
+    				author: "Another Author",
+    				price: 35,
+    			},
+    			{
+    				isbn: "isbn3",
+    				title: "Another Book 2",
+    				author: "Another Author 2",
+    				price: 38,
+    			}
+    		]
+    		
+    		let cartContent = {
+    			isbn1: 4,
+    			isbn2: 5,
     		}
     		
-    		let catalogAsArray = []
-    		Object.keys(catalog).forEach((key) => catalogAsArray.push({name: key, price: catalog.key}))
+    		let cartItems = catalog.map((item, index) => {
+    			let quantity = 0
+    			if (item.isbn in cartContent) {
+    				quantity = cartContent[item.isbn]
+    			}
+    			return {
+    				title: item.title,
+    				isbn: item.isbn,
+    				quantity: quantity,
+    			}
+    		})
     
         return (
           <div>
             <Typography component="h1" gutterBottom>
               Book Catalog:
     				</Typography>
-            <List component="nav" className={classes.rootList} aria-label="substrings">
-              {
-                catalogAsArray.map((item, ix) => {
-                  return (
-                    <ListItem key={ix}>
-                      <ListItemText primary={item.name} />
-                    </ListItem>
-                  )
-                })
-              }
-            </List>
+    				<BookList
+    					bookList={cartItems}
+    					onClickBook={this.onClickBook}
+    					onClickAdd={this.onAddBookClicked}
+    					onClickSub={this.onRemoveBookClicked}
+    					quantityHeading="Quantity In Cart"
+    				/>
           </div>
         )
       }
@@ -331,9 +336,78 @@
         super(props)
       }
     
-      render() {
-    		return (<div>CartView</div>)
+    	onClickBook() {
+    		console.log("Book clicled!")
     	}
+    
+    	onAddBookClicked() {
+    		console.log("Book added!")
+    	}
+    	
+    	onRemoveBookClicked() {
+    		console.log("Book removed!")
+    	}
+    
+      render() {
+        const {
+          router,
+          cartID,
+          classes,
+        } = this.props
+    
+    		let catalog = [
+    			{
+    				isbn: "isbn1",
+    				title: "A Book",
+    				author: "An Author",
+    				price: 45,
+    			},
+    			{
+    				isbn: "isbn2",
+    				title: "Another Book",
+    				author: "Another Author",
+    				price: 35,
+    			},
+    			{
+    				isbn: "isbn3",
+    				title: "Another Book 2",
+    				author: "Another Author 2",
+    				price: 38,
+    			}
+    		]
+    		
+    		let cartContent = {
+    			isbn1: 4,
+    			isbn2: 5,
+    		}
+    		
+    		let cartItems = catalog.map((item, index) => {
+    			let quantity = 0
+    			if (item.isbn in cartContent) {
+    				quantity = cartContent[item.isbn]
+    			}
+    			return {
+    				title: item.title,
+    				isbn: item.isbn,
+    				quantity: quantity,
+    			}
+    		})
+    
+        return (
+          <div>
+            <Typography component="h1" gutterBottom>
+              Books that are actually in your Cart:
+    				</Typography>
+    				<BookList
+    					bookList={cartItems.filter((item) => item.quantity > 0)}
+    					onClickBook={this.onClickBook}
+    					onClickAdd={this.onAddBookClicked}
+    					onClickSub={this.onRemoveBookClicked}
+    					quantityHeading="Quantity"
+    				/>
+          </div>
+        )
+      }
     }
     
     // Add style
@@ -392,6 +466,119 @@
         );
       }
     }
+    class BookListComponent extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+    
+    	render() {
+    		const {
+    			cartID,
+    			bookList,
+    			onClickBook,
+    			onClickAdd,
+    			onClickSub,
+    			quantityHeading,
+    			classes,
+    		} = this.props
+    		
+    		return (
+    			<Table className={classes.table} aria-label="simple table">
+    				<TableHead>
+    					<TableRow>
+    						<TableCell>Title</TableCell>
+    						<TableCell>ISBN</TableCell>
+    						<TableCell align="center">{quantityHeading}</TableCell>
+    					</TableRow>
+    				</TableHead>
+    				<TableBody>
+    					{
+    						bookList.map((item, index) => (
+    							<TableRow key={index}>
+    								<TableCell>
+    									<Button onClick={onClickBook}>{item.title}</Button>
+    								</TableCell>
+    								<TableCell>{item.isbn}</TableCell>
+    								<TableCell align="center">
+    									<EditableBookQuantity cartID={cartID} isbn={item.isbn} quantity={0} />
+    								</TableCell>
+    							</TableRow>
+    						))
+    					}
+    				</TableBody>
+    			</Table>
+        )
+    	}
+    }
+    
+    const BookList = withStyles(styles, {
+      withTheme: true
+    })(BookListComponent)
+    class EditableBookQuantityComponent extends React.Component {
+      constructor(props) {
+        super(props)
+    		
+    		this.state = {quantity: props.quantity}
+      }
+    	
+    	onClickAdd() {
+    		this.setState({quantity: this.state.quantity + 1})
+    	}
+    	
+    	onClickRemove() {
+    		let quantity = this.state.quantity
+    		if (quantity > 0) {
+    			this.setState({quantity: quantity - 1})
+    		}
+    	}
+    	
+    	render() {
+    		return (
+    			<div>
+    				<Button onClick={() => this.onClickAdd()}>
+    					+
+    				</Button>
+    				
+    				{this.state.quantity}
+    				
+    				<Button onClick={() => this.onClickRemove()}>
+    					-
+    				</Button>
+    			</div>
+    		)
+    	}
+    }
+    
+    const EditableBookQuantity = withStyles(styles, {
+      withTheme: true
+    })(EditableBookQuantityComponent)
+    class InputFieldComponent extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+    	
+    	render() {
+    		const {label, value, onChange, classes} = this.props
+    		return (
+    			<FormControl fullWidth className={classes.textField} variant="outlined">
+    				<InputLabel htmlFor="outlined-adornment-amount">{label}</InputLabel>
+    				<OutlinedInput
+    					id="outlined-adornment-amount"
+    					value={value}
+    					onChange={onChange}
+    					startAdornment={<InputAdornment position="start">></InputAdornment>}
+    					labelWidth={60}
+    					multiline
+    					rows="1"
+    				/>
+    			</FormControl>
+    		)
+    	}
+    }
+    
+    const InputField = withStyles(styles, {
+      withTheme: true
+    })(InputFieldComponent)
 
     ///////////////////////////////////////////////////////////////////////////
     // Initial render

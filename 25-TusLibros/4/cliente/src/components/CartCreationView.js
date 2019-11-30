@@ -9,85 +9,47 @@ class CartCreationComponent extends React.Component {
   }
 
   handleClientIDChange(event) {
-		const {clientID, password} = this.state
     this.setState({
-      clientID: event.target.value,
-			password: password
+      clientID: event.target.value
     })
   }
 	
 	handlePasswordChange(event) {
-		const {clientID, password} = this.state
     this.setState({
-      clientID: clientID,
 			password: event.target.value
     })
 	}
 
   handleCreate() {
-    const {
-      router,
-    } = this.props
-
-    const {
-			clientID,
-      password,
-    } = this.state
-
+    const {clientID, password} = this.state
     getLocalAsJson(`createCart?clientID=${clientID}&password=${password}`)
-      .then(function (response) {
-        return response.json()
-      })
-      .then(function (json) {
-				console.log(`cart ID = ${json.response}`)
-        router.navigate("/catalog", { cartID: json.response })
-      })
-      .catch(function (error) {
-        console.log('Looks like there was a problem: \n', error);
-      });
+      .then((response) => response.json())
+      .then((json) => this.props.router.navigate("/catalog", {cartID: json.response}))
+      .catch((error) => console.log('Looks like there was a problem: \n', error));
   }
 
   render() {
     const {clientID, password} = this.state
-
-    const {
-      classes,
-    } = this.props
 
     return (
       <div>
         <Typography component="h1" gutterBottom>
           Enter your Client ID and password
          </Typography>
-        <FormControl fullWidth className={classes.textField} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-amount">Client ID</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            value={clientID}
-            onChange={(ev)=>this.handleClientIDChange(ev)}
-            startAdornment={<InputAdornment position="start">></InputAdornment>}
-            labelWidth={60}
-            multiline
-            rows="1"
-          />
-        </FormControl>
-				<FormControl fullWidth className={classes.textField} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-amount">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            value={password}
-            onChange={(ev)=>this.handlePasswordChange(ev)}
-            startAdornment={<InputAdornment position="start">></InputAdornment>}
-            labelWidth={60}
-            multiline
-            rows="1"
-          />
-        </FormControl>
-
+        <InputField
+					label="Client ID"
+					value={clientID}
+					onChange={(e) => this.handleClientIDChange(e)}
+				/>
+				<InputField
+					label="Password"
+					value={password}
+					onChange={(e) => this.handlePasswordChange(e)}
+				/>
         <Button
           color="inherit"
-          onClick={(ev)=>this.handleCreate(ev)}>
-          Create Cart
+          onClick={(e) => this.handleCreate(e)}>
+					Create Cart
 				</Button>
       </div>
     )
