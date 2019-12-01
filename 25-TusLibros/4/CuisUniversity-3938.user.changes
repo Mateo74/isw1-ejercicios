@@ -15529,3 +15529,599 @@ PASSED!
 ----SNAPSHOT----(1 December 2019 13:10:42) CuisUniversity-3938.image priorSource: 16230881!
 
 ----QUIT----(1 December 2019 13:10:50) CuisUniversity-3938.image priorSource: 16235448!
+
+----STARTUP---- (1 December 2019 16:37:55) as /Users/mmarenco/Materias/isw1/isw1-ejercicios/25-TusLibros/4/CuisUniversity-3938.image!
+
+!CartTest methodsFor: 'tests' stamp: 'mm 12/1/2019 16:44:05'!
+test09AddingAndRemovingABookLeavesCartEmpty
+
+	| cart book |
+	
+	cart := testObjectsFactory createCart.
+	book := testObjectsFactory itemSellByTheStore.
+	
+	cart add: book.
+
+	cart remove: book.
+	
+	self assert: cart isEmpty.! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'mm 12/1/2019 16:44:30'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'mm 12/1/2019 16:44:30'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'mm 12/1/2019 16:44:30'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'mm 12/1/2019 16:44:30'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'mm 12/1/2019 16:44:30'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'mm 12/1/2019 16:44:30'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'mm 12/1/2019 16:44:30'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'mm 12/1/2019 16:44:30'!
+PASSED!
+
+!testRun: #CartTest #test09AddingAndRemovingABookLeavesCartEmpty stamp: 'mm 12/1/2019 16:44:30'!
+ERROR!
+
+!testRun: #CartTest #test09AddingAndRemovingABookLeavesCartEmpty stamp: 'mm 12/1/2019 16:44:30'!
+ERROR!
+!Cart methodsFor: 'adding' stamp: 'mm 12/1/2019 16:44:52'!
+remove: aBook
+
+	! !
+!Cart methodsFor: 'adding' stamp: 'mm 12/1/2019 16:45:13' prior: 50839059!
+remove: aBook
+
+	self assertIsValidItem: aBook.! !
+!Cart methodsFor: 'adding' stamp: 'mm 12/1/2019 16:45:44' prior: 50839062!
+remove: anItem
+
+	self assertIsValidItem: anItem.
+	
+	items remove: anItem.! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'mm 12/1/2019 16:45:47'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'mm 12/1/2019 16:45:47'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'mm 12/1/2019 16:45:47'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'mm 12/1/2019 16:45:47'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'mm 12/1/2019 16:45:47'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'mm 12/1/2019 16:45:47'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'mm 12/1/2019 16:45:47'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'mm 12/1/2019 16:45:47'!
+PASSED!
+
+!testRun: #CartTest #test09AddingAndRemovingABookLeavesCartEmpty stamp: 'mm 12/1/2019 16:45:47'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'mm 12/1/2019 16:49:03'!
+test09CannotRemoveItemThatWasNotAdded
+
+	| cart book |
+	
+	cart := testObjectsFactory createCart.
+	
+	self should: [cart remove: book]
+		  raise: Error - MessageNotUnderstood
+		  withExceptionDo: [ :anError |
+				self assert: Cart itemNotIntCartErrorMessage equals: anError messageText.
+				self assert: cart isEmpty.
+			]! !
+!CartTest methodsFor: 'tests' stamp: 'mm 12/1/2019 16:49:15' prior: 50839099!
+test09CannotRemoveItemThatWasNotAdded
+
+	| cart book |
+	
+	cart := testObjectsFactory createCart.
+	
+	self should: [cart remove: book]
+		  raise: Error - MessageNotUnderstood
+		  withExceptionDo: [ :anError |
+				self assert: Cart itemNotInCartErrorMessage equals: anError messageText.
+				self assert: cart isEmpty.
+			]! !
+!CartTest methodsFor: 'tests' stamp: 'mm 12/1/2019 16:49:35' prior: 50839112!
+test09CannotRemoveItemThatWasNotAdded
+
+	| cart book |
+	
+	cart := testObjectsFactory createCart.
+	book := testObjectsFactory itemSellByTheStore.
+	
+	self should: [cart remove: book]
+		  raise: Error - MessageNotUnderstood
+		  withExceptionDo: [ :anError |
+				self assert: Cart itemNotInCartErrorMessage equals: anError messageText.
+				self assert: cart isEmpty.
+			]! !
+!Cart class methodsFor: 'error messages' stamp: 'mm 12/1/2019 16:53:15'!
+itemNotInCartErrorMessage
+
+	^ 'Cannot remove an item that is not in cart'! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'mm 12/1/2019 16:53:19'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'mm 12/1/2019 16:53:19'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'mm 12/1/2019 16:53:19'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'mm 12/1/2019 16:53:19'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'mm 12/1/2019 16:53:19'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'mm 12/1/2019 16:53:19'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'mm 12/1/2019 16:53:19'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'mm 12/1/2019 16:53:19'!
+PASSED!
+
+!testRun: #CartTest #test09AddingAndRemovingABookLeavesCartEmpty stamp: 'mm 12/1/2019 16:53:19'!
+PASSED!
+
+!testRun: #CartTest #test09CannotRemoveItemThatWasNotAdded stamp: 'mm 12/1/2019 16:53:19'!
+FAILURE!
+
+!testRun: #CartTest #test09CannotRemoveItemThatWasNotAdded stamp: 'mm 12/1/2019 16:53:19'!
+FAILURE!
+!Cart methodsFor: 'adding' stamp: 'mm 12/1/2019 16:55:03' prior: 50839066!
+remove: anItem
+
+	self assertIsValidItem: anItem.
+	
+	(items includes: anItem) ifTrue: [items remove: anItem]! !
+!Cart methodsFor: 'adding' stamp: 'mm 12/1/2019 16:55:28' prior: 50839179!
+remove: anItem
+
+	self assertIsValidItem: anItem.
+	
+	(items includes: anItem) ifTrue: [items remove: anItem].
+	
+	self error: self class itemNotInCartErrorMessage.! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'mm 12/1/2019 16:55:30'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'mm 12/1/2019 16:55:30'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'mm 12/1/2019 16:55:30'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'mm 12/1/2019 16:55:30'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'mm 12/1/2019 16:55:30'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'mm 12/1/2019 16:55:30'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'mm 12/1/2019 16:55:30'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'mm 12/1/2019 16:55:30'!
+PASSED!
+
+!testRun: #CartTest #test09AddingAndRemovingABookLeavesCartEmpty stamp: 'mm 12/1/2019 16:55:30'!
+ERROR!
+
+!testRun: #CartTest #test09CannotRemoveItemThatWasNotAdded stamp: 'mm 12/1/2019 16:55:30'!
+PASSED!
+
+!testRun: #CartTest #test09AddingAndRemovingABookLeavesCartEmpty stamp: 'mm 12/1/2019 16:55:30'!
+ERROR!
+!Cart methodsFor: 'adding' stamp: 'mm 12/1/2019 16:56:32' prior: 50839185!
+remove: anItem
+
+	self assertIsValidItem: anItem.
+	
+	(items includes: anItem) ifFalse: [self error: self class itemNotInCartErrorMessage.].
+	
+	items remove: anItem.! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+
+!testRun: #CartTest #test09AddingAndRemovingABookLeavesCartEmpty stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+
+!testRun: #CartTest #test09CannotRemoveItemThatWasNotAdded stamp: 'mm 12/1/2019 16:56:34'!
+PASSED!
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'mm 12/1/2019 17:04:24'!
+test22CannotRemoveBookFromNonExistentCart
+
+	|purchaseSystem book|
+
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book _ testObjectFactory itemSellByTheStore.
+	
+	self should: [purchaseSystem remove: book from: testObjectFactory invalidCartID.]
+	raise: Error - MessageNotUnderstood 
+	withExceptionDo: [ :anError | 
+		self assert: PurchaseSystem invalidCartIDErrorMessage equals: anError messageText
+	].
+	! !
+!PurchaseSystem methodsFor: 'cart operations' stamp: 'mm 12/1/2019 17:05:11'!
+remove: anItem from: aCart
+
+	self error: self class invalidCartIDErrorMessage.! !
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test21CatalogIsReturnedCorrectly stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test22CannotRemoveBookFromNonExistentCart stamp: 'mm 12/1/2019 17:05:17'!
+PASSED!
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'mm 12/1/2019 17:07:26'!
+test23AddingAndRemovingBookLeavesCartEmpty
+
+	|purchaseSystem cart book|
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book _ testObjectFactory itemSellByTheStore.
+	
+	cart _ testObjectFactory createCart.
+	
+	purchaseSystem add: 1 of: book to: cart. 
+	
+	purchaseSystem remove: book from: cart.
+	
+	self assert: cart isEmpty.
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'mm 12/1/2019 17:10:08' prior: 50839369!
+test23AddingAndRemovingBookLeavesCartEmpty
+
+	|purchaseSystem client cart book|
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book _ testObjectFactory itemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	
+	
+	purchaseSystem add: 1 of: book to: cart. 
+	
+	purchaseSystem remove: book from: cart.
+	
+	self assert: cart isEmpty.
+	! !
+
+a := OrderedCollection with: 4 with: 4.!
+
+a!
+
+a remove: 4.!
+
+a!
+
+!testRun: #PurchaseSystemTest #test22CannotRemoveBookFromNonExistentCart stamp: 'mm 12/1/2019 17:11:55'!
+PASSED!
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'mm 12/1/2019 17:12:56' prior: 50839384!
+test23AddingAndRemovingBookLeavesCartEmpty
+
+	|purchaseSystem client cart book|
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	book _ testObjectFactory itemSellByTheStore.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+		
+	purchaseSystem add: 1 of: book to: cart. 
+	purchaseSystem remove: book from: cart.
+	
+	self assert: (purchaseSystem list: cart) isEmpty.
+	! !
+
+!testRun: #PurchaseSystemTest #test23AddingAndRemovingBookLeavesCartEmpty stamp: 'mm 12/1/2019 17:12:59'!
+ERROR!
+
+!testRun: #PurchaseSystemTest #test23AddingAndRemovingBookLeavesCartEmpty stamp: 'mm 12/1/2019 17:12:59'!
+ERROR!
+!PurchaseSystem methodsFor: 'cart operations' stamp: 'mm 12/1/2019 17:14:28' prior: 50839285!
+remove: aBookISBN from: aCartID
+
+	|cartInfo|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	cartInfo cart remove: aBookISBN.
+	cartInfo setLastTimeUsed: timeProvider now.! !
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test21CatalogIsReturnedCorrectly stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test22CannotRemoveBookFromNonExistentCart stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test23AddingAndRemovingBookLeavesCartEmpty stamp: 'mm 12/1/2019 17:14:34'!
+PASSED!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'mm 12/1/2019 17:18:26' prior: 50838479!
+initializeWith: aPortNumber
+
+	timeProvider _ RealTimeProvider new.
+	clients _ self clients.
+	catalog _ self catalog.
+	salesBook _ OrderedCollection new.
+	merchantProcessor _ self.
+	purchaseSystem _ PurchaseSystem
+		newWithClients: clients
+		salesBook: salesBook
+		timeProvider: timeProvider
+		catalog: catalog
+		andMerchantProcessor: merchantProcessor.
+	
+
+	port _ aPortNumber.
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action: [:request | | clientID password cartID |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [cartID _ purchaseSystem createCartWithClientID: clientID andPassword: password.] 
+			sendErrorMessageOn: request.
+		self sendResponseWithBody: cartID on: request.
+	].
+
+	webServer addService: '/addToCart' action: [:request | | cartID bookIsbn quantity |
+		self validate: request has: 'cartID' has: 'bookIsbn' and: 'quantity'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		quantity _ self getAsInteger: 'quantity' from: request.
+		self onError: [purchaseSystem add: quantity of: bookIsbn to: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully added' on: request.
+	].
+
+	webServer addService: '/listCart' action: [:request | | cartID cartItems |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [cartItems _ purchaseSystem list: cartID] sendErrorMessageOn: request.
+		self sendResponseWithBody: cartItems on: request.
+	].
+
+	webServer addService: '/checkoutCart' action: [:request | | cartID ccn cced cco |
+		self validate: request has: 'cartID' has: 'ccn' has: 'cced' and: 'cco'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		ccn _ request fields at: 'ccn'.
+		cced _ self getAsMonthAndYear: 'cced' from: request.
+		cco _ request fields at: 'cco'.
+		self onError: [
+			purchaseSystem
+				checkout: cartID
+				withCardNumber: ccn
+				withExpirationDate: cced
+				withOwner: cco
+			]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: 'Checkout successful' on: request.
+	].
+
+	webServer addService: '/listPurchases' action: [:request | | clientID password purchases |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [purchases _ purchaseSystem listPurchasesOf: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: purchases on: request.
+	].
+
+	webServer addService: '/catalog' action: [:request |
+		self sendResponseWithBody: (self serialize: purchaseSystem catalog) on: request.
+	].
+	webServer addService: '/removeFromCart' action: [:request | | cartID bookIsbn |
+		self validate: request has: 'cartID' and: 'bookIsbn'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		self onError: [purchaseSystem remove: bookIsbn from: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully removed' on: request.
+	].! !
+
+server := StringServerController listeningOn: 3000.!
+
+server := StringServerController listeningOn: 3000.!
+
+server := StringServerController listeningOn: 3008.!
+
+server stopListening!
+
+server destroy!
+
+server := StringServerController listeningOn: 3002.!
+
+server stopListening.!
+
+server destroy!
+
+----QUIT----(1 December 2019 17:29:51) CuisUniversity-3938.image priorSource: 16235541!
+
+----STARTUP---- (1 December 2019 17:29:59) as /Users/mmarenco/Materias/isw1/isw1-ejercicios/25-TusLibros/4/CuisUniversity-3938.image!
+
+
+server := StringServerController listeningOn: 3001.!
+
+server stopListening!
+
+server destroy!
+
+server := TusLibrosServerController listeningOn: 3000.!
+
+server := TusLibrosServerController listeningOn: 2999.!
+
+server := TusLibrosServerController listeningOn: 2999.!
+
+server stopListening!
+
+server destroy!
+
+----SNAPSHOT----(1 December 2019 17:40:47) CuisUniversity-3938.image priorSource: 16255621!
+
+----QUIT----(1 December 2019 17:41:01) CuisUniversity-3938.image priorSource: 16256151!
