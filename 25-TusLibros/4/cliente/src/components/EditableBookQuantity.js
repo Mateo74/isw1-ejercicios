@@ -6,7 +6,10 @@ class EditableBookQuantityComponent extends React.Component {
   }
 	
 	onClickAdd() {
-		this.setState({quantity: this.state.quantity + 1})
+		const {cartID, isbn, quantity, router} = this.props
+		handleErrors(router, request(`addToCart?cartID=${cartID}&bookIsbn=${isbn}&quantity=1`)
+			.then((responseBody) => this.setState({quantity: this.state.quantity + 1}))
+		)
 	}
 	
 	onClickRemove() {

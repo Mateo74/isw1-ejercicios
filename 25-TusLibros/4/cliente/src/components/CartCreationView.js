@@ -5,6 +5,8 @@ class CartCreationComponent extends React.Component {
     this.state = {
 			clientID: "",
 			password: "",
+			error: false,
+			errorMessage: "",
     }
   }
 
@@ -22,11 +24,18 @@ class CartCreationComponent extends React.Component {
 
   handleCreate() {
     const {clientID, password} = this.state
-    getLocalAsJson(`createCart?clientID=${clientID}&password=${password}`)
-      .then((response) => response.json())
-      .then((json) => this.props.router.navigate("/catalog", {cartID: json.response}))
-      .catch((error) => console.log('Looks like there was a problem: \n', error));
+    request(`createCart?clientID=${clientID}&password=${password}`)
+      .then((responseBody) => this.props.router.navigate("/catalog", {cartID: responseBody}))
+      .catch((error) => this.setState({error: true, errorMessage: error.message}));
   }
+
+	errorMessageElement() {
+		const {error, errorMessage} = this.state
+		if (error) {
+			return <div style={{color:'red'}}>{errorMessage}</div>
+		}
+		return null
+	}
 
   render() {
     const {clientID, password} = this.state
@@ -46,10 +55,11 @@ class CartCreationComponent extends React.Component {
 					value={password}
 					onChange={(e) => this.handlePasswordChange(e)}
 				/>
+				{this.errorMessageElement()}
         <Button
           color="inherit"
-          onClick={(e) => this.handleCreate(e)}>
-					Create Cart
+          onClick={(e) => this.handleCreate()}>
+					Log In and create a Cart
 				</Button>
       </div>
     )

@@ -14,7 +14,6 @@ class InputFieldComponent extends React.Component {
 					onChange={onChange}
 					startAdornment={<InputAdornment position="start">></InputAdornment>}
 					labelWidth={60}
-					multiline
 					rows="1"
 				/>
 			</FormControl>

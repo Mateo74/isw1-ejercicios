@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Substrings Finder</title>
+  <title>Tus Libros</title>
 
   <!-- Fonts to support Material Design -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
@@ -115,7 +115,7 @@
     
     const useStyles = makeStyles(styles);
 
-    const getLocalAsJson = (path) => {
+    const request = (path) => {
       const port = 3000
     
       return fetch(`http://localhost:${port}/${path}`, {
@@ -125,8 +125,21 @@
           "Access-Control-Request-Headers": "*"
         }
       })
+    	.then((response) => response.json())
+    	.then((json) => {
+    		let errorMessage = json.response["error_message"]
+    		if (errorMessage != undefined) {
+    			throw new Error(errorMessage)
+    		}
+    		else {
+    			return json.response
+    		}
+    	})
     }
-
+    
+    const handleErrors = (router, promise) => {
+    	promise.catch((error) => router.navigate("/error", {errorMessage: error.message}))
+    }
     class MyToolBarComponent extends React.Component {
       constructor(props) {
         super(props)
@@ -143,35 +156,39 @@
     	onClickPurchaseHistory() {
     		this.props.router.navigate("/purchaseHistory", {})
     	}
+    	
+    	onClickLogout() {
+    		this.props.router.navigate("/", {cartID: -1})
+    	}
     
       render() {
-    		const classes = this.props.classes
+    		const {title, classes} = this.props
     
         return (
           <div className={classes.rootToolBar}>
             <AppBar position="static">
               <Toolbar>
                 <Typography variant="h6" className={classes.title}>
-                  {this.props.title}
+                  {title}
                 </Typography>
     						<Button
     							color="inherit"
-    							onClick={(ev) => this.onClickCatalog()}>
+    							onClick={() => this.onClickCatalog()}>
     							Catalog
     						</Button>
     						<Button
     							color="inherit"
-    							onClick={(ev) => this.onClickCart()}>
+    							onClick={() => this.onClickCart()}>
     							Cart
     						</Button>
     						<Button
     							color="inherit"
-    							onClick={(ev) => this.onClickPurchaseHistory()}>
+    							onClick={() => this.onClickPurchaseHistory()}>
     							Purchase History
     						</Button>
     						<Button
     							color="inherit"
-    							onClick={(ev)=>{}}>
+    							onClick={() => this.onClickLogout()}>
     							Log Out
     						</Button>
               </Toolbar>
@@ -193,6 +210,8 @@
         this.state = {
     			clientID: "",
     			password: "",
+    			error: false,
+    			errorMessage: "",
         }
       }
     
@@ -210,11 +229,18 @@
     
       handleCreate() {
         const {clientID, password} = this.state
-        getLocalAsJson(`createCart?clientID=${clientID}&password=${password}`)
-          .then((response) => response.json())
-          .then((json) => this.props.router.navigate("/catalog", {cartID: json.response}))
-          .catch((error) => console.log('Looks like there was a problem: \n', error));
+        request(`createCart?clientID=${clientID}&password=${password}`)
+          .then((responseBody) => this.props.router.navigate("/catalog", {cartID: responseBody}))
+          .catch((error) => this.setState({error: true, errorMessage: error.message}));
       }
+    
+    	errorMessageElement() {
+    		const {error, errorMessage} = this.state
+    		if (error) {
+    			return <div style={{color:'red'}}>{errorMessage}</div>
+    		}
+    		return null
+    	}
     
       render() {
         const {clientID, password} = this.state
@@ -234,10 +260,11 @@
     					value={password}
     					onChange={(e) => this.handlePasswordChange(e)}
     				/>
+    				{this.errorMessageElement()}
             <Button
               color="inherit"
-              onClick={(e) => this.handleCreate(e)}>
-    					Create Cart
+              onClick={(e) => this.handleCreate()}>
+    					Log In and create a Cart
     				</Button>
           </div>
         )
@@ -253,62 +280,8 @@
         super(props)
       }
     
-    	onClickBook() {
-    		console.log("Book clicled!")
-    	}
-    
-    	onAddBookClicked() {
-    		console.log("Book added!")
-    	}
-    	
-    	onRemoveBookClicked() {
-    		console.log("Book removed!")
-    	}
-    
       render() {
-        const {
-          router,
-          cartID,
-          classes,
-        } = this.props
-    
-    		let catalog = [
-    			{
-    				isbn: "isbn1",
-    				title: "A Book",
-    				author: "An Author",
-    				price: 45,
-    			},
-    			{
-    				isbn: "isbn2",
-    				title: "Another Book",
-    				author: "Another Author",
-    				price: 35,
-    			},
-    			{
-    				isbn: "isbn3",
-    				title: "Another Book 2",
-    				author: "Another Author 2",
-    				price: 38,
-    			}
-    		]
-    		
-    		let cartContent = {
-    			isbn1: 4,
-    			isbn2: 5,
-    		}
-    		
-    		let cartItems = catalog.map((item, index) => {
-    			let quantity = 0
-    			if (item.isbn in cartContent) {
-    				quantity = cartContent[item.isbn]
-    			}
-    			return {
-    				title: item.title,
-    				isbn: item.isbn,
-    				quantity: quantity,
-    			}
-    		})
+        const {cartID, router} = this.props
     
         return (
           <div>
@@ -316,11 +289,10 @@
               Book Catalog:
     				</Typography>
     				<BookList
-    					bookList={cartItems}
-    					onClickBook={this.onClickBook}
-    					onClickAdd={this.onAddBookClicked}
-    					onClickSub={this.onRemoveBookClicked}
+    					cartID={cartID}
     					quantityHeading="Quantity In Cart"
+    					includeEntireCatalog
+    					router={router}
     				/>
           </div>
         )
@@ -336,74 +308,18 @@
         super(props)
       }
     
-    	onClickBook() {
-    		console.log("Book clicled!")
-    	}
-    
-    	onAddBookClicked() {
-    		console.log("Book added!")
-    	}
-    	
-    	onRemoveBookClicked() {
-    		console.log("Book removed!")
-    	}
-    
       render() {
-        const {
-          router,
-          cartID,
-          classes,
-        } = this.props
-    
-    		let catalog = [
-    			{
-    				isbn: "isbn1",
-    				title: "A Book",
-    				author: "An Author",
-    				price: 45,
-    			},
-    			{
-    				isbn: "isbn2",
-    				title: "Another Book",
-    				author: "Another Author",
-    				price: 35,
-    			},
-    			{
-    				isbn: "isbn3",
-    				title: "Another Book 2",
-    				author: "Another Author 2",
-    				price: 38,
-    			}
-    		]
+        const {cartID, router} = this.props
     		
-    		let cartContent = {
-    			isbn1: 4,
-    			isbn2: 5,
-    		}
-    		
-    		let cartItems = catalog.map((item, index) => {
-    			let quantity = 0
-    			if (item.isbn in cartContent) {
-    				quantity = cartContent[item.isbn]
-    			}
-    			return {
-    				title: item.title,
-    				isbn: item.isbn,
-    				quantity: quantity,
-    			}
-    		})
-    
         return (
           <div>
             <Typography component="h1" gutterBottom>
               Books that are actually in your Cart:
     				</Typography>
     				<BookList
-    					bookList={cartItems.filter((item) => item.quantity > 0)}
-    					onClickBook={this.onClickBook}
-    					onClickAdd={this.onAddBookClicked}
-    					onClickSub={this.onRemoveBookClicked}
+    					cartID={cartID}
     					quantityHeading="Quantity"
+    					router={router}
     				/>
           </div>
         )
@@ -419,37 +335,44 @@
         super(props);
         this.state = {
           path: "/",
-    			cartID: 0,
+    			cartID: -1,
+    			errorMessage: "",
         };
       }
     
       render() {
-        let title = "Tus Libros"
-        let content = "Where am I?"
-    		
         const router = {
           current: () => this.state.path,
           navigate: (path, state) => {
-            // http://es6-features.org/#SpreadOperator
             this.setState({ ...state, path: path })
           }
         }
+    		
+    		let title = "Tus Libros"
+        let content = "Where am I?"
+    		let {path, cartID, errorMessage} = this.state
+    		
+    		if (cartID === -1) {
+    			path = "/"
+    		}
     
-        if (this.state.path === "/") {
+        if (path === "/") {
           content = (<CartCreationView
             router={router}
           />)
-        } else if (this.state.path === "/catalog") {
+        } else if (path === "/catalog") {
           content = (<CatalogView
             router={router}
             cartID={this.state.cartID}
           />)
-        } else if (this.state.path === "/cart") {
+        } else if (path === "/cart") {
           content = (<CartView
             router={router}
             cartID={this.state.cartID}
           />)
-        }
+        } else if (path ==="/error") {
+    			content = (<ErrorView message={this.state.errorMessage} router={router} />)
+    		}
     		
         return (
           <div>
@@ -469,18 +392,54 @@
     class BookListComponent extends React.Component {
       constructor(props) {
         super(props)
+    		
+    		this.state = {bookList: []}
       }
+    	
+    	buildBookListFrom(catalog, cartContent, includeEntireCatalog) {
+    		let bookList = []
+    		
+    		Object.keys(catalog).forEach((isbn) => {
+    			let quantity = 0
+    			if (isbn in cartContent) {
+    				quantity = cartContent[isbn]
+    			}
+    			if (includeEntireCatalog || quantity > 0) {
+    				bookList.push({
+    					title: catalog[isbn].title,
+    					isbn: isbn,
+    					quantity: quantity,
+    				})
+    			}
+    		})
+    		
+    		return bookList
+    	}
+    	
+    	componentDidMount() {
+        const {cartID, includeEntireCatalog, router} = this.props
+    		
+    		let catalog = {}
+    		handleErrors(router, request(`catalog`)
+    			.then((responseBody) => {
+    				catalog = responseBody
+    				return request(`listCart?cartID=${cartID}`)
+    			})
+    			.then((cartContent) => {
+    				this.setState( {bookList: this.buildBookListFrom(catalog, cartContent, includeEntireCatalog)} )
+    			})
+    		)
+    	}
     
     	render() {
     		const {
     			cartID,
-    			bookList,
-    			onClickBook,
-    			onClickAdd,
-    			onClickSub,
     			quantityHeading,
+    			router,
     			classes,
     		} = this.props
+    		
+    		const bookList = this.state.bookList
     		
     		return (
     			<Table className={classes.table} aria-label="simple table">
@@ -496,11 +455,11 @@
     						bookList.map((item, index) => (
     							<TableRow key={index}>
     								<TableCell>
-    									<Button onClick={onClickBook}>{item.title}</Button>
+    									<Button onClick={()=>{}}>{item.title}</Button>
     								</TableCell>
     								<TableCell>{item.isbn}</TableCell>
     								<TableCell align="center">
-    									<EditableBookQuantity cartID={cartID} isbn={item.isbn} quantity={0} />
+    									<EditableBookQuantity cartID={cartID} isbn={item.isbn} quantity={item.quantity} router={router} />
     								</TableCell>
     							</TableRow>
     						))
@@ -522,7 +481,10 @@
       }
     	
     	onClickAdd() {
-    		this.setState({quantity: this.state.quantity + 1})
+    		const {cartID, isbn, quantity, router} = this.props
+    		handleErrors(router, request(`addToCart?cartID=${cartID}&bookIsbn=${isbn}&quantity=1`)
+    			.then((responseBody) => this.setState({quantity: this.state.quantity + 1}))
+    		)
     	}
     	
     	onClickRemove() {
@@ -568,7 +530,6 @@
     					onChange={onChange}
     					startAdornment={<InputAdornment position="start">></InputAdornment>}
     					labelWidth={60}
-    					multiline
     					rows="1"
     				/>
     			</FormControl>
@@ -579,6 +540,30 @@
     const InputField = withStyles(styles, {
       withTheme: true
     })(InputFieldComponent)
+    class ErrorComponent extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+    
+    	onClickOk() {
+    		this.props.router.navigate("/", {cartID: -1})
+    	}
+    
+    	render() {
+    		return (
+    			<div>
+    				<h1 style={{color:'red'}}>An error occurred:</h1>
+    				<div style={{color:'red'}}>{this.props.message}</div>
+    				<Button onClick={() => this.onClickOk()}>Ok</Button>
+    			</div>
+    		)
+    	}
+    }
+    
+    const ErrorView = withStyles(styles, {
+      withTheme: true
+    })(ErrorComponent)
+    
 
     ///////////////////////////////////////////////////////////////////////////
     // Initial render

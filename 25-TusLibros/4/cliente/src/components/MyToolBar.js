@@ -14,35 +14,39 @@ class MyToolBarComponent extends React.Component {
 	onClickPurchaseHistory() {
 		this.props.router.navigate("/purchaseHistory", {})
 	}
+	
+	onClickLogout() {
+		this.props.router.navigate("/", {cartID: -1})
+	}
 
   render() {
-		const classes = this.props.classes
+		const {title, classes} = this.props
 
     return (
       <div className={classes.rootToolBar}>
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
-              {this.props.title}
+              {title}
             </Typography>
 						<Button
 							color="inherit"
-							onClick={(ev) => this.onClickCatalog()}>
+							onClick={() => this.onClickCatalog()}>
 							Catalog
 						</Button>
 						<Button
 							color="inherit"
-							onClick={(ev) => this.onClickCart()}>
+							onClick={() => this.onClickCart()}>
 							Cart
 						</Button>
 						<Button
 							color="inherit"
-							onClick={(ev) => this.onClickPurchaseHistory()}>
+							onClick={() => this.onClickPurchaseHistory()}>
 							Purchase History
 						</Button>
 						<Button
 							color="inherit"
-							onClick={(ev)=>{}}>
+							onClick={() => this.onClickLogout()}>
 							Log Out
 						</Button>
           </Toolbar>

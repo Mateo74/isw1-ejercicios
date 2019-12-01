@@ -3,37 +3,44 @@ class App extends React.Component {
     super(props);
     this.state = {
       path: "/",
-			cartID: 0,
+			cartID: -1,
+			errorMessage: "",
     };
   }
 
   render() {
-    let title = "Tus Libros"
-    let content = "Where am I?"
-		
     const router = {
       current: () => this.state.path,
       navigate: (path, state) => {
-        // http://es6-features.org/#SpreadOperator
         this.setState({ ...state, path: path })
       }
     }
+		
+		let title = "Tus Libros"
+    let content = "Where am I?"
+		let {path, cartID, errorMessage} = this.state
+		
+		if (cartID === -1) {
+			path = "/"
+		}
 
-    if (this.state.path === "/") {
+    if (path === "/") {
       content = (<CartCreationView
         router={router}
       />)
-    } else if (this.state.path === "/catalog") {
+    } else if (path === "/catalog") {
       content = (<CatalogView
         router={router}
         cartID={this.state.cartID}
       />)
-    } else if (this.state.path === "/cart") {
+    } else if (path === "/cart") {
       content = (<CartView
         router={router}
         cartID={this.state.cartID}
       />)
-    }
+    } else if (path ==="/error") {
+			content = (<ErrorView message={this.state.errorMessage} router={router} />)
+		}
 		
     return (
       <div>
