@@ -1,7 +1,6 @@
 class EditableBookQuantityComponent extends React.Component {
   constructor(props) {
     super(props)
-		
 		this.state = {quantity: props.quantity}
   }
 	
@@ -13,10 +12,7 @@ class EditableBookQuantityComponent extends React.Component {
 	}
 	
 	onClickRemove() {
-		let quantity = this.state.quantity
-		if (quantity > 0) {
-			this.setState({quantity: quantity - 1})
-		}
+		
 	}
 	
 	render() {

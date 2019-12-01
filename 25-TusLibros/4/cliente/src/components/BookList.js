@@ -64,7 +64,7 @@ class BookListComponent extends React.Component {
 						bookList.map((item, index) => (
 							<TableRow key={index}>
 								<TableCell>
-									<Button onClick={()=>{}}>{item.title}</Button>
+									<ClickableBookTitle title={item.title} isbn={item.isbn} router={router}/>
 								</TableCell>
 								<TableCell>{item.isbn}</TableCell>
 								<TableCell align="center">

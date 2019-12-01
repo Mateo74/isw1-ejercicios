@@ -4,6 +4,7 @@ class App extends React.Component {
     this.state = {
       path: "/",
 			cartID: -1,
+			displayedBookIsbn: "",
 			errorMessage: "",
     };
   }
@@ -18,7 +19,7 @@ class App extends React.Component {
 		
 		let title = "Tus Libros"
     let content = "Where am I?"
-		let {path, cartID, errorMessage} = this.state
+		let {path, cartID, displayedBookIsbn, errorMessage} = this.state
 		
 		if (cartID === -1) {
 			path = "/"
@@ -38,6 +39,12 @@ class App extends React.Component {
         router={router}
         cartID={this.state.cartID}
       />)
+		} else if (path === "/bookDetail") {
+			content = (<BookDetailView
+				router={router}
+				cartID={cartID}
+				isbn={displayedBookIsbn}
+			/>)
     } else if (path ==="/error") {
 			content = (<ErrorView message={this.state.errorMessage} router={router} />)
 		}

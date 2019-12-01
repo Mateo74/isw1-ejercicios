@@ -336,6 +336,7 @@
         this.state = {
           path: "/",
     			cartID: -1,
+    			displayedBookIsbn: "",
     			errorMessage: "",
         };
       }
@@ -350,7 +351,7 @@
     		
     		let title = "Tus Libros"
         let content = "Where am I?"
-    		let {path, cartID, errorMessage} = this.state
+    		let {path, cartID, displayedBookIsbn, errorMessage} = this.state
     		
     		if (cartID === -1) {
     			path = "/"
@@ -370,6 +371,12 @@
             router={router}
             cartID={this.state.cartID}
           />)
+    		} else if (path === "/bookDetail") {
+    			content = (<BookDetailView
+    				router={router}
+    				cartID={cartID}
+    				isbn={displayedBookIsbn}
+    			/>)
         } else if (path ==="/error") {
     			content = (<ErrorView message={this.state.errorMessage} router={router} />)
     		}
@@ -455,7 +462,7 @@
     						bookList.map((item, index) => (
     							<TableRow key={index}>
     								<TableCell>
-    									<Button onClick={()=>{}}>{item.title}</Button>
+    									<ClickableBookTitle title={item.title} isbn={item.isbn} router={router}/>
     								</TableCell>
     								<TableCell>{item.isbn}</TableCell>
     								<TableCell align="center">
@@ -476,7 +483,6 @@
     class EditableBookQuantityComponent extends React.Component {
       constructor(props) {
         super(props)
-    		
     		this.state = {quantity: props.quantity}
       }
     	
@@ -488,10 +494,7 @@
     	}
     	
     	onClickRemove() {
-    		let quantity = this.state.quantity
-    		if (quantity > 0) {
-    			this.setState({quantity: quantity - 1})
-    		}
+    		
     	}
     	
     	render() {
@@ -564,6 +567,75 @@
       withTheme: true
     })(ErrorComponent)
     
+    class ClickableBookTitleComponent extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+    	
+    	onClickTitle() {
+    		const {isbn, router} = this.props
+    		router.navigate("/bookDetail", {displayedBookIsbn: isbn})
+    	}
+    	
+    	render() {
+    		return (
+    			<Button onClick={() => this.onClickTitle()}>{this.props.title}</Button>
+    		)
+    	}
+    }
+    
+    const ClickableBookTitle = withStyles(styles, {
+      withTheme: true
+    })(ClickableBookTitleComponent)
+    class BookDetailComponent extends React.Component {
+      constructor(props) {
+        super(props)
+    		
+    		this.state = {title: "", author: "", quantity: null}
+      }
+    	
+    	componentDidMount() {
+    		const {cartID, isbn, router} = this.props
+    		let title = ""
+    		let author = ""
+    		
+    		handleErrors(router, request(`catalog`)
+    			.then((catalog) => {
+    				title = catalog[isbn].title
+    				author = catalog[isbn].author
+    			})
+    		)
+    		
+    		handleErrors(router, request(`listCart?cartID=${cartID}`)
+    			.then((cartContent) => {
+    				let quantity = 0
+    				if (isbn in cartContent) {
+    					quantity = cartContent[isbn]
+    				}
+    				this.setState({title: title, author: author, quantity: quantity})
+    			})
+    		)
+    	}
+    	
+    	render() {
+    		const {cartID, isbn, router} = this.props
+    		const {title, author, quantity} = this.state
+    		
+    		return (
+    			<div>
+    				<h1>{title}</h1>
+    				<div>Author: {author}</div>
+    				<div>ISBN: {isbn}</div>
+    				<div>Quantity In Cart:</div>
+    				{quantity != null && <EditableBookQuantity cartID={cartID} isbn={isbn} quantity={quantity} router={router} />}
+    			</div>
+    		)
+    	}
+    }
+    
+    const BookDetailView = withStyles(styles, {
+      withTheme: true
+    })(BookDetailComponent)
 
     ///////////////////////////////////////////////////////////////////////////
     // Initial render
