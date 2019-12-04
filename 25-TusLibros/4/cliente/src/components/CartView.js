@@ -3,6 +3,10 @@ class CartComponent extends React.Component {
     super(props)
   }
 
+	onCheckoutClicked() {
+		
+	}
+
   render() {
     const {cartID, router} = this.props
 		
@@ -16,6 +20,7 @@ class CartComponent extends React.Component {
 					quantityHeading="Quantity"
 					router={router}
 				/>
+				<Button onClick={() => this.onCheckoutClicked()}>Checkout</Button>
       </div>
     )
   }

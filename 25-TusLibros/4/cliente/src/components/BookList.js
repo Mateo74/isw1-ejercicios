@@ -30,11 +30,11 @@ class BookListComponent extends React.Component {
 		
 		let catalog = {}
 		handleErrors(router, request(`catalog`)
-			.then((responseBody) => {
+			.then(responseBody => {
 				catalog = responseBody
 				return request(`listCart?cartID=${cartID}`)
 			})
-			.then((cartContent) => {
+			.then(cartContent => {
 				this.setState( {bookList: this.buildBookListFrom(catalog, cartContent, includeEntireCatalog)} )
 			})
 		)
@@ -68,7 +68,7 @@ class BookListComponent extends React.Component {
 								</TableCell>
 								<TableCell>{item.isbn}</TableCell>
 								<TableCell align="center">
-									<EditableBookQuantity cartID={cartID} isbn={item.isbn} quantity={item.quantity} router={router} />
+									<EditableBookQuantity cartID={cartID} isbn={item.isbn} initialQuantity={item.quantity} router={router} />
 								</TableCell>
 							</TableRow>
 						))

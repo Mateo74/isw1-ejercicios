@@ -16125,3 +16125,683 @@ server destroy!
 ----SNAPSHOT----(1 December 2019 17:40:47) CuisUniversity-3938.image priorSource: 16255621!
 
 ----QUIT----(1 December 2019 17:41:01) CuisUniversity-3938.image priorSource: 16256151!
+
+----STARTUP---- (3 December 2019 19:15:30) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+
+server := TusLibrosServerController listeningOn: 3000.!
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 3000.!
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 8000.!
+
+server stopListening.!
+
+server destroy.!
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 8000.!
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 8082.!
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 8082.!
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 8000.!
+
+!classDefinition: #ClientStoreEntry category: #TusLibros stamp: 'DH 12/3/2019 20:21:23'!
+Object subclass: #ClientStoreEntry
+	instanceVariableNames: 'password purchases totalSpent'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!ClientStoreEntry methodsFor: 'queries' stamp: 'DH 12/3/2019 20:21:21'!
+totalSpent
+
+	^totalSpent! !
+!ClientStoreEntry methodsFor: 'initialization' stamp: 'DH 12/3/2019 20:21:39' prior: 50835794!
+initializeWithPassword: aPassword
+
+	password _ aPassword.
+	purchases _ Dictionary new.
+	totalSpent _ 0.! !
+!ClientStoreEntry methodsFor: 'queries' stamp: 'DH 12/3/2019 20:23:20'!
+updateTotalSpentBy: anAmountSpent
+
+	totalSpent _ totalSpent + anAmountSpent.! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:24:34'!
+test24MakingAPurchaseAffectsClientTotalSpent
+
+	
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:27:10' prior: 50839709!
+test24MakingAPurchaseAffectsClientTotalSpent
+
+	|purchaseSystem client cart book|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	purchaseSystem add: 1 of: book to: cart.
+	
+	purchaseSystem checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	^cart! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:29:57' prior: 50839714!
+test24MakingAPurchaseAffectsClientTotalSpent
+
+	|purchaseSystem client cart book|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	purchaseSystem add: 1 of: book to: cart.
+	
+	purchaseSystem checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	self assert: testObjectFactory clients! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:31:45' prior: 50839736!
+test24MakingAPurchaseAffectsClientTotalSpent
+
+	|purchaseSystem client cart book|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	purchaseSystem add: 1 of: book to: cart.
+	
+	purchaseSystem checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	self assert: testObjectFactory itemSellByTheStorePrice equals: (testObjectFactory clients at: client) totalSpent! !
+
+!testRun: #PurchaseSystemTest #test24MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:31:55'!
+ERROR!
+
+server stopListening.!
+
+server destroy.!
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:32:59' prior: 50839759!
+test24MakingAPurchaseAffectsClientTotalSpent
+
+	|purchaseSystem client cart book|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	purchaseSystem add: 1 of: book to: cart.
+	
+	purchaseSystem checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	self
+		assert: testObjectFactory itemSellByTheStorePrice
+		equals: (testObjectFactory clientsWithPasswords at: client) totalSpent! !
+
+!testRun: #PurchaseSystemTest #test24MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:33:01'!
+FAILURE!
+
+!testRun: #PurchaseSystemTest #test24MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:33:01'!
+FAILURE!
+!PurchaseSystem methodsFor: 'cart operations' stamp: 'DH 12/3/2019 20:34:39' prior: 50835910!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	cashier checkOut.
+	self registerPurchasesFor: cartInfo ownerID madeWith: cartInfo cart.
+	self updateTotalSpentOf: cartInfo ownerID by: cartInfo cart .
+	self removeCart: aCartID.! !
+!PurchaseSystem methodsFor: 'cart operations' stamp: 'DH 12/3/2019 20:35:16' prior: 50839823!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	cashier checkOut.
+	self registerPurchasesFor: cartInfo ownerID madeWith: cartInfo cart.
+	self updateTotalSpentOf: cartInfo ownerID by: cartInfo cart total.
+	self removeCart: aCartID.! !
+!PurchaseSystem methodsFor: 'client operations - private' stamp: 'DH 12/3/2019 20:36:14'!
+updateTotalSpentOf: aClientID by: anAmountSpent
+
+	(clients at: aClientID) updateTotalSpentBy: anAmountSpent.! !
+
+!testRun: #PurchaseSystemTest #test24MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:36:25'!
+FAILURE!
+
+!testRun: #PurchaseSystemTest #test24MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:36:25'!
+FAILURE!
+
+!testRun: #PurchaseSystemTest #test24MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:36:32'!
+FAILURE!
+
+!testRun: #PurchaseSystemTest #test24MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:36:32'!
+FAILURE!
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:40:45'!
+test25MakingAPurchaseAffectsClientTotalSpent
+
+	|purchaseSystem client cart book|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	purchaseSystem add: 1 of: book to: cart.
+	
+	purchaseSystem checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	self
+		assert: testObjectFactory itemSellByTheStorePrice
+		equals: (testObjectFactory clientsWithPasswords at: client) totalSpent! !
+
+!methodRemoval: PurchaseSystemTest #test24MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:40:45'!
+test24MakingAPurchaseAffectsClientTotalSpent
+
+	|purchaseSystem client cart book|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	purchaseSystem add: 1 of: book to: cart.
+	
+	purchaseSystem checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	self
+		assert: testObjectFactory itemSellByTheStorePrice
+		equals: (testObjectFactory clientsWithPasswords at: client) totalSpent!
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:42:15'!
+test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero
+
+	|purchaseSystem|
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self assert: 0 equals: (purchaseSystem totalSpentBy: testObjectFactory validClientID).
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:42:26' prior: 50839940!
+test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero
+
+	|purchaseSystem|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self assert: 0 equals: (purchaseSystem totalSpentBy: testObjectFactory validClientID).
+	! !
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:42:28' prior: 50839951!
+test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero
+
+	|purchaseSystem|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	self assert: 0 equals: (purchaseSystem totalSpentBy: testObjectFactory validClientID).
+	! !
+
+!testRun: #PurchaseSystemTest #test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero stamp: 'DH 12/3/2019 20:42:29'!
+ERROR!
+
+!testRun: #PurchaseSystemTest #test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero stamp: 'DH 12/3/2019 20:42:29'!
+ERROR!
+!PurchaseSystem methodsFor: 'client operations' stamp: 'DH 12/3/2019 20:43:30'!
+totalSpentBy: aClientID withPassword: aPassword
+
+	|clientInfo|
+	clientInfo _ self getInfoFromClientWithID: aClientID validatingPassword: aPassword.
+	^clientInfo totalSpent.! !
+
+!testRun: #PurchaseSystemTest #test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero stamp: 'DH 12/3/2019 20:44:05'!
+ERROR!
+
+!testRun: #PurchaseSystemTest #test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero stamp: 'DH 12/3/2019 20:44:05'!
+ERROR!
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:45:22' prior: 50839962!
+test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero
+
+	|purchaseSystem client|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	self assert: 0 equals: (purchaseSystem totalSpentBy: client withPassword: (testObjectFactory passwordFor: client)).
+	! !
+
+!testRun: #PurchaseSystemTest #test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero stamp: 'DH 12/3/2019 20:45:24'!
+PASSED!
+!PurchaseSystemTest methodsFor: 'tests' stamp: 'DH 12/3/2019 20:46:37' prior: 50839888!
+test25MakingAPurchaseAffectsClientTotalSpent
+
+	|purchaseSystem client cart book|
+	
+	purchaseSystem _ testObjectFactory createPurchaseSystemWithMerchantProcessor: self.
+	client _ testObjectFactory validClientID.
+	cart _ purchaseSystem createCartWithClientID: client andPassword: (testObjectFactory passwordFor: client).
+	book _ testObjectFactory itemSellByTheStore.
+	purchaseSystem add: 1 of: book to: cart.
+	
+	purchaseSystem checkout: cart
+		withCardNumber: testObjectFactory validCreditCardNumber
+	 	withExpirationDate:  testObjectFactory futureDate
+		withOwner: testObjectFactory validOwner.
+	
+	self
+		assert: testObjectFactory itemSellByTheStorePrice
+		equals: (purchaseSystem totalSpentBy: client withPassword: (testObjectFactory passwordFor: client)).! !
+
+!testRun: #PurchaseSystemTest #test25MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:46:39'!
+PASSED!
+
+----SNAPSHOT----(3 December 2019 20:46:47) CuisUniversity-3938.image priorSource: 16256244!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 12/3/2019 20:48:04' prior: 50839526!
+initializeWith: aPortNumber
+
+	timeProvider _ RealTimeProvider new.
+	clients _ self clients.
+	catalog _ self catalog.
+	salesBook _ OrderedCollection new.
+	merchantProcessor _ self.
+	purchaseSystem _ PurchaseSystem
+		newWithClients: clients
+		salesBook: salesBook
+		timeProvider: timeProvider
+		catalog: catalog
+		andMerchantProcessor: merchantProcessor.
+	
+
+	port _ aPortNumber.
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action: [:request | | clientID password cartID |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [cartID _ purchaseSystem createCartWithClientID: clientID andPassword: password.] 
+			sendErrorMessageOn: request.
+		self sendResponseWithBody: cartID on: request.
+	].
+
+	webServer addService: '/addToCart' action: [:request | | cartID bookIsbn quantity |
+		self validate: request has: 'cartID' has: 'bookIsbn' and: 'quantity'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		quantity _ self getAsInteger: 'quantity' from: request.
+		self onError: [purchaseSystem add: quantity of: bookIsbn to: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully added' on: request.
+	].
+
+	webServer addService: '/listCart' action: [:request | | cartID cartItems |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [cartItems _ purchaseSystem list: cartID] sendErrorMessageOn: request.
+		self sendResponseWithBody: cartItems on: request.
+	].
+
+	webServer addService: '/checkoutCart' action: [:request | | cartID ccn cced cco |
+		self validate: request has: 'cartID' has: 'ccn' has: 'cced' and: 'cco'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		ccn _ request fields at: 'ccn'.
+		cced _ self getAsMonthAndYear: 'cced' from: request.
+		cco _ request fields at: 'cco'.
+		self onError: [
+			purchaseSystem
+				checkout: cartID
+				withCardNumber: ccn
+				withExpirationDate: cced
+				withOwner: cco
+			]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: 'Checkout successful' on: request.
+	].
+
+	webServer addService: '/listPurchases' action: [:request | | clientID password purchases |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [purchases _ purchaseSystem listPurchasesOf: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: purchases on: request.
+	].
+
+	webServer addService: '/catalog' action: [:request |
+		self sendResponseWithBody: (self serialize: purchaseSystem catalog) on: request.
+	].
+
+	webServer addService: '/removeFromCart' action: [:request | | cartID bookIsbn |
+		self validate: request has: 'cartID' and: 'bookIsbn'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		self onError: [purchaseSystem remove: bookIsbn from: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully removed' on: request.
+	].
+
+	webServer addService: '/totalSpent' action: [:request | | clientID password totalSpent |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [totalSpent _ purchaseSystem totalSpentBy: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: totalSpent on: request.
+	].! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CartTest #test09AddingAndRemovingABookLeavesCartEmpty stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CartTest #test09CannotRemoveItemThatWasNotAdded stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 12/3/2019 20:48:10'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test21CatalogIsReturnedCorrectly stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test22CannotRemoveBookFromNonExistentCart stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test23AddingAndRemovingBookLeavesCartEmpty stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test25MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 20:48:11'!
+PASSED!
+
+----SNAPSHOT----(3 December 2019 20:48:15) CuisUniversity-3938.image priorSource: 16268652!
+
+----SNAPSHOT----(3 December 2019 20:48:23) CuisUniversity-3938.image priorSource: 16277069!
+
+----SNAPSHOT----(3 December 2019 21:10:19) CuisUniversity-3938.image priorSource: 16277162!
+
+----QUIT----(3 December 2019 21:10:26) CuisUniversity-3938.image priorSource: 16277255!
+
+----STARTUP---- (3 December 2019 23:33:56) as D:\DAMIAN\Facultad\Inge1\windows64\CuisUniversity-3938.image!
+
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'DH 12/3/2019 23:33:59'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'DH 12/3/2019 23:33:59'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'DH 12/3/2019 23:33:59'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'DH 12/3/2019 23:33:59'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'DH 12/3/2019 23:33:59'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'DH 12/3/2019 23:33:59'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'DH 12/3/2019 23:33:59'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'DH 12/3/2019 23:33:59'!
+PASSED!
+
+!testRun: #CartTest #test09AddingAndRemovingABookLeavesCartEmpty stamp: 'DH 12/3/2019 23:33:59'!
+PASSED!
+
+!testRun: #CartTest #test09CannotRemoveItemThatWasNotAdded stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test01CannotCreateCartWithInvalidClientID stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test02CannotCreateCartWithIncorrectPassword stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test03IDsOfTwoCreatedCartsAreDifferent stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test04CannotAddBookToNonExistentCart stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test05CannotListANonExistentCart stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test06ListingAnEmptyCartResultsInEmptyList stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test07ListingACartShowsAddedBooks stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test08CannotCheckoutANonExistentCart stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test09CheckoutOfValidCartMakesTheSaleWithCorrectCost stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test10CheckoutedCartCannotBeModified stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test11CheckoutedCartCannotBeListed stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test12CannotListPurchasesOfNonExistentClient stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test13CannotListPurchasesOfClientUsingWrongPassword stamp: 'DH 12/3/2019 23:34:00'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test14ListingPurchasesOfClientShowsAllPurchases stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test15CannotListACartIf30MinutesPassedSinceLastUsed stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test16CannotModifyACartIf30MinutesPassedSinceLastUsed stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test17CannotCheckoutACartIf30MinutesPassedSinceLastUsed stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test18CartNotUsedFor30MinutesIsDeleted stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test19CannotAddBookThatDoesNotBelongToEditorial stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test20CannotAddBookWithQuantityLessThanOne stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test21CatalogIsReturnedCorrectly stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test22CannotRemoveBookFromNonExistentCart stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test23AddingAndRemovingBookLeavesCartEmpty stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test24TotalSpentOfClientThatDidNotMakeAnyPurchaseIsZero stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+!testRun: #PurchaseSystemTest #test25MakingAPurchaseAffectsClientTotalSpent stamp: 'DH 12/3/2019 23:34:01'!
+PASSED!
+
+server := TusLibrosServerController listeningOn: 8000.!
+
+server stopListening!
+
+server destroy !
+
+----QUIT----(3 December 2019 23:35:46) CuisUniversity-3938.image priorSource: 16277348!

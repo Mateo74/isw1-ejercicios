@@ -11,14 +11,14 @@ class BookDetailComponent extends React.Component {
 		let author = ""
 		
 		handleErrors(router, request(`catalog`)
-			.then((catalog) => {
+			.then(catalog => {
 				title = catalog[isbn].title
 				author = catalog[isbn].author
 			})
 		)
 		
 		handleErrors(router, request(`listCart?cartID=${cartID}`)
-			.then((cartContent) => {
+			.then(cartContent => {
 				let quantity = 0
 				if (isbn in cartContent) {
 					quantity = cartContent[isbn]
@@ -38,7 +38,7 @@ class BookDetailComponent extends React.Component {
 				<div>Author: {author}</div>
 				<div>ISBN: {isbn}</div>
 				<div>Quantity In Cart:</div>
-				{quantity != null && <EditableBookQuantity cartID={cartID} isbn={isbn} quantity={quantity} router={router} />}
+				{quantity != null && <EditableBookQuantity cartID={cartID} isbn={isbn} initialQuantity={quantity} router={router} />}
 			</div>
 		)
 	}

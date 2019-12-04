@@ -44,7 +44,9 @@ class App extends React.Component {
 				router={router}
 				cartID={cartID}
 				isbn={displayedBookIsbn}
-			/>)
+      />)
+    // } else if (path === "/purchaseHistory") {
+    //   content = (<PurchaseHistoryView router={router} />)
     } else if (path ==="/error") {
 			content = (<ErrorView message={this.state.errorMessage} router={router} />)
 		}

@@ -116,7 +116,7 @@
     const useStyles = makeStyles(styles);
 
     const request = (path) => {
-      const port = 3000
+      const port = 8000
     
       return fetch(`http://localhost:${port}/${path}`, {
         method: "GET",
@@ -308,6 +308,10 @@
         super(props)
       }
     
+    	onCheckoutClicked() {
+    		
+    	}
+    
       render() {
         const {cartID, router} = this.props
     		
@@ -321,6 +325,7 @@
     					quantityHeading="Quantity"
     					router={router}
     				/>
+    				<Button onClick={() => this.onCheckoutClicked()}>Checkout</Button>
           </div>
         )
       }
@@ -376,7 +381,9 @@
     				router={router}
     				cartID={cartID}
     				isbn={displayedBookIsbn}
-    			/>)
+          />)
+        // } else if (path === "/purchaseHistory") {
+        //   content = (<PurchaseHistoryView router={router} />)
         } else if (path ==="/error") {
     			content = (<ErrorView message={this.state.errorMessage} router={router} />)
     		}
@@ -428,11 +435,11 @@
     		
     		let catalog = {}
     		handleErrors(router, request(`catalog`)
-    			.then((responseBody) => {
+    			.then(responseBody => {
     				catalog = responseBody
     				return request(`listCart?cartID=${cartID}`)
     			})
-    			.then((cartContent) => {
+    			.then(cartContent => {
     				this.setState( {bookList: this.buildBookListFrom(catalog, cartContent, includeEntireCatalog)} )
     			})
     		)
@@ -466,7 +473,7 @@
     								</TableCell>
     								<TableCell>{item.isbn}</TableCell>
     								<TableCell align="center">
-    									<EditableBookQuantity cartID={cartID} isbn={item.isbn} quantity={item.quantity} router={router} />
+    									<EditableBookQuantity cartID={cartID} isbn={item.isbn} initialQuantity={item.quantity} router={router} />
     								</TableCell>
     							</TableRow>
     						))
@@ -483,18 +490,25 @@
     class EditableBookQuantityComponent extends React.Component {
       constructor(props) {
         super(props)
-    		this.state = {quantity: props.quantity}
+    		this.state = {quantity: props.initialQuantity}
       }
     	
-    	onClickAdd() {
-    		const {cartID, isbn, quantity, router} = this.props
-    		handleErrors(router, request(`addToCart?cartID=${cartID}&bookIsbn=${isbn}&quantity=1`)
-    			.then((responseBody) => this.setState({quantity: this.state.quantity + 1}))
+    	makeRequestAndChangeQuantity(path, changeBy) {
+    		handleErrors(this.props.router, request(path)
+    			.then(responseBody => this.setState({quantity: this.state.quantity + changeBy}))
     		)
     	}
     	
+    	onClickAdd() {
+    		const {cartID, isbn} = this.props
+    		this.makeRequestAndChangeQuantity(`addToCart?cartID=${cartID}&bookIsbn=${isbn}&quantity=1`, 1)
+    	}
+    	
     	onClickRemove() {
-    		
+    		if (this.state.quantity > 0) {
+    			const {cartID, isbn} = this.props
+    			this.makeRequestAndChangeQuantity(`removeFromCart?cartID=${cartID}&bookIsbn=${isbn}`, -1)
+    		}
     	}
     	
     	render() {
@@ -600,14 +614,14 @@
     		let author = ""
     		
     		handleErrors(router, request(`catalog`)
-    			.then((catalog) => {
+    			.then(catalog => {
     				title = catalog[isbn].title
     				author = catalog[isbn].author
     			})
     		)
     		
     		handleErrors(router, request(`listCart?cartID=${cartID}`)
-    			.then((cartContent) => {
+    			.then(cartContent => {
     				let quantity = 0
     				if (isbn in cartContent) {
     					quantity = cartContent[isbn]
@@ -627,7 +641,7 @@
     				<div>Author: {author}</div>
     				<div>ISBN: {isbn}</div>
     				<div>Quantity In Cart:</div>
-    				{quantity != null && <EditableBookQuantity cartID={cartID} isbn={isbn} quantity={quantity} router={router} />}
+    				{quantity != null && <EditableBookQuantity cartID={cartID} isbn={isbn} initialQuantity={quantity} router={router} />}
     			</div>
     		)
     	}
