@@ -3,6 +3,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       path: "/",
+      clientID: -1,
+      clientPassword: "",
 			cartID: -1,
 			displayedBookIsbn: "",
 			errorMessage: "",
@@ -19,7 +21,14 @@ class App extends React.Component {
 		
 		let title = "Tus Libros"
     let content = "Where am I?"
-		let {path, cartID, displayedBookIsbn, errorMessage} = this.state
+		let {
+      path,
+      clientID,
+      clientPassword,
+      cartID,
+      displayedBookIsbn,
+      errorMessage
+    } = this.state
 		
 		if (cartID === -1) {
 			path = "/"
@@ -29,26 +38,36 @@ class App extends React.Component {
       content = (<CartCreationView
         router={router}
       />)
-    } else if (path === "/catalog") {
+    }
+    else if (path === "/catalog") {
       content = (<CatalogView
         router={router}
-        cartID={this.state.cartID}
+        cartID={cartID}
       />)
-    } else if (path === "/cart") {
+    }
+    else if (path === "/cart") {
       content = (<CartView
         router={router}
-        cartID={this.state.cartID}
+        cartID={cartID}
+        clientID={clientID}
       />)
-		} else if (path === "/bookDetail") {
+    }
+    else if (path === "/bookDetail") {
 			content = (<BookDetailView
 				router={router}
 				cartID={cartID}
 				isbn={displayedBookIsbn}
       />)
-    // } else if (path === "/purchaseHistory") {
-    //   content = (<PurchaseHistoryView router={router} />)
-    } else if (path ==="/error") {
-			content = (<ErrorView message={this.state.errorMessage} router={router} />)
+    }
+    else if (path === "/purchaseHistory") {
+      content = (<PurchaseHistoryView
+        router={router}
+        clientID={clientID}
+        clientPassword={clientPassword}
+      />)
+    }
+    else if (path ==="/error") {
+			content = (<ErrorView message={errorMessage} router={router} />)
 		}
 		
     return (

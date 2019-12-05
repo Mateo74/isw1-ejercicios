@@ -25,7 +25,7 @@ class CartCreationComponent extends React.Component {
   handleCreate() {
     const {clientID, password} = this.state
     request(`createCart?clientID=${clientID}&password=${password}`)
-      .then((responseBody) => this.props.router.navigate("/catalog", {cartID: responseBody}))
+      .then((responseBody) => this.props.router.navigate("/catalog", {cartID: responseBody, clientID: clientID, clientPassword: password}))
       .catch((error) => this.setState({error: true, errorMessage: error.message}));
   }
 

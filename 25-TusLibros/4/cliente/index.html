@@ -116,7 +116,7 @@
     const useStyles = makeStyles(styles);
 
     const request = (path) => {
-      const port = 8000
+      const port = 5000
     
       return fetch(`http://localhost:${port}/${path}`, {
         method: "GET",
@@ -161,41 +161,41 @@
     		this.props.router.navigate("/", {cartID: -1})
     	}
     
-      render() {
+    	render() {
     		const {title, classes} = this.props
     
-        return (
-          <div className={classes.rootToolBar}>
-            <AppBar position="static">
-              <Toolbar>
-                <Typography variant="h6" className={classes.title}>
-                  {title}
-                </Typography>
-    						<Button
-    							color="inherit"
-    							onClick={() => this.onClickCatalog()}>
-    							Catalog
-    						</Button>
-    						<Button
-    							color="inherit"
-    							onClick={() => this.onClickCart()}>
-    							Cart
-    						</Button>
-    						<Button
-    							color="inherit"
-    							onClick={() => this.onClickPurchaseHistory()}>
-    							Purchase History
-    						</Button>
-    						<Button
-    							color="inherit"
-    							onClick={() => this.onClickLogout()}>
-    							Log Out
-    						</Button>
-              </Toolbar>
-            </AppBar>
-          </div>
-        )
-      }
+    		return (
+    		<div className={classes.rootToolBar}>
+    			<AppBar position="static">
+    				<Toolbar>
+    					<Typography variant="h6" className={classes.title}>
+    					{title}
+    					</Typography>
+    					<Button
+    						color="inherit"
+    						onClick={() => this.onClickCatalog()}>
+    						Catalog
+    					</Button>
+    					<Button
+    						color="inherit"
+    						onClick={() => this.onClickCart()}>
+    						Cart
+    					</Button>
+    					<Button
+    						color="inherit"
+    						onClick={() => this.onClickPurchaseHistory()}>
+    						Purchase History
+    					</Button>
+    					<Button
+    						color="inherit"
+    						onClick={() => this.onClickLogout()}>
+    						Log Out
+    					</Button>
+    				</Toolbar>
+    			</AppBar>
+    		</div>
+    		)
+    	}
     
     }
     
@@ -230,7 +230,7 @@
       handleCreate() {
         const {clientID, password} = this.state
         request(`createCart?clientID=${clientID}&password=${password}`)
-          .then((responseBody) => this.props.router.navigate("/catalog", {cartID: responseBody}))
+          .then((responseBody) => this.props.router.navigate("/catalog", {cartID: responseBody, clientID: clientID, clientPassword: password}))
           .catch((error) => this.setState({error: true, errorMessage: error.message}));
       }
     
@@ -340,6 +340,8 @@
         super(props);
         this.state = {
           path: "/",
+          clientID: -1,
+          clientPassword: "",
     			cartID: -1,
     			displayedBookIsbn: "",
     			errorMessage: "",
@@ -356,7 +358,14 @@
     		
     		let title = "Tus Libros"
         let content = "Where am I?"
-    		let {path, cartID, displayedBookIsbn, errorMessage} = this.state
+    		let {
+          path,
+          clientID,
+          clientPassword,
+          cartID,
+          displayedBookIsbn,
+          errorMessage
+        } = this.state
     		
     		if (cartID === -1) {
     			path = "/"
@@ -366,26 +375,36 @@
           content = (<CartCreationView
             router={router}
           />)
-        } else if (path === "/catalog") {
+        }
+        else if (path === "/catalog") {
           content = (<CatalogView
             router={router}
-            cartID={this.state.cartID}
+            cartID={cartID}
           />)
-        } else if (path === "/cart") {
+        }
+        else if (path === "/cart") {
           content = (<CartView
             router={router}
-            cartID={this.state.cartID}
+            cartID={cartID}
+            clientID={clientID}
           />)
-    		} else if (path === "/bookDetail") {
+        }
+        else if (path === "/bookDetail") {
     			content = (<BookDetailView
     				router={router}
     				cartID={cartID}
     				isbn={displayedBookIsbn}
           />)
-        // } else if (path === "/purchaseHistory") {
-        //   content = (<PurchaseHistoryView router={router} />)
-        } else if (path ==="/error") {
-    			content = (<ErrorView message={this.state.errorMessage} router={router} />)
+        }
+        else if (path === "/purchaseHistory") {
+          content = (<PurchaseHistoryView
+            router={router}
+            clientID={clientID}
+            clientPassword={clientPassword}
+          />)
+        }
+        else if (path ==="/error") {
+    			content = (<ErrorView message={errorMessage} router={router} />)
     		}
     		
         return (
@@ -650,6 +669,77 @@
     const BookDetailView = withStyles(styles, {
       withTheme: true
     })(BookDetailComponent)
+    class PurchaseHistoryComponent extends React.Component {
+        constructor(props) {
+            super(props)
+    
+            this.state = {purchaseHistory: []}
+        }
+    
+        buildPurchaseHistoryFrom(catalog, clientPurchases) {
+            let purchaseHistory = []
+            Object.keys(clientPurchases).forEach(isbn => 
+                purchaseHistory.push({title: catalog[isbn].title, quantityPurchased: clientPurchases[isbn]})
+            )
+            return purchaseHistory
+        }
+    
+        componentDidMount() {
+            const {clientID, clientPassword, router} = this.props
+            let catalog = {}
+            let clientPurchases = {}
+    
+            handleErrors(router, request("catalog")
+                .then(responseBody => {
+                    catalog = responseBody
+                    return request(`listPurchases?clientID=${clientID}&password=${clientPassword}`)
+                })
+                .then(responseBody => {
+                    clientPurchases = responseBody
+                    return request(`totalSpent?clientID=${clientID}&password=${clientPassword}`)
+                })
+                .then(totalSpent => {
+                    this.setState({purchaseHistory: this.buildPurchaseHistoryFrom(catalog, clientPurchases), totalSpent: totalSpent})
+                })
+            )
+        }
+    
+        render() {
+            const {classes} = this.props
+            const {purchaseHistory, totalSpent} = this.state
+            return (
+                <div>
+                    <Typography component="h1" gutterBottom>
+                        Your Purchase History:
+                    </Typography>
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Title</TableCell>
+                                <TableCell>Quantity Purchased</TableCell>
+                                <TableCell>Total Spent: {totalSpent}</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {
+                                purchaseHistory.map((item, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{item.title}</TableCell>
+                                        <TableCell>{item.quantityPurchased}</TableCell>
+                                        <TableCell></TableCell>
+                                    </TableRow>
+                                ))
+                            }
+                        </TableBody>
+                    </Table>
+                </div>
+            )
+        }
+    }
+    
+    const PurchaseHistoryView = withStyles(styles, {
+        withTheme: true
+      })(PurchaseHistoryComponent)
 
     ///////////////////////////////////////////////////////////////////////////
     // Initial render
