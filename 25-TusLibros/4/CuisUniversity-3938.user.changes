@@ -17888,3 +17888,349 @@ PASSED!
 ----SNAPSHOT----(4 December 2019 23:48:11) CuisUniversity-3938.image priorSource: 16309446!
 
 ----QUIT----(4 December 2019 23:48:18) CuisUniversity-3938.image priorSource: 16318921!
+
+----STARTUP---- (5 December 2019 13:15:36) as /Users/damian/Desktop/macos64_tuslibros44/CuisUniversity-3938.image!
+
+
+server := TusLibrosServerController listeningOn: 5000.!
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 3010.!
+
+Object subclass: #SaleTicket
+	instanceVariableNames: 'cardNumber cardOwner total'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #SaleTicket category: #TusLibros stamp: 'DH 12/5/2019 13:27:08'!
+Object subclass: #SaleTicket
+	instanceVariableNames: 'cardNumber cardOwner total'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!SaleTicket methodsFor: 'initialization' stamp: 'DH 12/5/2019 13:30:53'!
+initializeWithCardNumber: aCardNumber cardOwner: aCardOwner andTotal: aTotalCost
+
+	cardNumber _ aCardNumber.
+	cardOwner _ aCardOwner.
+	total _ aTotalCost.! !
+!SaleTicket class methodsFor: 'instance creation' stamp: 'DH 12/5/2019 13:32:59'!
+forSaleOf: aTotalCost debitedFrom: aCreditCard
+
+	^self new
+		initializeWithCardNumber: aCreditCard number
+		cardOwner: aCreditCard owner
+		andTotal: aTotalCost.! !
+!CreditCard methodsFor: 'queries' stamp: 'DH 12/5/2019 13:33:46'!
+owner
+
+	^owner! !
+!CreditCard methodsFor: 'queries' stamp: 'DH 12/5/2019 13:33:54'!
+number
+
+	^number! !
+!SaleTicket class methodsFor: 'queries' stamp: 'DH 12/5/2019 13:34:46'!
+cardNumber
+
+	^2! !
+
+!methodRemoval: SaleTicket class #cardNumber stamp: 'DH 12/5/2019 13:34:55'!
+cardNumber
+
+	^2!
+!SaleTicket methodsFor: 'queries' stamp: 'DH 12/5/2019 13:35:13'!
+cardNumber
+
+	^cardNumber! !
+!SaleTicket methodsFor: 'queries' stamp: 'DH 12/5/2019 13:35:20'!
+cardOwner
+
+	^cardOwner! !
+!SaleTicket methodsFor: 'queries' stamp: 'DH 12/5/2019 13:35:28'!
+total
+
+	^total! !
+!PurchaseSystem methodsFor: 'cart operations' stamp: 'DH 12/5/2019 13:36:44' prior: 50839845!
+checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
+	
+	|cartInfo creditCard cashier total|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	creditCard _ CreditCard newWithNumber: aCardNumber owner: anOwner  expiringOn: aMonth.
+	cashier _ Cashier
+		toCheckout: cartInfo cart
+		charging: creditCard
+		throught: merchantProcessor
+		on: timeProvider now
+		registeringOn: salesBook.
+	
+	total _ cashier checkOut.
+	self registerPurchasesFor: cartInfo ownerID madeWith: cartInfo cart.
+	self updateTotalSpentOf: cartInfo ownerID by: cartInfo cart total.
+	self removeCart: aCartID.
+	^SaleTicket forSaleOf: total debitedFrom: creditCard.! !
+!PurchaseSystem methodsFor: 'cart operations' stamp: 'DH 12/5/2019 13:37:01' prior: 50840933!
+checkout: aCartID
+	
+	|cartInfo clientInfo|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	clientInfo _ clients at: cartInfo ownerID.
+	^self
+		checkout: aCartID
+		withCardNumber: clientInfo cardNumber
+		withExpirationDate: clientInfo cardExpirationDate
+		withOwner: clientInfo cardOwner.! !
+!TusLibrosServerController methodsFor: 'serialization' stamp: 'DH 12/5/2019 13:39:15'!
+serializeCatalog: aCatalog
+
+	^aCatalog collect: [:catalogEntry |
+		Dictionary new
+			at: 'title' put: catalogEntry title;
+			at: 'author' put: catalogEntry author;
+			at: 'price' put: catalogEntry price;
+			yourself.
+	]! !
+!TusLibrosServerController methodsFor: 'as yet unclassified' stamp: 'DH 12/5/2019 13:39:15' prior: 50840946!
+initializeWith: aPortNumber
+
+	timeProvider _ RealTimeProvider new.
+	clients _ self clients.
+	catalog _ self catalog.
+	salesBook _ OrderedCollection new.
+	merchantProcessor _ self.
+	purchaseSystem _ PurchaseSystem
+		newWithClients: clients
+		salesBook: salesBook
+		timeProvider: timeProvider
+		catalog: catalog
+		andMerchantProcessor: merchantProcessor.
+	
+
+	port _ aPortNumber.
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action: [:request | | clientID password cartID |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [cartID _ purchaseSystem createCartWithClientID: clientID andPassword: password.] 
+			sendErrorMessageOn: request.
+		self sendResponseWithBody: cartID on: request.
+	].
+
+	webServer addService: '/addToCart' action: [:request | | cartID bookIsbn quantity |
+		self validate: request has: 'cartID' has: 'bookIsbn' and: 'quantity'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		quantity _ self getAsInteger: 'quantity' from: request.
+		self onError: [purchaseSystem add: quantity of: bookIsbn to: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully added' on: request.
+	].
+
+	webServer addService: '/listCart' action: [:request | | cartID cartItems |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [cartItems _ purchaseSystem list: cartID] sendErrorMessageOn: request.
+		self sendResponseWithBody: cartItems on: request.
+	].
+
+	webServer addService: '/checkoutCart' action: [:request | | cartID ccn cced cco |
+		self validate: request has: 'cartID' has: 'ccn' has: 'cced' and: 'cco'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		ccn _ request fields at: 'ccn'.
+		cced _ self getAsMonthAndYear: 'cced' from: request.
+		cco _ request fields at: 'cco'.
+		self onError: [
+			purchaseSystem
+				checkout: cartID
+				withCardNumber: ccn
+				withExpirationDate: cced
+				withOwner: cco
+			]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: 'Checkout successful' on: request.
+	].
+
+	webServer addService: '/listPurchases' action: [:request | | clientID password purchases |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [purchases _ purchaseSystem listPurchasesOf: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: purchases on: request.
+	].
+
+	webServer addService: '/catalog' action: [:request |
+		self sendResponseWithBody: (self serializeCatalog: purchaseSystem catalog) on: request.
+	].
+
+	webServer addService: '/removeFromCart' action: [:request | | cartID bookIsbn |
+		self validate: request has: 'cartID' and: 'bookIsbn'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		self onError: [purchaseSystem remove: bookIsbn from: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully removed' on: request.
+	].
+
+	webServer addService: '/totalSpent' action: [:request | | clientID password totalSpent |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [totalSpent _ purchaseSystem totalSpentBy: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: totalSpent on: request.
+	].
+
+	webServer addService: '/checkoutCartWithDefaultCard' action: [:request | | cartID |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [purchaseSystem checkout: cartID]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: 'Checkout successful' on: request.
+	].! !
+
+!methodRemoval: TusLibrosServerController #serialize: stamp: 'DH 12/5/2019 13:39:15'!
+serialize: aCatalog
+
+	^aCatalog collect: [:catalogEntry |
+		Dictionary new
+			at: 'title' put: catalogEntry title;
+			at: 'author' put: catalogEntry author;
+			at: 'price' put: catalogEntry price;
+			yourself.
+	]!
+!TusLibrosServerController methodsFor: 'serialization' stamp: 'DH 12/5/2019 13:42:46'!
+serializeSaleTicket: aSaleTicket
+
+	^Dictionary new
+		at: 'card_number' put: aSaleTicket cardNumber;
+		at: 'card_owner' put: aSaleTicket cardOwner;
+		at: 'total' put: aSaleTicket total;
+		yourself! !
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 12/5/2019 13:45:05' prior: 50841730!
+initializeWith: aPortNumber
+
+	timeProvider _ RealTimeProvider new.
+	clients _ self clients.
+	catalog _ self catalog.
+	salesBook _ OrderedCollection new.
+	merchantProcessor _ self.
+	purchaseSystem _ PurchaseSystem
+		newWithClients: clients
+		salesBook: salesBook
+		timeProvider: timeProvider
+		catalog: catalog
+		andMerchantProcessor: merchantProcessor.
+	
+
+	port _ aPortNumber.
+	webServer := WebServer new listenOn: aPortNumber.
+	
+	webServer addService: '/createCart' action: [:request | | clientID password cartID |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [cartID _ purchaseSystem createCartWithClientID: clientID andPassword: password.] 
+			sendErrorMessageOn: request.
+		self sendResponseWithBody: cartID on: request.
+	].
+
+	webServer addService: '/addToCart' action: [:request | | cartID bookIsbn quantity |
+		self validate: request has: 'cartID' has: 'bookIsbn' and: 'quantity'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		quantity _ self getAsInteger: 'quantity' from: request.
+		self onError: [purchaseSystem add: quantity of: bookIsbn to: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully added' on: request.
+	].
+
+	webServer addService: '/listCart' action: [:request | | cartID cartItems |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [cartItems _ purchaseSystem list: cartID] sendErrorMessageOn: request.
+		self sendResponseWithBody: cartItems on: request.
+	].
+
+	webServer addService: '/checkoutCart' action: [:request | | cartID ccn cced cco ticket |
+		self validate: request has: 'cartID' has: 'ccn' has: 'cced' and: 'cco'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		ccn _ request fields at: 'ccn'.
+		cced _ self getAsMonthAndYear: 'cced' from: request.
+		cco _ request fields at: 'cco'.
+		self onError: [
+			ticket _ purchaseSystem
+				checkout: cartID
+				withCardNumber: ccn
+				withExpirationDate: cced
+				withOwner: cco
+			]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: (self serializeSaleTicket: ticket) on: request.
+	].
+
+	webServer addService: '/listPurchases' action: [:request | | clientID password purchases |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [purchases _ purchaseSystem listPurchasesOf: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: purchases on: request.
+	].
+
+	webServer addService: '/catalog' action: [:request |
+		self sendResponseWithBody: (self serializeCatalog: purchaseSystem catalog) on: request.
+	].
+
+	webServer addService: '/removeFromCart' action: [:request | | cartID bookIsbn |
+		self validate: request has: 'cartID' and: 'bookIsbn'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		bookIsbn _ request fields at: 'bookIsbn'.
+		self onError: [purchaseSystem remove: bookIsbn from: cartID]
+			 sendErrorMessageOn: request.
+		self sendResponseWithBody: 'Items successfully removed' on: request.
+	].
+
+	webServer addService: '/totalSpent' action: [:request | | clientID password totalSpent |
+		self validate: request has: 'clientID' and: 'password'.
+		clientID _ self getAsInteger: 'clientID' from: request.
+		password _ request fields at: 'password'.
+		self onError: [totalSpent _ purchaseSystem totalSpentBy: clientID withPassword: password.]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: totalSpent on: request.
+	].
+
+	webServer addService: '/checkoutCartWithDefaultCard' action: [:request | | cartID ticket |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [ticket _ purchaseSystem checkout: cartID]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: (self serializeSaleTicket: ticket) on: request.
+	].! !
+
+server stopListening.!
+
+server destroy.!
+
+server := TusLibrosServerController listeningOn: 3010.!
+
+server stopListening.!
+
+server destroy.!
+
+----SNAPSHOT----(5 December 2019 14:06:30) CuisUniversity-3938.image priorSource: 16319014!
+
+----QUIT----(5 December 2019 14:06:38) CuisUniversity-3938.image priorSource: 16331566!
