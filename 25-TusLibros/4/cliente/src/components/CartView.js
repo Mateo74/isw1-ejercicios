@@ -4,7 +4,12 @@ class CartComponent extends React.Component {
   }
 
 	onCheckoutClicked() {
-		
+    const {cartID, router} = this.props
+    handleErrors(router, request(`checkoutCartWithDefaultCard?cartID=${cartID}`)
+      .then(ticket => {
+        router.navigate('/ticket', {checkoutTicket: ticket})
+      })
+    )
 	}
 
   render() {

@@ -6,8 +6,9 @@ class App extends React.Component {
       clientID: -1,
       clientPassword: "",
 			cartID: -1,
-			displayedBookIsbn: "",
-			errorMessage: "",
+      displayedBookIsbn: "",
+      checkoutTicket: {},
+      errorMessage: "",
     };
   }
 
@@ -27,6 +28,7 @@ class App extends React.Component {
       clientPassword,
       cartID,
       displayedBookIsbn,
+      checkoutTicket,
       errorMessage
     } = this.state
 		
@@ -65,6 +67,9 @@ class App extends React.Component {
         clientID={clientID}
         clientPassword={clientPassword}
       />)
+    }
+    else if (path === "/ticket") {
+      content = (<TicketView router={router} ticket={checkoutTicket} />)
     }
     else if (path ==="/error") {
 			content = (<ErrorView message={errorMessage} router={router} />)

@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #CartTest category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 TestCase subclass: #CartTest
 	instanceVariableNames: 'testObjectsFactory'
 	classVariableNames: ''
@@ -127,7 +127,7 @@ setUp
 	testObjectsFactory := StoreTestObjectsFactory new.! !
 
 
-!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #CashierTest category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: 'testObjectsFactory debitBehavior'
 	classVariableNames: ''
@@ -275,7 +275,7 @@ debit: anAmount from: aCreditCard
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
 
-!classDefinition: #PurchaseSystemTest category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #PurchaseSystemTest category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 TestCase subclass: #PurchaseSystemTest
 	instanceVariableNames: 'testObjectFactory debitBehavior'
 	classVariableNames: ''
@@ -706,7 +706,7 @@ createAndUseACartUsing: aPurchaseSystem andAdvanceMinutes: anAmountOfMinutes
 	^cart! !
 
 
-!classDefinition: #Cart category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #Cart category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
@@ -784,7 +784,7 @@ remove: anItem
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -810,7 +810,7 @@ itemNotInCartErrorMessage
 	^ 'Cannot remove an item that is not in cart'! !
 
 
-!classDefinition: #CartStoreEntry category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #CartStoreEntry category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #CartStoreEntry
 	instanceVariableNames: 'cart ownerID lastUsed'
 	classVariableNames: ''
@@ -848,7 +848,7 @@ setLastTimeUsed: aDateAndTime
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CartStoreEntry class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'CartStoreEntry class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 CartStoreEntry class
 	instanceVariableNames: ''!
 
@@ -858,7 +858,7 @@ for: aCart ownedBy: aClientID createdOn: aDateAndTime
 	^self new initializeWithCart: aCart owner: aClientID andDateAndTime: aDateAndTime.! !
 
 
-!classDefinition: #Cashier category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #Cashier category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #Cashier
 	instanceVariableNames: 'cart salesBook merchantProcessor creditCard total'
 	classVariableNames: ''
@@ -909,7 +909,7 @@ initializeToCheckout: aCart charging: aCreditCard throught: aMerchantProcessor r
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Cashier class
 	instanceVariableNames: ''!
 
@@ -949,7 +949,7 @@ creditCardHasNoCreditErrorMessage
 	^'Credit card has no credit'! !
 
 
-!classDefinition: #CatalogEntry category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #CatalogEntry category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #CatalogEntry
 	instanceVariableNames: 'title author price'
 	classVariableNames: ''
@@ -989,7 +989,7 @@ title
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CatalogEntry class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'CatalogEntry class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 CatalogEntry class
 	instanceVariableNames: ''!
 
@@ -999,20 +999,41 @@ forBookWithTitle: aBookTitle author: anAuthor price: aPrice
 	^self new initializeWithTitle: aBookTitle author: anAuthor price: aPrice.! !
 
 
-!classDefinition: #ClientStoreEntry category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #ClientStoreEntry category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #ClientStoreEntry
-	instanceVariableNames: 'password purchases totalSpent'
+	instanceVariableNames: 'password purchases totalSpent cardNumber cardOwner cardExpirationDate'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!ClientStoreEntry methodsFor: 'initialization' stamp: 'DH 12/3/2019 20:21:39'!
+!ClientStoreEntry methodsFor: 'initialization' stamp: 'DH 12/4/2019 22:43:17'!
 initializeWithPassword: aPassword
+cardNumber: aCardNumber
+cardOwner: aName
+cardExpirationDate: aMonth
 
 	password _ aPassword.
+	cardNumber _ aCardNumber.
+	cardOwner _ aName.
+	cardExpirationDate _ aMonth.
 	purchases _ Dictionary new.
 	totalSpent _ 0.! !
 
+
+!ClientStoreEntry methodsFor: 'queries' stamp: 'DH 12/4/2019 22:59:39'!
+cardExpirationDate
+
+	^cardExpirationDate! !
+
+!ClientStoreEntry methodsFor: 'queries' stamp: 'DH 12/4/2019 22:59:24'!
+cardNumber
+
+	^cardNumber! !
+
+!ClientStoreEntry methodsFor: 'queries' stamp: 'DH 12/4/2019 22:59:30'!
+cardOwner
+
+	^cardOwner! !
 
 !ClientStoreEntry methodsFor: 'queries' stamp: 'DH 11/16/2019 15:21:03'!
 password
@@ -1029,24 +1050,41 @@ totalSpent
 
 	^totalSpent! !
 
-!ClientStoreEntry methodsFor: 'queries' stamp: 'DH 12/3/2019 20:23:20'!
+
+!ClientStoreEntry methodsFor: 'update' stamp: 'DH 12/3/2019 20:23:20'!
 updateTotalSpentBy: anAmountSpent
 
 	totalSpent _ totalSpent + anAmountSpent.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'ClientStoreEntry class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'ClientStoreEntry class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 ClientStoreEntry class
 	instanceVariableNames: ''!
 
-!ClientStoreEntry class methodsFor: 'instance creation' stamp: 'DH 11/16/2019 15:46:34'!
+!ClientStoreEntry class methodsFor: 'instance creation' stamp: 'DH 12/4/2019 23:37:40'!
 forClientWithPassword: aPassword
 
-	^self new initializeWithPassword: aPassword! !
+	^self new
+		initializeWithPassword: aPassword
+		cardNumber: '1234567891011120'
+		cardOwner: 'Unused name'
+		cardExpirationDate: (Month month: 5 year: 2020).! !
+
+!ClientStoreEntry class methodsFor: 'instance creation' stamp: 'DH 12/4/2019 22:44:26'!
+forClientWithPassword: aPassword
+cardNumber: aCardNumber
+cardOwner: aName
+cardExpirationDate: aMonth
+
+	^self new
+		initializeWithPassword: aPassword
+		cardNumber: aCardNumber
+		cardOwner: aName
+		cardExpirationDate: aMonth.! !
 
 
-!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #CreditCard category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #CreditCard
 	instanceVariableNames: 'expiration number owner'
 	classVariableNames: ''
@@ -1075,7 +1113,7 @@ isACreditCardNumber: aString
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'CreditCard class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 CreditCard class
 	instanceVariableNames: ''!
 
@@ -1091,7 +1129,7 @@ invalidCreditCardNumberErrorMessage
 	^'Credit card number does not have 16 digits.'! !
 
 
-!classDefinition: #PurchaseSystem category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #PurchaseSystem category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #PurchaseSystem
 	instanceVariableNames: 'clients carts lastCartID catalog salesBook timeProvider merchantProcessor'
 	classVariableNames: ''
@@ -1121,6 +1159,18 @@ add: aNumberOfBooks of: aBookISBN to: aCartID
 	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
 	cartInfo cart add: aNumberOfBooks of: aBookISBN.
 	cartInfo setLastTimeUsed: timeProvider now.! !
+
+!PurchaseSystem methodsFor: 'cart operations' stamp: 'DH 12/4/2019 23:05:39'!
+checkout: aCartID
+	
+	|cartInfo clientInfo|
+	cartInfo _ self validateAndGetInfoFromCartWithID: aCartID.
+	clientInfo _ clients at: cartInfo ownerID.
+	self
+		checkout: aCartID
+		withCardNumber: clientInfo cardNumber
+		withExpirationDate: clientInfo cardExpirationDate
+		withOwner: clientInfo cardOwner.! !
 
 !PurchaseSystem methodsFor: 'cart operations' stamp: 'DH 12/3/2019 20:35:16'!
 checkout: aCartID withCardNumber: aCardNumber withExpirationDate: aMonth withOwner: anOwner
@@ -1242,7 +1292,7 @@ update: aDictionary withItemsFrom: aCart
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'PurchaseSystem class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'PurchaseSystem class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 PurchaseSystem class
 	instanceVariableNames: ''!
 
@@ -1292,7 +1342,7 @@ andMerchantProcessor: aMerchantProcessor
 	andMerchantProcessor: aMerchantProcessor! !
 
 
-!classDefinition: #Sale category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #Sale category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #Sale
 	instanceVariableNames: 'total'
 	classVariableNames: ''
@@ -1318,7 +1368,7 @@ initializeTotal: aTotal
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Sale class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'Sale class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Sale class
 	instanceVariableNames: ''!
 
@@ -1329,7 +1379,7 @@ of: aTotal
 	^self new initializeTotal: aTotal ! !
 
 
-!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #StoreTestObjectsFactory category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #StoreTestObjectsFactory
 	instanceVariableNames: 'stubTimeProvider'
 	classVariableNames: ''
@@ -1442,7 +1492,7 @@ anotherValidClientID
 
 	^8128! !
 
-!StoreTestObjectsFactory methodsFor: 'clients' stamp: 'DH 11/18/2019 22:02:34'!
+!StoreTestObjectsFactory methodsFor: 'clients' stamp: 'DH 12/4/2019 22:45:45'!
 clientsWithPasswords
 
 	|clients|
@@ -1483,7 +1533,7 @@ createPurchaseSystemWithSalesBook: aSalesBook andMerchantProcessor: aMerchantPro
 	andMerchantProcessor: aMerchantProcessor ! !
 
 
-!classDefinition: #TimeProvider category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #TimeProvider category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #TimeProvider
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1496,7 +1546,7 @@ now
 	^self subclassResponsibility! !
 
 
-!classDefinition: #RealTimeProvider category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #RealTimeProvider category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 TimeProvider subclass: #RealTimeProvider
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1509,7 +1559,7 @@ now
 	^DateAndTime now! !
 
 
-!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #StubTimeProvider category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 TimeProvider subclass: #StubTimeProvider
 	instanceVariableNames: 'dateAndTime'
 	classVariableNames: ''
@@ -1552,7 +1602,7 @@ advanceMinutes: anAmountOfMinutes
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'StubTimeProvider class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'StubTimeProvider class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 StubTimeProvider class
 	instanceVariableNames: ''!
 
@@ -1562,14 +1612,14 @@ newWithActualDateAndTime
 	^self new initializeWithActualDateAndTime! !
 
 
-!classDefinition: #TusLibrosServerController category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: #TusLibrosServerController category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 Object subclass: #TusLibrosServerController
 	instanceVariableNames: 'webServer port purchaseSystem timeProvider clients catalog salesBook merchantProcessor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 12/3/2019 20:48:04'!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'DH 12/4/2019 23:13:14'!
 initializeWith: aPortNumber
 
 	timeProvider _ RealTimeProvider new.
@@ -1663,6 +1713,15 @@ initializeWith: aPortNumber
 			sendErrorMessageOn: request.
 			
 		self sendResponseWithBody: totalSpent on: request.
+	].
+
+	webServer addService: '/checkoutCartWithDefaultCard' action: [:request | | cartID |
+		self validate: request has: 'cartID'.
+		cartID _ self getAsInteger: 'cartID' from: request.
+		self onError: [purchaseSystem checkout: cartID]
+			sendErrorMessageOn: request.
+			
+		self sendResponseWithBody: 'Checkout successful' on: request.
 	].! !
 
 
@@ -1783,12 +1842,20 @@ catalog
 		at: '3333' put: (CatalogEntry forBookWithTitle: 'Book 3' author: 'Author 3' price: 33);
 		yourself.! !
 
-!TusLibrosServerController methodsFor: 'data' stamp: 'DH 11/29/2019 19:57:45'!
+!TusLibrosServerController methodsFor: 'data' stamp: 'DH 12/4/2019 23:37:59'!
 clients
 
 	^Dictionary new
-		at: 1 put: (ClientStoreEntry forClientWithPassword: 'flan');
-		at: 2 put: (ClientStoreEntry forClientWithPassword: 'rosebud');
+		at: 1 put: (ClientStoreEntry
+			forClientWithPassword: 'flan'
+			cardNumber: '1111111111111111'
+			cardOwner: 'Flan'
+			cardExpirationDate: (Month month: 5 year: 2022));
+		at: 2 put: (ClientStoreEntry
+			forClientWithPassword: 'rosebud'
+			cardNumber: '1234567891011120' 
+			cardOwner: 'Rosebud'
+			cardExpirationDate: (Month month: 2 year: 2023));
 		yourself! !
 
 
@@ -1822,7 +1889,7 @@ serialize: aCatalog
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TusLibrosServerController class' category: #TusLibros stamp: 'DH 12/3/2019 21:10:24'!
+!classDefinition: 'TusLibrosServerController class' category: #TusLibros stamp: 'DH 12/4/2019 23:48:15'!
 TusLibrosServerController class
 	instanceVariableNames: ''!
 

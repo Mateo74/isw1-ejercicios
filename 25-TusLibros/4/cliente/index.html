@@ -116,7 +116,7 @@
     const useStyles = makeStyles(styles);
 
     const request = (path) => {
-      const port = 5000
+      const port = 3010
     
       return fetch(`http://localhost:${port}/${path}`, {
         method: "GET",
@@ -309,7 +309,12 @@
       }
     
     	onCheckoutClicked() {
-    		
+        const {cartID, router} = this.props
+        handleErrors(router, request(`checkoutCartWithDefaultCard?cartID=${cartID}`)
+          .then(ticket => {
+            router.navigate('/ticket', {checkoutTicket: ticket})
+          })
+        )
     	}
     
       render() {
@@ -343,8 +348,9 @@
           clientID: -1,
           clientPassword: "",
     			cartID: -1,
-    			displayedBookIsbn: "",
-    			errorMessage: "",
+          displayedBookIsbn: "",
+          checkoutTicket: {},
+          errorMessage: "",
         };
       }
     
@@ -364,6 +370,7 @@
           clientPassword,
           cartID,
           displayedBookIsbn,
+          checkoutTicket,
           errorMessage
         } = this.state
     		
@@ -402,6 +409,9 @@
             clientID={clientID}
             clientPassword={clientPassword}
           />)
+        }
+        else if (path === "/ticket") {
+          content = (<TicketView router={router} ticket={checkoutTicket} />)
         }
         else if (path ==="/error") {
     			content = (<ErrorView message={errorMessage} router={router} />)
@@ -740,7 +750,25 @@
     const PurchaseHistoryView = withStyles(styles, {
         withTheme: true
       })(PurchaseHistoryComponent)
-
+    class TicketComponent extends React.Component {
+        constructor(props) {
+          super(props)
+        }
+      
+        render() {
+          return (
+            <div>
+              Ticket!
+            </div>
+          )
+        }
+      }
+      
+      // Add style
+      const TicketView = withStyles(styles, {
+        withTheme: true
+      })(TicketComponent)
+      
     ///////////////////////////////////////////////////////////////////////////
     // Initial render
     //
